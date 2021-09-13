@@ -15,6 +15,8 @@ public class SellerEntity extends BaseEntity {
     private String imageUrl;
     private String description;
     private List<SaleEntity> sales;
+    private List<UserRoleEntity> roles;
+    private ShopEntity shop;
 
     public SellerEntity() {
     }
@@ -80,13 +82,33 @@ public class SellerEntity extends BaseEntity {
         return this;
     }
 
-    @OneToMany
+    @ManyToMany
     public List<SaleEntity> getSales() {
         return sales;
     }
 
     public SellerEntity setSales(List<SaleEntity> sales) {
         this.sales = sales;
+        return this;
+    }
+
+    @ManyToMany
+    public List<UserRoleEntity> getRoles() {
+        return roles;
+    }
+
+    public SellerEntity setRoles(List<UserRoleEntity> roles) {
+        this.roles = roles;
+        return this;
+    }
+
+    @ManyToOne
+    public ShopEntity getShop() {
+        return shop;
+    }
+
+    public SellerEntity setShop(ShopEntity shop) {
+        this.shop = shop;
         return this;
     }
 }

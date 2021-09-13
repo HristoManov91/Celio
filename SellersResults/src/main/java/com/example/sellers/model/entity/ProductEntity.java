@@ -17,6 +17,12 @@ public class ProductEntity extends BaseEntity {
     public ProductEntity() {
     }
 
+    public ProductEntity(String name, CategoryEntity category, BigDecimal price) {
+        this.name = name;
+        this.category = category;
+        this.price = price;
+    }
+
     @Column (length = 20 , nullable = false , unique = true)
     public String getName() {
         return name;

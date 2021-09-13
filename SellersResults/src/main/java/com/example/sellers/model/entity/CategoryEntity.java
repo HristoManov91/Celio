@@ -1,10 +1,8 @@
 package com.example.sellers.model.entity;
 
-import org.springframework.stereotype.Controller;
+import com.example.sellers.model.entity.enums.CategoryEnum;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "categories")
@@ -16,9 +14,11 @@ public class CategoryEntity extends BaseEntity {
     public CategoryEntity() {
     }
 
-    //ToDo валидации
+    public CategoryEntity(CategoryEnum categoryEnum) {
+        this.categoryEnum = categoryEnum;
+    }
 
-    @Column
+    @Enumerated(EnumType.STRING)
     public CategoryEnum getCategoryEnum() {
         return categoryEnum;
     }

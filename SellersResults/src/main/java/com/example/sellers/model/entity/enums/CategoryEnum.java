@@ -1,4 +1,4 @@
-package com.example.sellers.model.entity;
+package com.example.sellers.model.entity.enums;
 
 import javax.persistence.Enumerated;
 
@@ -15,10 +15,10 @@ public enum CategoryEnum {
     UNDERWEAR ,
     BELT ,
     SHOES ,
-    SOCK ,
-    PYJAMA ,
+    SOCKS ,
+    PYJAMAS ,
     SCARVES ,
     HAT ,
-    GLOVE ,
-    //ToDo може би трябва да се рефакторира
+    GLOVES ,
+    //ToDo може би трябва да се редактират категориите
 }
