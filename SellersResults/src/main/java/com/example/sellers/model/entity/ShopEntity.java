@@ -1,6 +1,7 @@
 package com.example.sellers.model.entity;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -9,8 +10,9 @@ public class ShopEntity extends BaseEntity{
 
     private String name;
     private String description;
-    private List<SellerEntity> sellers;
-    private List<TargetEntity> targets;
+    private List<UserEntity> sellers;
+    private BigDecimal targets;
+    private List<Traffic> traffic;
 
     public ShopEntity() {
     }
@@ -36,22 +38,31 @@ public class ShopEntity extends BaseEntity{
     }
 
     @OneToMany(mappedBy = "shop")
-    public List<SellerEntity> getSellers() {
+    public List<UserEntity> getSellers() {
         return sellers;
     }
 
-    public ShopEntity setSellers(List<SellerEntity> sellers) {
+    public ShopEntity setSellers(List<UserEntity> sellers) {
         this.sellers = sellers;
         return this;
     }
 
-    @OneToMany
-    public List<TargetEntity> getTargets() {
+    public BigDecimal getTargets() {
         return targets;
     }
 
-    public ShopEntity setTargets(List<TargetEntity> targets) {
+    public ShopEntity setTargets(BigDecimal targets) {
         this.targets = targets;
+        return this;
+    }
+
+    @OneToMany(mappedBy = "shopEntity")
+    public List<Traffic> getTraffic() {
+        return traffic;
+    }
+
+    public ShopEntity setTraffic(List<Traffic> traffic) {
+        this.traffic = traffic;
         return this;
     }
 }

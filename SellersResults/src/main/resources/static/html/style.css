@@ -1,0 +1,14 @@
+nav {
+    background: red;
+    margin: 0;
+    padding: 15px;
+}
+
+nav li {
+    display: inline-block;
+}
+
+nav li a {
+    color: white;
+    text-decoration: none;
+}

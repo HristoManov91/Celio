@@ -2,11 +2,12 @@ package com.example.sellers.model.entity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "sellers")
-public class SellerEntity extends BaseEntity {
+public class UserEntity extends BaseEntity {
 
     private String fullName;
     private String password;
@@ -15,10 +16,10 @@ public class SellerEntity extends BaseEntity {
     private String imageUrl;
     private String description;
     private List<SaleEntity> sales;
-    private List<UserRoleEntity> roles;
+    private List<UserRoleEntity> roles = new ArrayList<>();
     private ShopEntity shop;
 
-    public SellerEntity() {
+    public UserEntity() {
     }
 
     @Column(name = "full_name" , length = 50 , nullable = false , unique = true)
@@ -26,17 +27,17 @@ public class SellerEntity extends BaseEntity {
         return fullName;
     }
 
-    public SellerEntity setFullName(String fullName) {
+    public UserEntity setFullName(String fullName) {
         this.fullName = fullName;
         return this;
     }
 
-    @Column(length = 20)
+    @Column(length = 20 , nullable = false)
     public String getPassword() {
         return password;
     }
 
-    public SellerEntity setPassword(String password) {
+    public UserEntity setPassword(String password) {
         this.password = password;
         return this;
     }
@@ -46,7 +47,7 @@ public class SellerEntity extends BaseEntity {
         return email;
     }
 
-    public SellerEntity setEmail(String email) {
+    public UserEntity setEmail(String email) {
         this.email = email;
         return this;
     }
@@ -56,7 +57,7 @@ public class SellerEntity extends BaseEntity {
         return dateOfAppointment;
     }
 
-    public SellerEntity setDateOfAppointment(LocalDate dateOfAppointment) {
+    public UserEntity setDateOfAppointment(LocalDate dateOfAppointment) {
         this.dateOfAppointment = dateOfAppointment;
         return this;
     }
@@ -67,7 +68,7 @@ public class SellerEntity extends BaseEntity {
         return imageUrl;
     }
 
-    public SellerEntity setImageUrl(String imageUrl) {
+    public UserEntity setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
         return this;
     }
@@ -77,27 +78,27 @@ public class SellerEntity extends BaseEntity {
         return description;
     }
 
-    public SellerEntity setDescription(String description) {
+    public UserEntity setDescription(String description) {
         this.description = description;
         return this;
     }
 
-    @ManyToMany
+    @OneToMany
     public List<SaleEntity> getSales() {
         return sales;
     }
 
-    public SellerEntity setSales(List<SaleEntity> sales) {
+    public UserEntity setSales(List<SaleEntity> sales) {
         this.sales = sales;
         return this;
     }
 
-    @ManyToMany
+    @ManyToMany //(fetch = FetchType.EAGER)
     public List<UserRoleEntity> getRoles() {
         return roles;
     }
 
-    public SellerEntity setRoles(List<UserRoleEntity> roles) {
+    public UserEntity setRoles(List<UserRoleEntity> roles) {
         this.roles = roles;
         return this;
     }
@@ -107,7 +108,7 @@ public class SellerEntity extends BaseEntity {
         return shop;
     }
 
-    public SellerEntity setShop(ShopEntity shop) {
+    public UserEntity setShop(ShopEntity shop) {
         this.shop = shop;
         return this;
     }
