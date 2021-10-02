@@ -9,6 +9,7 @@ import java.util.List;
 @Table(name = "sellers")
 public class UserEntity extends BaseEntity {
 
+    //ToDo да направя username да е email и да се влиза с него
     private String fullName;
     private String password;
     private String email;
@@ -32,7 +33,7 @@ public class UserEntity extends BaseEntity {
         return this;
     }
 
-    @Column(length = 20 , nullable = false)
+    @Column(nullable = false)
     public String getPassword() {
         return password;
     }

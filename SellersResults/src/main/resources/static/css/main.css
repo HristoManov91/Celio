@@ -1,0 +1,29 @@
+/*body {*/
+/*    background-image: url("static/img/celio-star.png");*/
+/*    background-position: center center;*/
+/*    background-repeat: no-repeat;*/
+/*    background-attachment: fixed;*/
+/*    background-size: cover;*/
+/*    background-color: #464646;*/
+/*}*/
+
+body {
+    background-image: url("/static/img/backgroud.jpg");
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+nav {
+    text-align: right;
+}
+
+nav ul li {
+    display: inline-block;
+    padding: 0 10px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+}

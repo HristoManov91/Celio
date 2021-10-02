@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>SellerResults</title>
+</head>
+<body>
+<h1>Hello, <span th:text="">User name</span>!</h1>
+<div sec:authorize="hasRole('SELLER')">
+    I am an seller!
+</div>
+</body>
+</html>

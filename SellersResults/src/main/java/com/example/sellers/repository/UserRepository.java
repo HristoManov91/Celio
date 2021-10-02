@@ -9,5 +9,6 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
-    Optional<UserEntity> findByFullName (String fullName);
+    //ToDo може би е правилно да е по email?
+    Optional<UserEntity> findByEmail (String email);
 }

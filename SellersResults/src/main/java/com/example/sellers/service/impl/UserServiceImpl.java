@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<UserEntity> findUserByName(String fullName) {
-        return userRepository.findByFullName(fullName);
+    public Optional<UserEntity> findUserByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 }

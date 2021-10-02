@@ -22,10 +22,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         this.userService = userService;
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String fullName) throws UsernameNotFoundException {
-        UserEntity userEntity = userService.findUserByName(fullName)
-                .orElseThrow(() -> new UsernameNotFoundException("User with this full name " + fullName + " was not found."));
+    @Override //ToDo да проверя дали не трябва да е по email или username
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        UserEntity userEntity = userService.findUserByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User with this email " + email + " was not found."));
 
         return mapToUserDetails(userEntity);
     }
@@ -38,6 +38,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                         .stream()
                         .map(ur -> new SimpleGrantedAuthority("ROLE_" + ur.getRole().name())).collect(Collectors.toList());
 
-        return new User(userEntity.getFullName(), userEntity.getPassword(), authorities);
+        return new User(userEntity.getEmail(), userEntity.getPassword(), authorities);
     }
 }

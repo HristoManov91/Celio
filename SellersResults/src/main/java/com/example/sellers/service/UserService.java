@@ -14,5 +14,5 @@ public interface UserService {
     void addUser(String fullName, String password, String email, LocalDate dateOfAppointment,
                  List<UserRoleEntity> roles , Long shopId);
 
-    Optional<UserEntity> findUserByName(String fullName);
+    Optional<UserEntity> findUserByEmail(String fullName);
 }
