@@ -1,29 +1,28 @@
-/*body {*/
-/*    background-image: url("static/img/celio-star.png");*/
-/*    background-position: center center;*/
-/*    background-repeat: no-repeat;*/
-/*    background-attachment: fixed;*/
-/*    background-size: cover;*/
-/*    background-color: #464646;*/
-/*}*/
-
 body {
-    background-image: url("/static/img/backgroud.jpg");
+    background-image: url("/img/background2.png");
     background-position: center;
     background-attachment: fixed;
     background-size: cover;
 }
 
-nav {
-    text-align: right;
-}
-
-nav ul li {
-    display: inline-block;
-    padding: 0 10px;
-}
-
 nav ul li a {
     color: white;
-    text-decoration: none;
+}
+
+.container-fluid {
+    padding-top: 50px;
+}
+
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    /*background-color: red;*/
+    /*color: white;*/
+    text-align: center;
+}
+
+body div main h1 {
+    color: white;
 }

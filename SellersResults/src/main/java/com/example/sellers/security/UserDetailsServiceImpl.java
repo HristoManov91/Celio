@@ -1,7 +1,6 @@
 package com.example.sellers.security;
 
 import com.example.sellers.model.entity.UserEntity;
-import com.example.sellers.service.UserRoleService;
 import com.example.sellers.service.UserService;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
