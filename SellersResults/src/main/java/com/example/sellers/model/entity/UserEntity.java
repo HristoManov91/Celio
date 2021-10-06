@@ -1,5 +1,7 @@
 package com.example.sellers.model.entity;
 
+import org.apache.catalina.User;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -84,7 +86,7 @@ public class UserEntity extends BaseEntity {
         return this;
     }
 
-    @OneToMany
+    @OneToMany(mappedBy = "userEntity")
     public List<SaleEntity> getSales() {
         return sales;
     }
@@ -101,6 +103,11 @@ public class UserEntity extends BaseEntity {
 
     public UserEntity setRoles(List<UserRoleEntity> roles) {
         this.roles = roles;
+        return this;
+    }
+
+    public UserEntity addRole(UserRoleEntity userRoleEntity){
+        this.roles.add(userRoleEntity);
         return this;
     }
 

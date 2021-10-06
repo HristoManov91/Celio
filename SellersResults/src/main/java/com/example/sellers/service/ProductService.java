@@ -6,7 +6,9 @@ import java.math.BigDecimal;
 
 public interface ProductService {
 
-    void addProduct(String name, CategoryEnum category, BigDecimal price);
+    void addProduct(String name ,CategoryEnum category, BigDecimal price);
 
     long size();
+
+    void removeProduct(String name);
 }

@@ -9,19 +9,26 @@
     <div class="collapse navbar-collapse">
       <ul class="navbar-nav mr-auto col-12 justify-content-between">
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button"
-             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Admin
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="nav-link dropdown-toggle" id="managerDropdown" role="button"
+             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Manager</a>
+          <div class="dropdown-menu" aria-labelledby="managerDropdown">
             <a class="dropdown-item" href="/">Add training</a>
-            <a class="dropdown-item" href="/">Remove token</a>
+            <a class="dropdown-item" href="/users/remove-sale">Remove sale</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="/">Remove Seller</a>
+            <a class="dropdown-item" href="/users/remove-seller">Remove seller</a>
+            <a class="dropdown-item" href="/users/set-seller-store">Change the seller's store</a>
+            <a class="dropdown-item" href="/products/add">Add product</a>
+            <a class="dropdown-item" href="/products/remove">Remove product</a>
           </div>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Shop Results</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="shopDropdown" role="button"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Shop Results</a>
+          <div class="dropdown-menu" aria-labelledby="shopDropdown">
+            <a class="dropdown-item" href="/shops/shop-results">Results for shop</a>
+            <a class="dropdown-item" href="/shops/all-shops-results">Results for all shop</a>
+            <a class="dropdown-item" href="/shops/shop-information">Information</a>
+          </div>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Sellers Results</a>
@@ -36,7 +43,7 @@
           <a class="nav-link" href="/users/login">Login</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Profile</a>
+          <a class="nav-link" href="/users/profile">Profile</a>
         </li>
         <li class="nav-item">
           <div class="form-inline my-2 my-lg-0 border px-3">

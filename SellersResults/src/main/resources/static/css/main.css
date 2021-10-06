@@ -26,3 +26,8 @@ footer {
 body div main h1 {
     color: white;
 }
+
+.btn-primary {
+    background-color: red;
+    border: none;
+}

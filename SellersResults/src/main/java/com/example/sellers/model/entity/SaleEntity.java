@@ -12,6 +12,7 @@ public class SaleEntity extends BaseEntity {
     private LocalDate dateOfSale;
     List<ProductEntity> products;
     private BigDecimal totalPrice;
+    private UserEntity userEntity;
 
     public SaleEntity() {
     }
@@ -44,6 +45,16 @@ public class SaleEntity extends BaseEntity {
 
     public SaleEntity setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
+        return this;
+    }
+
+    @ManyToOne
+    public UserEntity getUserEntity() {
+        return userEntity;
+    }
+
+    public SaleEntity setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
         return this;
     }
 }

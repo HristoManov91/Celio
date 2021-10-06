@@ -11,8 +11,10 @@ public class ShopEntity extends BaseEntity{
     private String name;
     private String description;
     private List<UserEntity> sellers;
+    //ToDo да направя колекция от таргети да се пази
     private BigDecimal targets;
     private List<Traffic> traffic;
+    //ToDo да добавя колекция със снимки
 
     public ShopEntity() {
     }

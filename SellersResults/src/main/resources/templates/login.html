@@ -2,10 +2,39 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <th:block th:include="~{fragments/head}"></th:block>
 <body>
-  This is login page
-  <div>
-      <th:block th:include="~{fragments/nav}"></th:block>
-  </div>
-    <th:block th:include="~{fragments/footer}"></th:block>
+<div>
+    <th:block th:include="~{fragments/nav}"></th:block>
+    <main class="p-5 align-content-center my-login-div">
+        <h1 class="border-bottom">Login</h1>
+        <div class="d-flex justify-content-center">
+            <div class="row g-3 align-items-center" style="color: red">
+                <form action="/users/login" method="POST">
+                    <div>
+                        <div class="col-auto">
+                            <label for="email" class="col-form-label ">Email</label>
+                        </div>
+                        <div class="col-auto">
+                            <input type="text" name="email" required minlength="4" maxlength="30"
+                                   id="email" class="form-control" aria-describedby="emailHelpInLine">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="col-auto">
+                            <label for="password" class="col-form-label ">Password</label>
+                        </div>
+                        <div class="col-auto">
+                            <input type="text" name="password" required maxlength="30"
+                                   id="password" class="form-control" aria-describedby="passwordHelpInLine">
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center mt-2">
+                        <button class="btn btn-primary btn-block w-50" type="submit">Login</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+</div>
+<th:block th:include="~{fragments/footer}"></th:block>
 </body>
 </html>

@@ -25,7 +25,7 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public void addProduct(String name, CategoryEnum category, BigDecimal price) {
+    public void addProduct(String name , CategoryEnum category, BigDecimal price) {
         ProductEntity product = new ProductEntity(name , categoryService.findByName(category) , price);
 
         productRepository.save(product);
@@ -34,5 +34,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public long size() {
         return productRepository.count();
+    }
+
+    @Override
+    public void removeProduct(String name) {
+        ProductEntity productEntity = productRepository.findByName(name).orElseThrow();
+        productRepository.delete(productEntity);
     }
 }

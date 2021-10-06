@@ -1,6 +1,7 @@
 package com.example.sellers.model.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
 
 @Entity
@@ -14,7 +15,7 @@ public class ProductEntity extends BaseEntity {
     public ProductEntity() {
     }
 
-    public ProductEntity(String name, CategoryEntity category, BigDecimal price) {
+    public ProductEntity(String name ,CategoryEntity category, BigDecimal price) {
         this.name = name;
         this.category = category;
         this.price = price;

@@ -7,8 +7,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.List;
 
 @Component
 public class DatabaseInit implements CommandLineRunner {
@@ -43,20 +41,13 @@ public class DatabaseInit implements CommandLineRunner {
 
     private void addUsers() {
         if (userService.count() == 0) {
-            userService.addUser("Hristo Manov", "topsecret", "hristo@abv.bg", LocalDate.now(),
-                    List.of(userRoleService.findById(1L), userRoleService.findById(2L), userRoleService.findById(3L)), 1L);
-            userService.addUser("Plamen Terziev", passwordEncoder.encode("topsecret"), "plamen@abv.bg", LocalDate.now(),
-                    List.of(userRoleService.findById(2L), userRoleService.findById(3L)), 1L);
-            userService.addUser("Viktor Dimitrov", passwordEncoder.encode("topsecret"), "viktor@abv.bg", LocalDate.now(),
-                    List.of(userRoleService.findById(2L), userRoleService.findById(3L)), 2L);
-            userService.addUser("Ivan Ivanov", passwordEncoder.encode("topsecret"), "ivan@abv.bg", LocalDate.now(),
-                    List.of(userRoleService.findById(3L)), 3L);
-            userService.addUser("Pesho Peshev", passwordEncoder.encode("topsecret"), "pesho@abv.bg", LocalDate.now(),
-                    List.of(userRoleService.findById(3L)), 4L);
-            userService.addUser("Georgi Manov", passwordEncoder.encode("topsecret"), "georgi@abv.bg", LocalDate.now(),
-                    List.of(userRoleService.findById(3L)), 3L);
-            userService.addUser("Stanislav Evlogiev", passwordEncoder.encode("topsecret"), "stani@abv.bg", LocalDate.now(),
-                    List.of(userRoleService.findById(2L), userRoleService.findById(3L)), 2L);
+            userService.addUser("Hristo Manov", passwordEncoder.encode("topsecret"), "hristo@abv.bg", 1L);
+            userService.addUser("Plamen Terziev", passwordEncoder.encode("topsecret"), "plamen@abv.bg", 1L);
+            userService.addUser("Viktor Dimitrov", passwordEncoder.encode("topsecret"), "viktor@abv.bg", 2L);
+            userService.addUser("Ivan Ivanov", passwordEncoder.encode("topsecret"), "ivan@abv.bg", 3L);
+            userService.addUser("Pesho Peshev", passwordEncoder.encode("topsecret"), "pesho@abv.bg", 4L);
+            userService.addUser("Georgi Manov", passwordEncoder.encode("topsecret"), "georgi@abv.bg", 3L);
+            userService.addUser("Stanislav Evlogiev", passwordEncoder.encode("topsecret"), "stani@abv.bg", 2L);
         }
     }
 
@@ -67,14 +58,10 @@ public class DatabaseInit implements CommandLineRunner {
             productService.addProduct("Tohenri", CategoryEnum.PANTS, BigDecimal.valueOf(89.99));
             productService.addProduct("Neunir", CategoryEnum.TEE_SHIRT, BigDecimal.valueOf(24.99));
             productService.addProduct("Masantal", CategoryEnum.SHIRT, BigDecimal.valueOf(69.99));
-            productService.addProduct("Fireverse", CategoryEnum.BELT, BigDecimal.valueOf(49.99));
             productService.addProduct("Roknit", CategoryEnum.BERMUDA, BigDecimal.valueOf(99.99));
             productService.addProduct("Nucolor", CategoryEnum.JACKETS, BigDecimal.valueOf(119.99));
             productService.addProduct("Mike", CategoryEnum.UNDERWEAR, BigDecimal.valueOf(19.99));
             productService.addProduct("Jecloud", CategoryEnum.SWEATER, BigDecimal.valueOf(149.99));
-            productService.addProduct("Repop", CategoryEnum.SWEATSHIRT, BigDecimal.valueOf(89.99));
-            productService.addProduct("Mifunky", CategoryEnum.SOCKS, BigDecimal.valueOf(9.99));
-            productService.addProduct("Nysport", CategoryEnum.SHOES, BigDecimal.valueOf(89.99));
         }
     }
 }
