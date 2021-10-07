@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">>
 <th:block th:include="~{fragments/head}"></th:block>
 <body>
 <div>
@@ -14,7 +14,7 @@
                             <label for="email" class="col-form-label ">Email</label>
                         </div>
                         <div class="col-auto">
-                            <input type="text" name="email" required minlength="4" maxlength="30"
+                            <input type="text" name="email" required minlength="6" maxlength="50"
                                    id="email" class="form-control" aria-describedby="emailHelpInLine">
                         </div>
                     </div>
@@ -23,7 +23,7 @@
                             <label for="password" class="col-form-label ">Password</label>
                         </div>
                         <div class="col-auto">
-                            <input type="text" name="password" required maxlength="30"
+                            <input type="text" name="password" required maxlength="20" minlength="6"
                                    id="password" class="form-control" aria-describedby="passwordHelpInLine">
                         </div>
                     </div>

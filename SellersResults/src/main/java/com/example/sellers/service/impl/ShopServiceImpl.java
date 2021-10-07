@@ -5,6 +5,8 @@ import com.example.sellers.repository.ShopRepository;
 import com.example.sellers.service.ShopService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ShopServiceImpl implements ShopService {
 
@@ -16,7 +18,7 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     public void initShops() {
-        ShopEntity theMall = new ShopEntity().setName("TheMall").setDescription("Description for TheMall");
+        ShopEntity theMall = new ShopEntity().setName("The Mall").setDescription("Description for TheMall");
         shopRepository.save(theMall);
 
         ShopEntity paradise = new ShopEntity().setName("Paradise").setDescription("Description for Paradise");
@@ -34,6 +36,13 @@ public class ShopServiceImpl implements ShopService {
         return shopRepository.findById(shopId).orElse(null);
     }
 
+    @Override
+    public List<String> findAllShopName() {
+        return shopRepository.findAllShopName();
+    }
 
-
+    @Override
+    public ShopEntity findByName(String name) {
+        return shopRepository.findByName(name).orElseThrow(IllegalArgumentException::new);
+    }
 }

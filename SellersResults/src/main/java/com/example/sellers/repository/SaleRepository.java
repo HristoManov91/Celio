@@ -10,7 +10,10 @@ import java.util.Optional;
 import java.util.Set;
 
 @Repository
-public interface SaleRepository extends JpaRepository<SaleEntity , Long> {
+public interface SaleRepository extends JpaRepository<SaleEntity, Long> {
 
-    Optional<Set<SaleEntity>> findAllByUserEntityAndDateOfSaleBetween(UserEntity userEntity, LocalDate fromDate, LocalDate toDate);
+    Optional<Set<SaleEntity>> findAllByUserEntityAndDateOfSaleBetween
+            (UserEntity userEntity, LocalDate fromDate, LocalDate toDate);
+
+
 }

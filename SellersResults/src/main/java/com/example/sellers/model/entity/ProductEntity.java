@@ -50,4 +50,5 @@ public class ProductEntity extends BaseEntity {
         this.price = price;
         return this;
     }
+
 }

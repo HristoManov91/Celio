@@ -4,11 +4,10 @@ import org.apache.catalina.User;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Entity
-@Table(name = "sellers")
+@Table(name = "users")
 public class UserEntity extends BaseEntity {
 
     //ToDo да направя username да е email и да се влиза с него
@@ -18,14 +17,14 @@ public class UserEntity extends BaseEntity {
     private LocalDate dateOfAppointment;
     private String imageUrl;
     private String description;
-    private List<SaleEntity> sales;
-    private List<UserRoleEntity> roles = new ArrayList<>();
+    private List<SaleEntity> sales = new LinkedList<>();
+    private Set<UserRoleEntity> roles = new HashSet<>();
     private ShopEntity shop;
 
     public UserEntity() {
     }
 
-    @Column(name = "full_name" , length = 50 , nullable = false , unique = true)
+    @Column(name = "full_name", length = 50, nullable = false, unique = true)
     public String getFullName() {
         return fullName;
     }
@@ -45,7 +44,7 @@ public class UserEntity extends BaseEntity {
         return this;
     }
 
-    @Column(name = "email" , nullable = false , unique = true , length = 100)
+    @Column(name = "email", nullable = false, unique = true, length = 100)
     public String getEmail() {
         return email;
     }
@@ -55,7 +54,7 @@ public class UserEntity extends BaseEntity {
         return this;
     }
 
-    @Column(name = "date_of_appointment" , nullable = false)
+    @Column(name = "date_of_appointment", nullable = false)
     public LocalDate getDateOfAppointment() {
         return dateOfAppointment;
     }
@@ -97,17 +96,12 @@ public class UserEntity extends BaseEntity {
     }
 
     @ManyToMany //(fetch = FetchType.EAGER)
-    public List<UserRoleEntity> getRoles() {
+    public Set<UserRoleEntity> getRoles() {
         return roles;
     }
 
-    public UserEntity setRoles(List<UserRoleEntity> roles) {
+    public UserEntity setRoles(Set<UserRoleEntity> roles) {
         this.roles = roles;
-        return this;
-    }
-
-    public UserEntity addRole(UserRoleEntity userRoleEntity){
-        this.roles.add(userRoleEntity);
         return this;
     }
 
@@ -118,6 +112,15 @@ public class UserEntity extends BaseEntity {
 
     public UserEntity setShop(ShopEntity shop) {
         this.shop = shop;
+        return this;
+    }
+
+    public void addSale(SaleEntity saleEntity) {
+        this.sales.add(saleEntity);
+    }
+
+    public UserEntity addRole(UserRoleEntity userRoleEntity) {
+        this.roles.add(userRoleEntity);
         return this;
     }
 }

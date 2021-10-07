@@ -31,3 +31,16 @@ body div main h1 {
     background-color: red;
     border: none;
 }
+ /*така вместо да оцветяваме полетата слагама граница за показване на валидация*/
+input:valid {
+    border: lawngreen solid 2px;
+}
+
+input:invalid {
+    border: red solid 2px;
+}
+
+input:invalid:required {
+    background-image: linear-gradient(to right , pink , red);
+}
+

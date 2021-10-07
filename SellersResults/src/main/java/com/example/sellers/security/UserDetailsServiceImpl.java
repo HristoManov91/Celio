@@ -21,7 +21,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         this.userService = userService;
     }
 
-    @Override //ToDo да проверя дали не трябва да е по email или username
+    @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         UserEntity userEntity = userService.findUserByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User with this email " + email + " was not found."));

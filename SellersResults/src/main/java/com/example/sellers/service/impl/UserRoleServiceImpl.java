@@ -19,7 +19,7 @@ public class UserRoleServiceImpl implements UserRoleService {
     @Override
     public void initUserRoles() {
         //Todo да добавя описание на всяка роля
-        if(userRoleRepository.count() == 0) {
+        if (userRoleRepository.count() == 0) {
             UserRoleEntity admin = new UserRoleEntity(UserRoleEnum.ADMIN, "Description for Admin role");
             userRoleRepository.save(admin);
 
@@ -27,15 +27,13 @@ public class UserRoleServiceImpl implements UserRoleService {
             userRoleRepository.save(manager);
 
             UserRoleEntity seller = new UserRoleEntity(UserRoleEnum.SELLER, "Description for Seller role");
-
             userRoleRepository.save(seller);
         }
     }
 
     @Override
     public UserRoleEntity findById(Long id) {
-        return userRoleRepository.findById(id).orElse(null);
+        return userRoleRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("USER role not found. Please seed the roles."));
     }
-
-
 }

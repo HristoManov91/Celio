@@ -1,4 +1,5 @@
-<th:block>
+<th:block xmlns:th="http://www.thymeleaf.org"
+          xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   <nav class="navbar navbar-expand-lg bg-danger fixed-top">
     <a class="navbar-brand" href="/"><img alt="celio-star" src="/img/celio-star-logo.png"
                                           width="35" height="35" class="logo"></a>
@@ -9,7 +10,7 @@
     <div class="collapse navbar-collapse">
       <ul class="navbar-nav mr-auto col-12 justify-content-between">
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="managerDropdown" role="button"
+          <a class="nav-link dropdown-toggle" sec:authorize="hasRole('ROLE_MANAGER')" id="managerDropdown" role="button"
              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Manager</a>
           <div class="dropdown-menu" aria-labelledby="managerDropdown">
             <a class="dropdown-item" href="/">Add training</a>
@@ -22,7 +23,7 @@
           </div>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="shopDropdown" role="button"
+          <a class="nav-link dropdown-toggle" sec:authorize="isAuthenticated()" href="#" id="shopDropdown" role="button"
             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Shop Results</a>
           <div class="dropdown-menu" aria-labelledby="shopDropdown">
             <a class="dropdown-item" href="/shops/shop-results">Results for shop</a>
@@ -31,21 +32,21 @@
           </div>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Sellers Results</a>
+          <a class="nav-link" sec:authorize="isAuthenticated()" href="#">Sellers Results</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Training</a>
+          <a class="nav-link" sec:authorize="isAuthenticated()" href="#">Training</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/users/register">Register</a>
+          <a class="nav-link" sec:authorize="!isAuthenticated()" href="/users/register">Register</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/users/login">Login</a>
+          <a class="nav-link" sec:authorize="!isAuthenticated()" href="/users/login">Login</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/users/profile">Profile</a>
+          <a class="nav-link" sec:authorize="isAuthenticated()" href="/users/profile">Profile</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" sec:authorize="isAuthenticated()">
           <div class="form-inline my-2 my-lg-0 border px-3">
             <div class="logged-user"
                  text="Welcome, Gosho"></div>

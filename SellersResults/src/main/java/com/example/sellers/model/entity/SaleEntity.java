@@ -11,7 +11,6 @@ public class SaleEntity extends BaseEntity {
 
     private LocalDate dateOfSale;
     List<ProductEntity> products;
-    private BigDecimal totalPrice;
     private UserEntity userEntity;
 
     public SaleEntity() {
@@ -27,6 +26,7 @@ public class SaleEntity extends BaseEntity {
         return this;
     }
 
+    //ToDo да проверя дали не трябва да е @ManyToMany
     @OneToMany
     public List<ProductEntity> getProducts() {
         return products;
@@ -34,17 +34,6 @@ public class SaleEntity extends BaseEntity {
 
     public SaleEntity setProducts(List<ProductEntity> products) {
         this.products = products;
-        return this;
-    }
-
-    //ToDo може да се напише да се смята само или да го въвежда консултанта
-    @Column(nullable = false)
-    public BigDecimal getTotalPrice() {
-        return totalPrice;
-    }
-
-    public SaleEntity setTotalPrice(BigDecimal totalPrice) {
-        this.totalPrice = totalPrice;
         return this;
     }
 
@@ -56,5 +45,13 @@ public class SaleEntity extends BaseEntity {
     public SaleEntity setUserEntity(UserEntity userEntity) {
         this.userEntity = userEntity;
         return this;
+    }
+
+    public BigDecimal sumOfProductPrice(){
+        return this.getProducts().stream().map(ProductEntity::getPrice).reduce(BigDecimal.ZERO , BigDecimal::add);
+    }
+
+    public int countOfProducts(){
+        return this.getProducts().size();
     }
 }

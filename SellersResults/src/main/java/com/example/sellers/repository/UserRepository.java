@@ -13,5 +13,4 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     //ToDo може би е правилно да е по email?
     Optional<UserEntity> findByEmail (String email);
-
 }

@@ -35,8 +35,6 @@ public class DatabaseInit implements CommandLineRunner {
         addProducts();
         shopService.initShops();
         addUsers();
-
-
     }
 
     private void addUsers() {
