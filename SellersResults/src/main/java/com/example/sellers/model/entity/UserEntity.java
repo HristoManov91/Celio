@@ -20,6 +20,8 @@ public class UserEntity extends BaseEntity {
     private List<SaleEntity> sales = new LinkedList<>();
     private Set<UserRoleEntity> roles = new HashSet<>();
     private ShopEntity shop;
+    //ToDo да добавя поле с валидация от админ при регистрация
+    //ToDo да добавя клас с най-добри резултати
 
     public UserEntity() {
     }
@@ -95,7 +97,7 @@ public class UserEntity extends BaseEntity {
         return this;
     }
 
-    @ManyToMany //(fetch = FetchType.EAGER)
+    @ManyToMany (fetch = FetchType.EAGER)
     public Set<UserRoleEntity> getRoles() {
         return roles;
     }

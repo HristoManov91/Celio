@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -44,6 +45,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //ако е всичко ок отиваме на /home страницата
                 .defaultSuccessUrl("/home")
                 //ако има проблем го връщаме на страница за грешка
-                .failureForwardUrl("/users/login-error");//ToDo да създадем страница за грешка
+                .failureForwardUrl("/users/login-error");
     }
 }

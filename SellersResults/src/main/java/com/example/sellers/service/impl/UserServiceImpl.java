@@ -43,6 +43,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void addAdmin(String fullName, String password, String email) {
+
+        UserEntity admin = new UserEntity()
+                .setFullName(fullName)
+                .setPassword(password)
+                .setEmail(email)
+                .setDateOfAppointment(LocalDate.now())
+                .addRole(userRoleService.findById(3L))
+                .addRole(userRoleService.findById(2L))
+                .addRole(userRoleService.findById(1L));
+
+        userRepository.save(admin);
+    }
+
+    @Override
     public void addUser(String fullName, String password, String email, Long shopId) {
 
         UserEntity seller = new UserEntity()
@@ -120,6 +135,8 @@ public class UserServiceImpl implements UserService {
 
         UserRoleEntity userRole = userRoleService.findById(3L);
         user.addRole(userRole);
+
+        user.setDateOfAppointment(LocalDate.now());
 
         user.setShop(shopService.findByName(userRegistrationServiceModel.getShop()));
 

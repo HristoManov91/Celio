@@ -24,7 +24,7 @@
                                    aria-describedby="emailHelpInLine">
                             <small id="emailError"
                                    class="invalid-feedback form-text bg-danger rounded">Email must be valid</small>
-                            <small th:if="${email}" id="usernameUniqueError"
+                            <small id="usernameUniqueError"
                                    class="text-light form-text bg-danger rounded">Username is already occupied</small>
                         </div>
                     </div>
@@ -86,16 +86,18 @@
                     <div>
                         <div class="col-auto">
                             <label for="shop">Shop</label>
-                            <select th:field="${shops}"
+                            <select th:field="*{shop}"
                                     id="shop"
                                     class="custom-select">
-                                <option value="" selected>Select Shop</option>
+                                <option value="">Select Shop</option>
                                 <option th:each="s : ${shops}"
                                         th:value="${s}"
                                         th:text="${s}">
                                 </option>
                             </select>
                         </div>
+                        <small id="shopError" class="invalid-feedback form-text bg-danger rounded">You must select
+                            shop</small>
                     </div>
                     <!-- Button -->
                     <div class="d-flex justify-content-center mt-4">

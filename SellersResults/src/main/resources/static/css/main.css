@@ -44,3 +44,53 @@ input:invalid:required {
     background-image: linear-gradient(to right , pink , red);
 }
 
+.fonts {
+    font-size: 20px
+}
+
+.profile-card {
+    background-color: #dc3545;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    cursor: pointer;
+    min-height: 65vh;
+}
+
+.btn-outline-primary {
+    border: none;
+    background-color: black;
+    color: white;
+}
+
+/*.profile-card:before {*/
+/*    content: "";*/
+/*    position: absolute;*/
+/*    left: 0;*/
+/*    top: 0;*/
+/*    width: 4px;*/
+/*    height: 100%;*/
+/*    background-color: #bbbef5;*/
+/*    transform: scaleY(1);*/
+/*    transition: all 0.5s;*/
+/*    transform-origin: bottom*/
+/*}*/
+
+/*.profile-card:after {*/
+/*    content: "";*/
+/*    position: absolute;*/
+/*    left: 0;*/
+/*    top: 0;*/
+/*    width: 4px;*/
+/*    height: 100%;*/
+/*    background-color: #0833e3;*/
+/*    transform: scaleY(0);*/
+/*    transition: all 0.5s;*/
+/*    transform-origin: bottom*/
+/*}*/
+
+/*.profile-card:hover::after {*/
+/*    transform: scaleY(1)*/
+/*}*/
+

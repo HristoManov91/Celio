@@ -1,21 +1,29 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">>
 <th:block th:include="~{fragments/head}"></th:block>
 <body>
 <div>
     <th:block th:include="~{fragments/nav}"></th:block>
     <main class="p-5 align-content-center my-login-div">
         <h1 class="border-bottom">Login</h1>
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center" style="font-family: Verdana,sans-serif">
             <div class="row g-3 align-items-center" style="color: red">
-                <form action="/users/login" method="POST">
+                <div th:if="${bad_credentials}" class="alert alert-danger" role="alert">
+                    This email and password combination does not exist!
+                </div>
+                <form th:action="@{/users/login}" method="POST">
                     <div>
                         <div class="col-auto">
                             <label for="email" class="col-form-label ">Email</label>
                         </div>
                         <div class="col-auto">
-                            <input type="text" name="email" required minlength="6" maxlength="50"
-                                   id="email" class="form-control" aria-describedby="emailHelpInLine">
+                            <input type="email"
+                                   name="email"
+                                   th:value="${email}"
+                                   required minlength="6" maxlength="30"
+                                   id="email"
+                                   class="form-control"
+                                   aria-describedby="emailHelpInLine">
                         </div>
                     </div>
                     <div>
@@ -23,8 +31,12 @@
                             <label for="password" class="col-form-label ">Password</label>
                         </div>
                         <div class="col-auto">
-                            <input type="text" name="password" required maxlength="20" minlength="6"
-                                   id="password" class="form-control" aria-describedby="passwordHelpInLine">
+                            <input type="password"
+                                   name="password"
+                                   required minlength="6" maxlength="20"
+                                   id="password"
+                                   class="form-control"
+                                   aria-describedby="passwordHelpInLine">
                         </div>
                     </div>
                     <div class="d-flex justify-content-center mt-2">

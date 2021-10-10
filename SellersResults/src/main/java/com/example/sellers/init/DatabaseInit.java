@@ -39,7 +39,7 @@ public class DatabaseInit implements CommandLineRunner {
 
     private void addUsers() {
         if (userService.count() == 0) {
-            userService.addUser("Hristo Manov", passwordEncoder.encode("topsecret"), "hristo@abv.bg", 1L);
+            userService.addAdmin("Hristo Manov", passwordEncoder.encode("topsecret"), "hristo@abv.bg");
             userService.addUser("Plamen Terziev", passwordEncoder.encode("topsecret"), "plamen@abv.bg", 1L);
             userService.addUser("Viktor Dimitrov", passwordEncoder.encode("topsecret"), "viktor@abv.bg", 2L);
             userService.addUser("Ivan Ivanov", passwordEncoder.encode("topsecret"), "ivan@abv.bg", 3L);
