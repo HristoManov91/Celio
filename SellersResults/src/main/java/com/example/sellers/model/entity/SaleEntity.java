@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "sales")
@@ -27,7 +28,7 @@ public class SaleEntity extends BaseEntity {
     }
 
     //ToDo да проверя дали не трябва да е @ManyToMany
-    @OneToMany
+    @ManyToMany
     public List<ProductEntity> getProducts() {
         return products;
     }
@@ -53,5 +54,27 @@ public class SaleEntity extends BaseEntity {
 
     public int countOfProducts(){
         return this.getProducts().size();
+    }
+
+    @Override
+    public String toString() {
+        return "SaleEntity{" +
+                "dateOfSale=" + dateOfSale +
+                ", products=" + products +
+                ", userEntity=" + userEntity +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof SaleEntity)) return false;
+        SaleEntity that = (SaleEntity) o;
+        return Objects.equals(dateOfSale, that.dateOfSale) && Objects.equals(products, that.products) && Objects.equals(userEntity, that.userEntity);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(dateOfSale, products, userEntity);
     }
 }

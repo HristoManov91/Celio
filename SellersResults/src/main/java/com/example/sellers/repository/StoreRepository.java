@@ -1,6 +1,6 @@
 package com.example.sellers.repository;
 
-import com.example.sellers.model.entity.ShopEntity;
+import com.example.sellers.model.entity.StoreEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ShopRepository extends JpaRepository<ShopEntity , Long> {
+public interface StoreRepository extends JpaRepository<StoreEntity, Long> {
 
-    @Query ("SELECT se.name FROM ShopEntity se")
-    List<String> findAllShopName();
+    @Query ("SELECT se.name FROM StoreEntity se")
+    List<String> findAllStoresNames();
 
-    Optional<ShopEntity> findByName(String name);
+    Optional<StoreEntity> findByName(String name);
 }

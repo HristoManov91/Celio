@@ -1,8 +1,7 @@
 package com.example.sellers.model.entity;
 
-import org.apache.catalina.User;
-
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -10,7 +9,6 @@ import java.util.*;
 @Table(name = "users")
 public class UserEntity extends BaseEntity {
 
-    //ToDo да направя username да е email и да се влиза с него
     private String fullName;
     private String password;
     private String email;
@@ -19,9 +17,11 @@ public class UserEntity extends BaseEntity {
     private String description;
     private List<SaleEntity> sales = new LinkedList<>();
     private Set<UserRoleEntity> roles = new HashSet<>();
-    private ShopEntity shop;
-    //ToDo да добавя поле с валидация от админ при регистрация
-    //ToDo да добавя клас с най-добри резултати
+    private StoreEntity store;
+    private boolean isApproved;
+    private SaleEntity bestBill;
+    private SaleEntity mostProductsInBill;
+    private BigDecimal highestMonthlyTurnover;
 
     public UserEntity() {
     }
@@ -108,12 +108,12 @@ public class UserEntity extends BaseEntity {
     }
 
     @ManyToOne
-    public ShopEntity getShop() {
-        return shop;
+    public StoreEntity getStore() {
+        return store;
     }
 
-    public UserEntity setShop(ShopEntity shop) {
-        this.shop = shop;
+    public UserEntity setStore(StoreEntity store) {
+        this.store = store;
         return this;
     }
 
@@ -124,5 +124,77 @@ public class UserEntity extends BaseEntity {
     public UserEntity addRole(UserRoleEntity userRoleEntity) {
         this.roles.add(userRoleEntity);
         return this;
+    }
+
+    @Column
+    public boolean isApproved() {
+        return isApproved;
+    }
+
+    public UserEntity setApproved(boolean approved) {
+        isApproved = approved;
+        return this;
+    }
+
+    @OneToOne
+    public SaleEntity getBestBill() {
+        return bestBill;
+    }
+
+    public UserEntity setBestBill(SaleEntity bestBill) {
+        this.bestBill = bestBill;
+        return this;
+    }
+
+    @OneToOne
+    public SaleEntity getMostProductsInBill() {
+        return mostProductsInBill;
+    }
+
+    public UserEntity setMostProductsInBill(SaleEntity mostProductsInBill) {
+        this.mostProductsInBill = mostProductsInBill;
+        return this;
+    }
+
+    @Column(name = "highest_monthly_turnover")
+    public BigDecimal getHighestMonthlyTurnover() {
+        return highestMonthlyTurnover;
+    }
+
+    public UserEntity setHighestMonthlyTurnover(BigDecimal highestMonthlyTurnover) {
+        this.highestMonthlyTurnover = highestMonthlyTurnover;
+        return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserEntity)) return false;
+        UserEntity that = (UserEntity) o;
+        return isApproved == that.isApproved && Objects.equals(fullName, that.fullName) && Objects.equals(password, that.password) && Objects.equals(email, that.email) && Objects.equals(dateOfAppointment, that.dateOfAppointment) && Objects.equals(imageUrl, that.imageUrl) && Objects.equals(description, that.description) && Objects.equals(sales, that.sales) && Objects.equals(roles, that.roles) && Objects.equals(store, that.store) && Objects.equals(bestBill, that.bestBill) && Objects.equals(mostProductsInBill, that.mostProductsInBill) && Objects.equals(highestMonthlyTurnover, that.highestMonthlyTurnover);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(fullName, password, email, dateOfAppointment, imageUrl, description, sales, roles, store, isApproved, bestBill, mostProductsInBill, highestMonthlyTurnover);
+    }
+
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "fullName='" + fullName + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", dateOfAppointment=" + dateOfAppointment +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", description='" + description + '\'' +
+                ", sales=" + sales +
+                ", roles=" + roles +
+                ", store=" + store +
+                ", isApproved=" + isApproved +
+                ", bestBill=" + bestBill +
+                ", mostProductsInBill=" + mostProductsInBill +
+                ", highestMonthlyTurnover=" + highestMonthlyTurnover +
+                '}';
     }
 }

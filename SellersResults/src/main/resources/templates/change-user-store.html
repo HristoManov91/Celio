@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">>
+<th:block th:include="~{fragments/head}"></th:block>
+<body>
+<div>
+  <th:block th:include="~{fragments/nav}"></th:block>
+</div>
+<main class="p-5 align-content-center my-register-div">
+  <h1 class="border-bottom">Change User Store</h1>
+  <div class="d-flex justify-content-center">
+    <div class="row g-3" style="color: red">
+      <form th:action="@{/users/change-user-store}"
+            th:object="${userChangeStoreBindingModel}"
+            method="POST">
+        <!-- User -->
+        <div>
+          <div class="col-auto">
+            <label for="user">User</label>
+            <select th:field="*{fullName}"
+                    id="user"
+                    class="custom-select">
+              <option value="">Select User</option>
+              <option th:each="u : ${users}"
+                      th:value="${u}"
+                      th:text="${u}">
+              </option>
+            </select>
+          </div>
+          <small id="userError" class="invalid-feedback form-text bg-danger rounded">You must select
+            user</small>
+        </div>
+        <!-- New Store -->
+        <div>
+          <div class="col-auto">
+            <label for="store">Store</label>
+            <select th:field="*{store}"
+                    id="store"
+                    class="custom-select">
+              <option value="">Select Store</option>
+              <option th:each="s : ${stores}"
+                      th:value="${s}"
+                      th:text="${s}">
+              </option>
+            </select>
+          </div>
+          <small id="storeError" class="invalid-feedback form-text bg-danger rounded">You must select
+            store</small>
+        </div>
+        <!-- Button -->
+        <div class="d-flex justify-content-center mt-4">
+          <button class="btn btn-primary btn-block w-50" type="submit">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>
+<th:block th:include="~{fragments/footer}"></th:block>
+</body>
+</html>

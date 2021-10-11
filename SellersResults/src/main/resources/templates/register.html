@@ -82,22 +82,22 @@
                                 Length must be 6 and 30 characters</small>
                         </div>
                     </div>
-                    <!-- Shop -->
+                    <!-- Store -->
                     <div>
                         <div class="col-auto">
-                            <label for="shop">Shop</label>
-                            <select th:field="*{shop}"
-                                    id="shop"
+                            <label for="store">Store</label>
+                            <select th:field="*{store}"
+                                    id="store"
                                     class="custom-select">
-                                <option value="">Select Shop</option>
-                                <option th:each="s : ${shops}"
+                                <option value="">Select Store</option>
+                                <option th:each="s : ${stores}"
                                         th:value="${s}"
                                         th:text="${s}">
                                 </option>
                             </select>
                         </div>
-                        <small id="shopError" class="invalid-feedback form-text bg-danger rounded">You must select
-                            shop</small>
+                        <small id="storeError" class="invalid-feedback form-text bg-danger rounded">You must select
+                            store</small>
                     </div>
                     <!-- Button -->
                     <div class="d-flex justify-content-center mt-4">

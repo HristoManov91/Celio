@@ -30,10 +30,10 @@ public class SaleServiceImpl implements SaleService {
     }
 
     @Override
-    public SaleEntity createSale(List<ProductEntity> productEntities , UserEntity userEntity) {
+    public void addSale(List<ProductEntity> productEntities , UserEntity userEntity) {
         SaleEntity saleEntity =
                 new SaleEntity().setProducts(productEntities).setDateOfSale(LocalDate.now()).setUserEntity(userEntity);
 
-        return saleRepository.save(saleEntity);
+        saleRepository.save(saleEntity);
     }
 }

@@ -1,13 +1,13 @@
 package com.example.sellers.service;
 
 import com.example.sellers.model.entity.UserEntity;
-import com.example.sellers.model.entity.UserRoleEntity;
+import com.example.sellers.model.entity.enums.UserRoleEnum;
 import com.example.sellers.model.service.UserRegistrationServiceModel;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface UserService {
 
@@ -33,8 +33,15 @@ public interface UserService {
 
     long countTotalProductsBetweenDate(UserEntity userEntity , LocalDate fromDate , LocalDate toDate);
 
-
     boolean emailExist(String email);
 
     void registrationUser(UserRegistrationServiceModel userRegistrationServiceModel);
+
+    Set<String> findAllUsers();
+
+    void changeUserStore(String fullName , String store);
+
+    void addUserRole(UserRoleEnum role , String userFullName);
+
+    void removeUser(String fullName);
 }

@@ -11,29 +11,26 @@ import java.math.BigDecimal;
 @Component
 public class DatabaseInit implements CommandLineRunner {
 
-    private final CategoryService categoryService;
     private final UserRoleService userRoleService;
     private final ProductService productService;
-    private final ShopService shopService;
+    private final StoreService storeService;
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
 
-    public DatabaseInit(CategoryService categoryService, UserRoleService userRoleService, ProductService productService,
-                        ShopService shopService, UserService userService, PasswordEncoder passwordEncoder) {
-        this.categoryService = categoryService;
+    public DatabaseInit(UserRoleService userRoleService, ProductService productService,
+                        StoreService storeService, UserService userService, PasswordEncoder passwordEncoder) {
         this.userRoleService = userRoleService;
         this.productService = productService;
-        this.shopService = shopService;
+        this.storeService = storeService;
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public void run(String... args) throws Exception {
-        categoryService.initCategories();
         userRoleService.initUserRoles();
         addProducts();
-        shopService.initShops();
+        storeService.initShops();
         addUsers();
     }
 
@@ -63,3 +60,4 @@ public class DatabaseInit implements CommandLineRunner {
         }
     }
 }
+

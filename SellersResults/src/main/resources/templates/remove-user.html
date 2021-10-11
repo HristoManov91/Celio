@@ -8,11 +8,11 @@
 <div class="container-fluid">
 </div>
 <main class="p-5 align-content-center my-login-div">
-  <h1 class="border-bottom">Add product</h1>
+  <h1 class="border-bottom">Remove user</h1>
   <div class="d-flex justify-content-center" style="font-family: Verdana,sans-serif">
     <div class="row g-3 align-items-center" style="color: red">
-      <form th:action="@{/products/add}"
-            th:object="${productAddBindingModel}"
+      <form th:action="@{/users/remove-user}"
+            th:object=""
             method="POST">
         <!-- Name -->
         <div>

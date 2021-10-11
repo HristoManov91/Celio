@@ -3,13 +3,13 @@ package com.example.sellers.service.impl;
 import com.example.sellers.model.entity.SaleEntity;
 import com.example.sellers.model.entity.UserEntity;
 import com.example.sellers.model.entity.UserRoleEntity;
+import com.example.sellers.model.entity.enums.UserRoleEnum;
 import com.example.sellers.model.service.UserRegistrationServiceModel;
 import com.example.sellers.repository.UserRepository;
 import com.example.sellers.service.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
@@ -20,19 +20,18 @@ import java.util.Set;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final ShopService shopService;
+    private final StoreService storeService;
     private final UserRoleService userRoleService;
     private final SaleService saleService;
-    private final ProductService productService;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, ShopService shopService, UserRoleService userRoleService, SaleService saleService, ProductService productService, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, StoreService storeService, UserRoleService userRoleService,
+                           SaleService saleService, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-        this.shopService = shopService;
+        this.storeService = storeService;
         this.userRoleService = userRoleService;
         this.saleService = saleService;
-        this.productService = productService;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
     }
@@ -65,7 +64,7 @@ public class UserServiceImpl implements UserService {
                 .setPassword(password)
                 .setEmail(email)
                 .setDateOfAppointment(LocalDate.now())
-                .setShop(shopService.findById(shopId))
+                .setStore(storeService.findById(shopId))
                 .addRole(userRoleService.findById(3L));
 
         userRepository.save(seller);
@@ -138,8 +137,42 @@ public class UserServiceImpl implements UserService {
 
         user.setDateOfAppointment(LocalDate.now());
 
-        user.setShop(shopService.findByName(userRegistrationServiceModel.getShop()));
+        user.setStore(storeService.findByName(userRegistrationServiceModel.getShop()));
 
         userRepository.save(user);
+    }
+
+    @Override
+    public Set<String> findAllUsers() {
+        return userRepository.findAllUserFullName();
+    }
+
+    @Override
+    public void changeUserStore(String fullName, String store) {
+        UserEntity user = userRepository.findUserEntityByFullName(fullName).orElseThrow(IllegalArgumentException::new);
+
+        user.setStore(storeService.findByName(store));
+
+        userRepository.save(user);
+    }
+
+    @Override
+    public void addUserRole(UserRoleEnum role , String userFullName) {
+        UserRoleEntity userRole = userRoleService.findUserRoleByName(role);
+
+        UserEntity user = userRepository.findUserEntityByFullName(userFullName)
+                .orElseThrow(() -> new IllegalArgumentException("User with this full name not found"));
+
+        user.addRole(userRole);
+
+        userRepository.save(user);
+    }
+
+    @Override
+    public void removeUser(String fullName) {
+        UserEntity user = userRepository.findUserEntityByFullName(fullName)
+                .orElseThrow(()-> new IllegalStateException("User with this full name not found"));
+
+        userRepository.delete(user);
     }
 }

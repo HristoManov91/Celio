@@ -8,7 +8,7 @@ public class UserRegisterBindingModel {
     private String password;
     private String confirmPassword;
     private String fullName;
-    private String shop;
+    private String store;
 
     public UserRegisterBindingModel() {
     }
@@ -46,12 +46,12 @@ public class UserRegisterBindingModel {
     }
 
     @NotNull
-    public String getShop() {
-        return shop;
+    public String getStore() {
+        return store;
     }
 
-    public UserRegisterBindingModel setShop(String shop) {
-        this.shop = shop;
+    public UserRegisterBindingModel setStore(String store) {
+        this.store = store;
         return this;
     }
 

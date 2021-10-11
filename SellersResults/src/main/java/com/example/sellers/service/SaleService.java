@@ -12,5 +12,5 @@ public interface SaleService {
 
     Set<SaleEntity> findAllByUserAndDateBetween(UserEntity userEntity , LocalDate fromDate , LocalDate toDate);
 
-    SaleEntity createSale(List<ProductEntity> productEntities , UserEntity userEntity);
+    void addSale(List<ProductEntity> productEntities , UserEntity userEntity);
 }

@@ -36,4 +36,10 @@ public class UserRoleServiceImpl implements UserRoleService {
         return userRoleRepository.findById(id)
                 .orElseThrow(() -> new IllegalStateException("USER role not found. Please seed the roles."));
     }
+
+    @Override
+    public UserRoleEntity findUserRoleByName(UserRoleEnum role) {
+        return userRoleRepository.findUserRoleEntityByRole(role)
+                .orElseThrow(() -> new IllegalStateException("USER role not found."));
+    }
 }

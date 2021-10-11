@@ -1,11 +1,9 @@
 package com.example.sellers.service.impl;
 
-import com.example.sellers.model.entity.enums.CategoryEnum;
 import com.example.sellers.model.entity.ProductEntity;
+import com.example.sellers.model.entity.enums.CategoryEnum;
 import com.example.sellers.repository.ProductRepository;
-import com.example.sellers.service.CategoryService;
 import com.example.sellers.service.ProductService;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -14,19 +12,14 @@ import java.math.BigDecimal;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
-    private final ModelMapper modelMapper;
-    private final CategoryService categoryService;
 
-    public ProductServiceImpl(ProductRepository productRepository, ModelMapper modelMapper, CategoryService categoryService) {
+    public ProductServiceImpl(ProductRepository productRepository) {
         this.productRepository = productRepository;
-        this.modelMapper = modelMapper;
-        this.categoryService = categoryService;
     }
 
-
     @Override
-    public void addProduct(String name , CategoryEnum category, BigDecimal price) {
-        ProductEntity product = new ProductEntity(name , categoryService.findByName(category) , price);
+    public void addProduct(String name, CategoryEnum category, BigDecimal price) {
+        ProductEntity product = new ProductEntity().setName(name).setCategory(category).setPrice(price);
 
         productRepository.save(product);
     }
@@ -38,7 +31,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void removeProduct(String name) {
-        ProductEntity productEntity = productRepository.findByName(name).orElseThrow();
-        productRepository.delete(productEntity);
+        ProductEntity product = productRepository.findByName(name)
+                .orElseThrow(() -> new IllegalArgumentException("Product with this name not found"));
+
+        productRepository.delete(product);
     }
 }

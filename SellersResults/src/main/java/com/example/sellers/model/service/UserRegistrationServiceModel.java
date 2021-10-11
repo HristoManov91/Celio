@@ -1,7 +1,5 @@
 package com.example.sellers.model.service;
 
-import com.example.sellers.model.entity.ShopEntity;
-
 public class UserRegistrationServiceModel {
 
     private String email;

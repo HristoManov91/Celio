@@ -12,6 +12,7 @@
                     This email and password combination does not exist!
                 </div>
                 <form th:action="@{/users/login}" method="POST">
+                    <!-- Email -->
                     <div>
                         <div class="col-auto">
                             <label for="email" class="col-form-label ">Email</label>
@@ -26,6 +27,7 @@
                                    aria-describedby="emailHelpInLine">
                         </div>
                     </div>
+                    <!-- Password -->
                     <div>
                         <div class="col-auto">
                             <label for="password" class="col-form-label ">Password</label>
@@ -39,6 +41,7 @@
                                    aria-describedby="passwordHelpInLine">
                         </div>
                     </div>
+                    <!-- Button -->
                     <div class="d-flex justify-content-center mt-2">
                         <button class="btn btn-primary btn-block w-50" type="submit">Login</button>
                     </div>

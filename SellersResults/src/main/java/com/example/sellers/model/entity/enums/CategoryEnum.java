@@ -1,7 +1,5 @@
 package com.example.sellers.model.entity.enums;
 
-import javax.persistence.Enumerated;
-
 public enum CategoryEnum {
     JEAN ,
     PANTS ,
@@ -13,5 +11,4 @@ public enum CategoryEnum {
     JACKETS ,
     UNDERWEAR ,
     OTHER
-    //ToDo може би трябва да се редактират категориите
 }

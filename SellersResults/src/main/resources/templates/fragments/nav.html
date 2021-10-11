@@ -9,27 +9,33 @@
 
     <div class="collapse navbar-collapse">
       <ul class="navbar-nav mr-auto col-12 justify-content-between">
-<!--        Може би да добавя някакво меню за админа-->
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" sec:authorize="hasRole('ROLE_MANAGER')" id="managerDropdown" role="button"
-             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Manager</a>
+        <li class="dropdown show">
+          <a class="btn btn-secondary dropdown-toggle"
+             href="#"
+             sec:authorize="hasRole('ROLE_MANAGER')"
+             id="managerDropdown"
+             role="button"
+             data-toggle="dropdown"
+             aria-haspopup="true"
+             aria-expanded="false">Manager</a>
           <div class="dropdown-menu" aria-labelledby="managerDropdown">
-            <a class="dropdown-item" href="/">Add training</a>
-            <a class="dropdown-item" href="/users/remove-sale">Remove sale</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="/users/remove-seller">Remove seller</a>
-            <a class="dropdown-item" href="/users/set-seller-store">Change the seller's store</a>
-            <a class="dropdown-item" href="/products/add">Add product</a>
-            <a class="dropdown-item" href="/products/remove">Remove product</a>
+<!--            <a class="dropdown-item" href="/">Add training</a>-->
+              <a class="dropdown-item" href="/users/remove-sale">Remove sale</a>
+<!--            <div class="dropdown-divider"></div>-->
+              <a class="dropdown-item" href="/products/add">Add product</a>
+              <a class="dropdown-item" href="/users/change-user-store">Change store</a>
+              <a class="dropdown-item" sec:authorize="hasRole('ROLE_ADMIN')" href="/products/remove">Remove product</a>
+              <a class="dropdown-item" sec:authorize="hasRole('ROLE_ADMIN')" href="/users/remove-seller">Remove user</a>
+              <a class="dropdown-item" sec:authorize="hasRole('ROLE_ADMIN')" href="/users/add-role">Add Role</a>
           </div>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" sec:authorize="isAuthenticated()" href="#" id="shopDropdown" role="button"
-            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Shop Results</a>
+          <a class="dropdown-toggle" sec:authorize="isAuthenticated()" id="shopDropdown" role="button"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Stores Results</a>
           <div class="dropdown-menu" aria-labelledby="shopDropdown">
-            <a class="dropdown-item" href="/shops/shop-results">Results for shop</a>
-            <a class="dropdown-item" href="/shops/all-shops-results">Results for all shop</a>
-            <a class="dropdown-item" href="/shops/shop-information">Information</a>
+            <a class="dropdown-item" href="/shops/store-results">Results for store</a>
+            <a class="dropdown-item" href="/shops/all-shops-results">Results for all store</a>
+            <a class="dropdown-item" href="/shops/store-information">Information</a>
           </div>
         </li>
         <li class="nav-item">
