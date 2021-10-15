@@ -9,23 +9,38 @@
     <div class="container mt-5">
         <div class="row d-flex justify-content-center">
             <div class="col-md-7">
-                <div class="profile-card p-3 py-4">
+                <div th:object="${user}" class="profile-card p-3 py-4">
                     <div class="text-center"><img src="/img/profile.jpg" width="100" class="rounded-circle"></div>
                     <!-- Да закача обект-->
                     <div class="text-center mt-3">
                         <!--Тук може да добавя нещо което да пише веднага под снимката -->
-                        <span class="bg-secondary p-1 px-4 rounded text-white">Level</span>
+                        <span th:if="*{roles.contains('ROLE_MANAGER')}"
+                              class="bg-secondary p-1 px-4 rounded text-white">Manager</span>
+                        <span th:unless="*{roles.contains('ROLE_MANAGER')}"
+                              class="bg-secondary p-1 px-4 rounded text-white">Seller</span>
                         <h5 class="mt-4 mb-0">Full Name</h5>
-                        <span>Names</span>
-                        <h5 class="mt-2 mb-0">Age</h5>
-                        <span>0</span>
+                        <span th:text="*{fullName}">Names</span>
+                        <h5 class="mt-2 mb-0">Birthday</h5>
+                        <span th:text="*{birthday}">01/01/1900</span>
+                        <h5 class="mt-2 mb-0">Best bill</h5>
+                        <span th:text="|Date: *{bestBill.getDateOfSale()} Sum: *{bestBill.sumOfProductPrice()}lv.|">
+                            Date: 01.01.1900 Sum: 1000</span>
+                        <h5 class="mt-2 mb-0">Bill with the most products</h5>
+                        <span
+                                th:text="|Date: *{getMostProductsInBill().getDateOfSale()} Count of products:
+                                *{getMostProductsInBill().countOfProducts()}|">
+                            Date: 01.01.1900 Count of products: 10</span>
+                        <h5 class="mt-2 mb-0">Highest Monthly Turnover</h5>
+                        <span
+                                th:text="|Value: *{getHighestMonthlyTurnover()}lv *{bestBill.getDateOfSale().month}
+                         *{bestBill.getDateOfSale().year}|">Value: 10000lv April 2020</span>
                         <div class="px-4 mt-5">
-                            <p class="fonts"> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim et nostrum
-                                optio perferendis quam quod ratione rem sit soluta ut! A dolor laborum, maiores neque
-                                nesciunt quis rerum sunt suscipit.</p>
+                            <p th:text="*{description}" class="fonts"> Lorem ipsum dolor sit amet, consectetur
+                                adipisicing elit. Enim et nostrum optio perferendis quam quod ratione rem sit soluta
+                                ut! A dolor laborum, maiores neque nesciunt quis rerum sunt suscipit.</p>
                         </div>
                         <div class="editButton">
-                            <button class="btn btn-outline-primary px-4">Edit Profile</button>
+                            <button class="btn btn-link" th:href="@{/users/{id}/edit(id=*{id})}">Edit Profile</button>
                         </div>
                     </div>
                 </div>

@@ -3,7 +3,7 @@ package com.example.sellers.model.binding;
 import javax.validation.constraints.*;
 
 public class UserRegisterBindingModel {
-    //ToDo валидации
+
     private String email;
     private String password;
     private String confirmPassword;

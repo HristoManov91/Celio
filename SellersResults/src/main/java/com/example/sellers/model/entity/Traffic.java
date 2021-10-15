@@ -44,26 +44,4 @@ public class Traffic extends BaseEntity{
         this.store = store;
         return this;
     }
-
-    @Override
-    public String toString() {
-        return "Traffic{" +
-                "date=" + date +
-                ", quantity=" + quantity +
-                ", store=" + store +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Traffic)) return false;
-        Traffic traffic = (Traffic) o;
-        return Objects.equals(date, traffic.date) && Objects.equals(quantity, traffic.quantity) && Objects.equals(store, traffic.store);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(date, quantity, store);
-    }
 }

@@ -12,6 +12,7 @@ public class UserEntity extends BaseEntity {
     private String fullName;
     private String password;
     private String email;
+    private LocalDate birthday;
     private LocalDate dateOfAppointment;
     private String imageUrl;
     private String description;
@@ -56,6 +57,16 @@ public class UserEntity extends BaseEntity {
         return this;
     }
 
+    @Column
+    public LocalDate getBirthday() {
+        return birthday;
+    }
+
+    public UserEntity setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
+        return this;
+    }
+
     @Column(name = "date_of_appointment", nullable = false)
     public LocalDate getDateOfAppointment() {
         return dateOfAppointment;
@@ -87,7 +98,7 @@ public class UserEntity extends BaseEntity {
         return this;
     }
 
-    @OneToMany(mappedBy = "userEntity")
+    @OneToMany(mappedBy = "userEntity" , fetch = FetchType.EAGER)
     public List<SaleEntity> getSales() {
         return sales;
     }
@@ -164,37 +175,5 @@ public class UserEntity extends BaseEntity {
     public UserEntity setHighestMonthlyTurnover(BigDecimal highestMonthlyTurnover) {
         this.highestMonthlyTurnover = highestMonthlyTurnover;
         return this;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof UserEntity)) return false;
-        UserEntity that = (UserEntity) o;
-        return isApproved == that.isApproved && Objects.equals(fullName, that.fullName) && Objects.equals(password, that.password) && Objects.equals(email, that.email) && Objects.equals(dateOfAppointment, that.dateOfAppointment) && Objects.equals(imageUrl, that.imageUrl) && Objects.equals(description, that.description) && Objects.equals(sales, that.sales) && Objects.equals(roles, that.roles) && Objects.equals(store, that.store) && Objects.equals(bestBill, that.bestBill) && Objects.equals(mostProductsInBill, that.mostProductsInBill) && Objects.equals(highestMonthlyTurnover, that.highestMonthlyTurnover);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(fullName, password, email, dateOfAppointment, imageUrl, description, sales, roles, store, isApproved, bestBill, mostProductsInBill, highestMonthlyTurnover);
-    }
-
-    @Override
-    public String toString() {
-        return "UserEntity{" +
-                "fullName='" + fullName + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", dateOfAppointment=" + dateOfAppointment +
-                ", imageUrl='" + imageUrl + '\'' +
-                ", description='" + description + '\'' +
-                ", sales=" + sales +
-                ", roles=" + roles +
-                ", store=" + store +
-                ", isApproved=" + isApproved +
-                ", bestBill=" + bestBill +
-                ", mostProductsInBill=" + mostProductsInBill +
-                ", highestMonthlyTurnover=" + highestMonthlyTurnover +
-                '}';
     }
 }

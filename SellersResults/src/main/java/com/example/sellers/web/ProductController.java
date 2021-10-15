@@ -47,10 +47,10 @@ public class ProductController {
         }
         productService.addProduct(
                 productAddBindingModel.getName(),
-                CategoryEnum.valueOf(productAddBindingModel.getName().toUpperCase(Locale.ROOT)),
+                productAddBindingModel.getCategory(),
                 productAddBindingModel.getPrice());
         //ToDo да проверя как може да изкара съобщение,че продукта е добавен успешно
-        return "redirect:add-product";
+        return "redirect:add";
     }
 
     @GetMapping("/remove")

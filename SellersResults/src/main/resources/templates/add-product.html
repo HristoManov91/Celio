@@ -38,7 +38,7 @@
             <select th:field="*{category}"
                     id="category"
                     class="custom-select">
-              <option value="">Select Shop</option>
+              <option value="">Select category</option>
               <option th:each="c : ${categories}"
                       th:value="${c}"
                       th:text="${c}">
@@ -54,10 +54,12 @@
           </div>
           <div class="col-auto">
             <input type="number"
+                   placeholder="0.00"
                    th:field="*{price}"
                    name="price"
                    required min="0"
                    id="price"
+                   step="0.01"
                    class="form-control"
                    aria-describedby="priceHelpInLine">
           </div>

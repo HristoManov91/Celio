@@ -3,12 +3,63 @@
 <th:block th:include="~{fragments/head}"></th:block>
 <body>
 <div>
-  <th:block th:include="~{fragments/nav}"></th:block>
+    <th:block th:include="~{fragments/nav}"></th:block>
 </div>
 <div class="container-fluid">
-  <!-- ToDo -->
-  <h5 class="text-center text-white mt-5">Add Sale</h5>
 </div>
+<main class="p-5 align-content-center my-register-div">
+    <h1 class="border-bottom">Add Sale</h1>
+    <div class="d-flex justify-content-center">
+        <div class="row g-3" style="color: red">
+            <form th:action="@{/sales/add}"
+                  th:object="${saleAddBindingModel}"
+                  method="POST">
+                <!-- User -->
+                <!-- ToDo да разбера как да го направя обикновенният User автоматично да му е заключено за него -->
+                <div sec:authorize="hasRole('ROLE_ADMIN')">
+                    <div class="col-auto">
+                        <label for="user">Seller</label>
+                        <select th:field="*{seller}"
+                                id="user"
+                                class="custom-select">
+                            <option value="">Select Seller</option>
+                            <option th:each="s : ${users}"
+                                    th:value="${s}"
+                                    th:text="${s}">
+                            </option>
+                        </select>
+                    </div>
+                    <small id="userError" class="invalid-feedback form-text bg-danger rounded">You must select
+                        seller</small>
+                </div>
+                <!-- Product -->
+                <div>
+                    <div class="col-auto">
+                        <label for="product">Product</label>
+                        <select th:field="*{products}"
+                                id="product"
+                                class="custom-select">
+                            <!-- ToDo да разбера как става с optgroup -->
+                            <option value="">Select Product</option>
+                            <option th:each="p : ${products}"
+                                    th:value="${p}"
+                                    th:text="|${p.category}: ${p.name} ${p.price}|">
+                            </option>
+                        </select>
+                    </div>
+                    <small id="productError" class="invalid-feedback form-text bg-danger rounded">You must select
+                        product</small>
+                </div>
+                <!-- ToDo Adding button -->
+
+                <!-- Finish button -->
+                <div class="d-flex justify-content-center mt-4">
+                    <button class="btn btn-primary btn-block w-50" type="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
 <th:block th:include="~{fragments/footer}"></th:block>
 </body>
 </html>

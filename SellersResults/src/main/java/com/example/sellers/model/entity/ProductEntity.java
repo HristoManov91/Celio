@@ -12,7 +12,6 @@ import java.util.Objects;
 public class ProductEntity extends BaseEntity {
 
     private String name;
-    //ToDo да проверя дали е ок да са само enum или да ги запазя в базата с отделно entity
     private CategoryEnum category;
     private BigDecimal price;
 
@@ -53,27 +52,5 @@ public class ProductEntity extends BaseEntity {
     public ProductEntity setPrice(BigDecimal price) {
         this.price = price;
         return this;
-    }
-
-    @Override
-    public String toString() {
-        return "ProductEntity{" +
-                "name='" + name + '\'' +
-                ", category=" + category +
-                ", price=" + price +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof ProductEntity)) return false;
-        ProductEntity that = (ProductEntity) o;
-        return Objects.equals(name, that.name) && category == that.category && Objects.equals(price, that.price);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, category, price);
     }
 }

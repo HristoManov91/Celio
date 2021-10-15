@@ -15,6 +15,4 @@ public class HomeController {
     public String home(){
         return "index";
     }
-
-    //ToDo да добавя страница с профил на User-a
 }

@@ -4,9 +4,12 @@ import com.example.sellers.model.entity.ProductEntity;
 import com.example.sellers.model.entity.enums.CategoryEnum;
 import com.example.sellers.repository.ProductRepository;
 import com.example.sellers.service.ProductService;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.Set;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -35,5 +38,21 @@ public class ProductServiceImpl implements ProductService {
                 .orElseThrow(() -> new IllegalArgumentException("Product with this name not found"));
 
         productRepository.delete(product);
+    }
+
+    @Override
+    public List<ProductEntity> getAllProductsOrderByCategory() {
+        return productRepository.findAllOrderByCategory()
+                .orElseThrow(() -> new IllegalStateException("There are no products in the database"));
+    }
+
+    @Override
+    public List<ProductEntity> findAll() {
+        return productRepository.findAll();
+    }
+
+    @Override
+    public long count() {
+        return productRepository.count();
     }
 }

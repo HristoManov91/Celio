@@ -39,25 +39,4 @@ public class UserRoleEntity extends BaseEntity{
         this.description = description;
         return this;
     }
-
-    @Override
-    public String toString() {
-        return "UserRoleEntity{" +
-                "role=" + role +
-                ", description='" + description + '\'' +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof UserRoleEntity)) return false;
-        UserRoleEntity that = (UserRoleEntity) o;
-        return role == that.role && Objects.equals(description, that.description);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(role, description);
-    }
 }

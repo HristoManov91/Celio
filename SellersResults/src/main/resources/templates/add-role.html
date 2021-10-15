@@ -3,58 +3,57 @@
 <th:block th:include="~{fragments/head}"></th:block>
 <body>
 <div>
-  <th:block th:include="~{fragments/nav}"></th:block>
+    <th:block th:include="~{fragments/nav}"></th:block>
 </div>
-<div class="container-fluid">
-</div>
+<div class="container-fluid"></div>
 <main class="p-5 align-content-center my-register-div">
-  <h1 class="border-bottom">Add role</h1>
-  <div class="d-flex justify-content-center">
-    <div class="row g-3" style="color: red">
-      <form th:action="@{/users/add-role}"
-            th:object="${userRoleBindingModel}"
-            method="POST">
-        <!-- User -->
-        <div>
-          <div class="col-auto">
-            <label for="user">User</label>
-            <select th:field="*{fullName}"
-                    id="user"
-                    class="custom-select">
-              <option value="">Select User</option>
-              <option th:each="u : ${users}"
-                      th:value="${u}"
-                      th:text="${u}">
-              </option>
-            </select>
-          </div>
-          <small id="userError" class="invalid-feedback form-text bg-danger rounded">You must select
-            user</small>
+    <h1 class="border-bottom">Add role</h1>
+    <div class="d-flex justify-content-center">
+        <div class="row g-3" style="color: red">
+            <form th:action="@{/users/add-role}"
+                  th:object="${userRoleBindingModel}"
+                  method="POST">
+                <!-- User -->
+                <div>
+                    <div class="col-auto">
+                        <label for="user">User</label>
+                        <select th:field="*{fullName}"
+                                id="user"
+                                class="custom-select">
+                            <option value="">Select User</option>
+                            <option th:each="u : ${users}"
+                                    th:value="${u}"
+                                    th:text="${u}">
+                            </option>
+                        </select>
+                    </div>
+                    <small id="userError" class="invalid-feedback form-text bg-danger rounded">You must select
+                        user</small>
+                </div>
+                <!-- Role -->
+                <div>
+                    <div class="col-auto">
+                        <label for="role">Role</label>
+                        <select th:field="*{role}"
+                                id="role"
+                                class="custom-select">
+                            <option value="">Select Role</option>
+                            <option th:each="r : ${roles}"
+                                    th:value="${r}"
+                                    th:text="${r}">
+                            </option>
+                        </select>
+                    </div>
+                    <small id="shopError" class="invalid-feedback form-text bg-danger rounded">You must select
+                        role</small>
+                </div>
+                <!-- Button -->
+                <div class="d-flex justify-content-center mt-4">
+                    <button class="btn btn-primary btn-block w-50" type="submit">Submit</button>
+                </div>
+            </form>
         </div>
-        <!-- Role -->
-        <div>
-          <div class="col-auto">
-            <label for="role">Role</label>
-            <select th:field="*{role}"
-                    id="role"
-                    class="custom-select">
-              <option value="">Select Role</option>
-              <option th:each="r : ${roles}"
-                      th:value="${r}"
-                      th:text="${r}">
-              </option>
-            </select>
-          </div>
-          <small id="shopError" class="invalid-feedback form-text bg-danger rounded">You must select
-            role</small>
-        </div>
-        <!-- Button -->
-        <div class="d-flex justify-content-center mt-4">
-          <button class="btn btn-primary btn-block w-50" type="submit">Submit</button>
-        </div>
-      </form>
     </div>
-  </div>
 </main>
 <th:block th:include="~{fragments/footer}"></th:block>
 </body>

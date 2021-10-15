@@ -12,11 +12,12 @@ import java.util.Set;
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
-    //ToDo може би е правилно да е по email?
     Optional<UserEntity> findByEmail (String email);
 
     @Query("SELECT u.fullName FROM UserEntity u")
     Set<String> findAllUserFullName();
 
     Optional<UserEntity> findUserEntityByFullName(String fullName);
+
+
 }

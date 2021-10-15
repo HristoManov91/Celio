@@ -1,11 +1,14 @@
 package com.example.sellers.service;
 
+import com.example.sellers.model.entity.SaleEntity;
 import com.example.sellers.model.entity.UserEntity;
 import com.example.sellers.model.entity.enums.UserRoleEnum;
 import com.example.sellers.model.service.UserRegistrationServiceModel;
+import com.example.sellers.model.view.ProfileViewModel;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -37,11 +40,17 @@ public interface UserService {
 
     void registrationUser(UserRegistrationServiceModel userRegistrationServiceModel);
 
-    Set<String> findAllUsers();
+    Set<String> findAllUsersFullName();
 
     void changeUserStore(String fullName , String store);
 
     void addUserRole(UserRoleEnum role , String userFullName);
 
     void removeUser(String fullName);
+
+    List<ProfileViewModel> findAllUsersViewModel();
+
+    ProfileViewModel findById(Long id);
+
+    List<UserEntity> findAll();
 }

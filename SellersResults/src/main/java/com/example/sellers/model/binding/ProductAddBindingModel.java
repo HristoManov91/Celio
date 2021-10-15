@@ -1,14 +1,20 @@
 package com.example.sellers.model.binding;
 
+import com.example.sellers.model.entity.enums.CategoryEnum;
+
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
 
 public class ProductAddBindingModel {
 
+    @NotBlank
     private String name;
+    @NotNull
     private BigDecimal price;
-    private String category;
+    @NotNull
+    private CategoryEnum category;
 
     public ProductAddBindingModel() {
     }
@@ -34,11 +40,11 @@ public class ProductAddBindingModel {
     }
 
     @NotBlank
-    public String getCategory() {
+    public CategoryEnum getCategory() {
         return category;
     }
 
-    public ProductAddBindingModel setCategory(String category) {
+    public ProductAddBindingModel setCategory(CategoryEnum category) {
         this.category = category;
         return this;
     }

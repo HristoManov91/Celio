@@ -7,7 +7,6 @@ import com.example.sellers.model.binding.UserRoleBindingModel;
 import com.example.sellers.model.entity.enums.UserRoleEnum;
 import com.example.sellers.model.service.UserRegistrationServiceModel;
 import com.example.sellers.service.StoreService;
-import com.example.sellers.service.UserRoleService;
 import com.example.sellers.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
@@ -54,13 +53,6 @@ public class UserController {
         return mvc;
     }
 
-//    @PostMapping("/login")
-//    public ModelAndView loginConfirm(@AuthenticationPrincipal UserDetails principal) {
-//        ModelAndView mav = new ModelAndView("login");
-//        mav.addObject("login", principal);
-//        return mav;
-//    }
-
     @GetMapping("/register")
     public String register(Model model) {
         model.addAttribute("stores", storeService.findAllStoresNames());
@@ -103,22 +95,22 @@ public class UserController {
         return "redirect:login";
     }
 
-    @GetMapping("/profile")
-    public String profile() {
-        //ToDo
+    @GetMapping("/profile/{id}")
+    public String profile(@PathVariable Long id , Model model) {
+        model.addAttribute("user" , userService.findById(id));
         return "profile";
     }
 
-    @PostMapping("/profile")
-    public String confirmProfile() {
-        //ToDo
-        return "redirect:profile";
+    @GetMapping("/profile/all")
+    public String allUsers(Model model){
+        model.addAttribute("users" , userService.findAllUsersViewModel());
+        return "all-users";
     }
 
     @GetMapping("/change-user-store")
     public String changeSellerStore(Model model) {
         model.addAttribute("stores", storeService.findAllStoresNames());
-        model.addAttribute("users" , userService.findAllUsers());
+        model.addAttribute("users" , userService.findAllUsersFullName());
         if (!model.containsAttribute("userChangeStoreBindingModel")){
             model.addAttribute("userChangeStoreBindingModel" , new UserChangeStoreBindingModel());
         }
@@ -140,7 +132,7 @@ public class UserController {
 
     @GetMapping("/add-role")
     public String addRole(Model model){
-        model.addAttribute("users" , userService.findAllUsers());
+        model.addAttribute("users" , userService.findAllUsersFullName());
         model.addAttribute("roles" , Arrays.stream(UserRoleEnum.values()).toList());
         if (!model.containsAttribute("userRoleBindingModel")){
             model.addAttribute("userRoleBindingModel" , new UserRoleBindingModel());
@@ -153,6 +145,7 @@ public class UserController {
     public String addRoleConfirm(@Valid UserRoleBindingModel userRoleBindingModel,
                                  BindingResult bindingResult){
 
+
         if (bindingResult.hasErrors()){
             return "redirect:add-role";
         }
@@ -162,21 +155,9 @@ public class UserController {
         return "redirect:all-users";
     }
 
-    @GetMapping("/remove-sale")
-    public String removeSale() {
-        //ToDo
-        return "remove-sale";
-    }
-
-    @PostMapping("remove-sale")
-    public String removeSaleConfirm() {
-        //ToDo
-        return "redirect:remove-sale";
-    }
-
     @GetMapping("/remove-user")
     public String removeSeller(Model model) {
-        Set<String> users = userService.findAllUsers();
+        Set<String> users = userService.findAllUsersFullName();
         model.addAttribute("users" , users);
         if(!model.containsAttribute("userRemoveBindingModel")){
             model.addAttribute("userRemoveBindingModel" , new UserRemoveBindingModel());

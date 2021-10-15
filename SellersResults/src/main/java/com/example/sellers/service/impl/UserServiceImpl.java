@@ -5,6 +5,7 @@ import com.example.sellers.model.entity.UserEntity;
 import com.example.sellers.model.entity.UserRoleEntity;
 import com.example.sellers.model.entity.enums.UserRoleEnum;
 import com.example.sellers.model.service.UserRegistrationServiceModel;
+import com.example.sellers.model.view.ProfileViewModel;
 import com.example.sellers.repository.UserRepository;
 import com.example.sellers.service.*;
 import org.modelmapper.ModelMapper;
@@ -13,8 +14,10 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -48,6 +51,7 @@ public class UserServiceImpl implements UserService {
                 .setFullName(fullName)
                 .setPassword(password)
                 .setEmail(email)
+                .setStore(storeService.findById(1L))
                 .setDateOfAppointment(LocalDate.now())
                 .addRole(userRoleService.findById(3L))
                 .addRole(userRoleService.findById(2L))
@@ -143,7 +147,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Set<String> findAllUsers() {
+    public Set<String> findAllUsersFullName() {
         return userRepository.findAllUserFullName();
     }
 
@@ -175,4 +179,38 @@ public class UserServiceImpl implements UserService {
 
         userRepository.delete(user);
     }
+
+    @Override
+    public List<ProfileViewModel> findAllUsersViewModel() {
+
+        List<ProfileViewModel> collect = userRepository.findAll()
+                .stream()
+                .map(this::mapToProfileView)
+                .collect(Collectors.toList());
+
+        System.out.println();
+        return null;
+    }
+
+    @Override
+    public ProfileViewModel findById(Long id) {
+        return userRepository.findById(id).map(this::mapToProfileView).get();
+    }
+
+    @Override
+    public List<UserEntity> findAll() {
+        return userRepository.findAll();
+    }
+
+    private ProfileViewModel mapToProfileView(UserEntity user){
+        ProfileViewModel profile = modelMapper.map(user , ProfileViewModel.class);
+
+        profile.setStore(user.getStore());
+        profile.setBestBill(user.getBestBill());
+        profile.setMostProductsInBill(user.getMostProductsInBill());
+        profile.setRoles(user.getRoles());
+
+        return profile;
+    }
+
 }

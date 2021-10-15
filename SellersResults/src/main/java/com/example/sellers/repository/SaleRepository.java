@@ -15,5 +15,4 @@ public interface SaleRepository extends JpaRepository<SaleEntity, Long> {
     Optional<Set<SaleEntity>> findAllByUserEntityAndDateOfSaleBetween
             (UserEntity userEntity, LocalDate fromDate, LocalDate toDate);
 
-
 }

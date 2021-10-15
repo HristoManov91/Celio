@@ -68,28 +68,4 @@ public class StoreEntity extends BaseEntity{
         this.traffic = traffic;
         return this;
     }
-
-    @Override
-    public String toString() {
-        return "StoreEntity{" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", sellers=" + sellers +
-                ", targets=" + targets +
-                ", traffic=" + traffic +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof StoreEntity)) return false;
-        StoreEntity that = (StoreEntity) o;
-        return Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(sellers, that.sellers) && Objects.equals(targets, that.targets) && Objects.equals(traffic, that.traffic);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, description, sellers, targets, traffic);
-    }
 }

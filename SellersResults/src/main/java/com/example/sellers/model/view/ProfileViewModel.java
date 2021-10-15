@@ -1,8 +1,11 @@
 package com.example.sellers.model.view;
 
 
+import com.example.sellers.model.entity.SaleEntity;
 import com.example.sellers.model.entity.StoreEntity;
 import com.example.sellers.model.entity.UserRoleEntity;
+
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashSet;
 
@@ -10,15 +13,17 @@ import java.util.Set;
 
 public class ProfileViewModel {
 
-    //ToDo да се добави полето за резултати
     private Long id;
     private String fullName;
-    private String email;
+    private LocalDate birthday;
     private LocalDate dateOfAppointment;
     private String imageUrl;
     private String description;
+    private StoreEntity store;
+    private SaleEntity bestBill;
+    private SaleEntity mostProductsInBill;
+    private BigDecimal highestMonthlyTurnover;
     private Set<UserRoleEntity> roles = new HashSet<>();
-    private StoreEntity shop;
 
     public ProfileViewModel() {
     }
@@ -41,12 +46,12 @@ public class ProfileViewModel {
         return this;
     }
 
-    public String getEmail() {
-        return email;
+    public LocalDate getBirthday() {
+        return birthday;
     }
 
-    public ProfileViewModel setEmail(String email) {
-        this.email = email;
+    public ProfileViewModel setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
         return this;
     }
 
@@ -77,21 +82,48 @@ public class ProfileViewModel {
         return this;
     }
 
+    public StoreEntity getStore() {
+        return store;
+    }
+
+    public ProfileViewModel setStore(StoreEntity store) {
+        this.store = store;
+        return this;
+    }
+
+    public SaleEntity getBestBill() {
+        return bestBill;
+    }
+
+    public ProfileViewModel setBestBill(SaleEntity bestBill) {
+        this.bestBill = bestBill;
+        return this;
+    }
+
+    public SaleEntity getMostProductsInBill() {
+        return mostProductsInBill;
+    }
+
+    public ProfileViewModel setMostProductsInBill(SaleEntity mostProductsInBill) {
+        this.mostProductsInBill = mostProductsInBill;
+        return this;
+    }
+
+    public BigDecimal getHighestMonthlyTurnover() {
+        return highestMonthlyTurnover;
+    }
+
+    public ProfileViewModel setHighestMonthlyTurnover(BigDecimal highestMonthlyTurnover) {
+        this.highestMonthlyTurnover = highestMonthlyTurnover;
+        return this;
+    }
+
     public Set<UserRoleEntity> getRoles() {
         return roles;
     }
 
     public ProfileViewModel setRoles(Set<UserRoleEntity> roles) {
         this.roles = roles;
-        return this;
-    }
-
-    public StoreEntity getShop() {
-        return shop;
-    }
-
-    public ProfileViewModel setShop(StoreEntity shop) {
-        this.shop = shop;
         return this;
     }
 }

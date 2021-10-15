@@ -15,14 +15,16 @@ public class DatabaseInit implements CommandLineRunner {
     private final ProductService productService;
     private final StoreService storeService;
     private final UserService userService;
+    private final SaleService saleService;
     private final PasswordEncoder passwordEncoder;
 
     public DatabaseInit(UserRoleService userRoleService, ProductService productService,
-                        StoreService storeService, UserService userService, PasswordEncoder passwordEncoder) {
+                        StoreService storeService, UserService userService, SaleService saleService, PasswordEncoder passwordEncoder) {
         this.userRoleService = userRoleService;
         this.productService = productService;
         this.storeService = storeService;
         this.userService = userService;
+        this.saleService = saleService;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -32,6 +34,8 @@ public class DatabaseInit implements CommandLineRunner {
         addProducts();
         storeService.initShops();
         addUsers();
+        saleService.addSaleForTests();
+
     }
 
     private void addUsers() {
@@ -56,7 +60,18 @@ public class DatabaseInit implements CommandLineRunner {
             productService.addProduct("Roknit", CategoryEnum.BERMUDA, BigDecimal.valueOf(99.99));
             productService.addProduct("Nucolor", CategoryEnum.JACKETS, BigDecimal.valueOf(119.99));
             productService.addProduct("Mike", CategoryEnum.UNDERWEAR, BigDecimal.valueOf(19.99));
-            productService.addProduct("Jecloud", CategoryEnum.SWEATER, BigDecimal.valueOf(149.99));
+            productService.addProduct("Portal5", CategoryEnum.JEAN, BigDecimal.valueOf(119.99));
+            productService.addProduct("Sowornever", CategoryEnum.JEAN, BigDecimal.valueOf(144.99));
+            productService.addProduct("Todestroy", CategoryEnum.JEAN , BigDecimal.valueOf(89.99));
+            productService.addProduct("TEONE", CategoryEnum.POLO, BigDecimal.valueOf(39.99));
+            productService.addProduct("Tocharles", CategoryEnum.PANTS, BigDecimal.valueOf(89.99));
+            productService.addProduct("Veyoke", CategoryEnum.SWEATER, BigDecimal.valueOf(89.99));
+            productService.addProduct("Segilllou", CategoryEnum.SWEATER, BigDecimal.valueOf(89.99));
+            productService.addProduct("Sactive", CategoryEnum.SHIRT, BigDecimal.valueOf(99.99));
+            productService.addProduct("Lvegod", CategoryEnum.TEE_SHIRT, BigDecimal.valueOf(39.99));
+            productService.addProduct("Rubiker", CategoryEnum.JACKETS, BigDecimal.valueOf(169.99));
+            productService.addProduct("MITCH", CategoryEnum.UNDERWEAR, BigDecimal.valueOf(19.99));
+            productService.addProduct("Niversible", CategoryEnum.OTHER, BigDecimal.valueOf(149.99));
         }
     }
 }
