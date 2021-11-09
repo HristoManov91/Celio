@@ -3,74 +3,40 @@
 <th:block th:include="~{fragments/head}"></th:block>
 <body>
 <div>
-  <th:block th:include="~{fragments/nav}"></th:block>
+    <th:block th:include="~{fragments/nav}"></th:block>
 </div>
 <div class="container-fluid">
 </div>
 <main class="p-5 align-content-center my-login-div">
-  <h1 class="border-bottom">Remove user</h1>
-  <div class="d-flex justify-content-center" style="font-family: Verdana,sans-serif">
-    <div class="row g-3 align-items-center" style="color: red">
-      <form th:action="@{/users/remove-user}"
-            th:object=""
-            method="POST">
-        <!-- Name -->
-        <div>
-          <div class="col-auto">
-            <label for="name" class="col-form-label ">Name</label>
-          </div>
-          <div class="col-auto">
-            <input type="text"
-                   th:field="*{name}"
-                   name="name"
-                   required minlength="4" maxlength="15"
-                   id="name"
-                   class="form-control"
-                   aria-describedby="nameHelpInLine">
-          </div>
-          <small id="nameError" class="invalid-feedback form-text bg-danger rounded">
-            Name must be between 4 and 15 characters</small>
+    <h1 class="border-bottom">Remove user</h1>
+    <div class="d-flex justify-content-center" style="font-family: Verdana,sans-serif">
+        <div class="row g-3 align-items-center" style="color: red">
+            <form th:action="@{/users/remove-user}"
+                  method="POST">
+                <!-- Name -->
+                <div>
+                    <div class="col-auto">
+                        <label for="user">Seller</label>
+                        <select th:field="*{userRemoveBindingModel.fullName}"
+                                id="user"
+                                class="custom-select">
+                            <option value="">Select User</option>
+                            <option th:each="s : ${users}"
+                                    th:value="${s}"
+                                    th:text="${s}">
+                            </option>
+                        </select>
+                    </div>
+                    <small id="userError" class="invalid-feedback form-text bg-danger rounded">You must select
+                        user</small>
+                </div>
+                <!-- Button -->
+                <div class="d-flex justify-content-center mt-2">
+                    <button class="btn btn-primary btn-block w-50" type="submit">Remove User</button>
+                </div>
+            </form>
         </div>
-        <!-- Category -->
-        <div>
-          <div class="col-auto">
-            <label for="category">Category</label>
-            <select th:field="*{category}"
-                    id="category"
-                    class="custom-select">
-              <option value="">Select Shop</option>
-              <option th:each="c : ${categories}"
-                      th:value="${c}"
-                      th:text="${c}">
-              </option>
-            </select>
-          </div>
-          <small id="categoryError" class="invalid-feedback form-text bg-danger rounded">You must select
-            category</small>
-        </div>
-        <div>
-          <div class="col-auto">
-            <label for="price" class="col-form-label ">Price</label>
-          </div>
-          <div class="col-auto">
-            <input type="number"
-                   th:field="*{price}"
-                   name="price"
-                   required min="0"
-                   id="price"
-                   class="form-control"
-                   aria-describedby="priceHelpInLine">
-          </div>
-          <small id="priceError" class="invalid-feedback form-text bg-danger rounded">Price must be
-            positive</small>
-        </div>
-        <!-- Button -->
-        <div class="d-flex justify-content-center mt-2">
-          <button class="btn btn-primary btn-block w-50" type="submit">Add Product</button>
-        </div>
-      </form>
     </div>
-  </div>
 </main>
 <th:block th:include="~{fragments/footer}"></th:block>
 </body>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">>
+<th:block th:include="~{fragments/head}"></th:block>
+<body>
+<div>
+    <th:block th:include="~{fragments/nav}"></th:block>
+</div>
+<div class="container">
+    <h2 class="text-center text-white">Edit Profile</h2>
+    <form
+            th:object="${user}"
+            th:action="@{/users/profile/{id}/edit(id=*{id})}"
+            th:method="patch"
+            enctype="multipart/form-data"
+            class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
+        <div class="row">
+            <!-- Full name -->
+            <div class="form-group col-md-6 mb-3">
+                <label for="fullName" class="text-white font-weight-bold">Full name</label>
+                <input disabled
+                        id="fullName"
+                        th:field="*{fullName}"
+                        th:errorclass="is-invalid"
+                        type="text" class="form-control"
+                        placeholder="Въведете име"/>
+                <p class="invalid-feedback errors alert alert-danger">
+                    Full name is required.
+                </p>
+            </div>
+            <!-- Birthday -->
+            <div class="form-group col-md-6 mb-3">
+                <label for="birthday" class="text-white font-weight-bold">Birthday</label>
+                <input
+                        id="birthday"
+                        th:field="*{birthday}"
+                        th:errorclass="is-invalid"
+                        type="date"
+                        class="form-control"
+                        placeholder="Date must be in past or present"/>
+                <p class="invalid-feedback errors alert alert-danger">
+                    Birthday is required.
+                </p>
+            </div>
+
+        </div>
+        <div class="row">
+            <!-- Store -->
+            <div class="form-group col-md-6 mb-3">
+                <label for="store" class="text-white font-weight-bold">Store</label>
+                <input disabled
+                        id="store"
+                        th:field="*{store.name}"
+                        type="text"
+                        class="form-control"
+                        placeholder="Best bill is calculated by the program"/>
+            </div>
+            <!-- Role -->
+            <div class="form-group col-md-6 mb-3">
+                <label for="role" class="text-white font-weight-bold">Role</label>
+                <input disabled
+                        id="role"
+                        th:field="*{role.name}"
+                        type="text"
+                        class="form-control"
+                        placeholder="Best bill is calculated by the program"/>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Date of appointment -->
+            <div class="form-group col-md-6 mb-3">
+                <label for="dateOfAppointment" class="text-white font-weight-bold">Date of Appointment</label>
+                <input id="dateOfAppointment"
+                        th:field="*{dateOfAppointment}"
+                        type="date"
+                        class="form-control"
+                        placeholder="Date of appointment is required"/>
+            </div>
+            <!-- Image -->
+            <div class="form-group col-md-6 mb-3">
+                <label class="text-white font-weight-bold" for="picture">Choose image</label>
+                <input id="picture"
+                       th:field="*{picture}"
+                       type="file"
+                       class="form-control">
+                <p class="invalid-feedback errors alert alert-danger">
+                    Image is required.
+                </p>
+            </div>
+        </div>
+        <!-- Description -->
+        <div class="form-group">
+            <label class="text-white font-weight-bold" for="description">Description</label>
+            <textarea id="description"
+                      th:field="*{description}"
+                      th:errorclass="is-invalid"
+                      type="textarea" class="form-control" rows="3"
+                      placeholder="Description"></textarea>
+            <p class="invalid-feedback errors alert alert-danger">
+                Description is required.
+            </p>
+        </div>
+
+        <div class="row">
+            <div class="col col-md-4">
+                <div class="button-holder d-flex">
+                    <input type="submit" class="btn btn-info btn-lg" value="Save changes"/>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<th:block th:include="~{fragments/footer}"></th:block>
+</body>
+</html>

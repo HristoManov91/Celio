@@ -12,4 +12,6 @@ public interface StoreService {
     List<String> findAllStoresNames();
 
     StoreEntity findByName(String name);
+
+    List<StoreEntity> findAll();
 }

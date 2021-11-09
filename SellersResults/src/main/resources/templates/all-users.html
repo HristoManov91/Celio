@@ -10,7 +10,8 @@
     <div class="offers row mx-auto d-flex flex-row justify-content-center">
         <div th:each="u : ${users}" th:object="${u}" class="offer card col-sm-6 col-md-3  col-lg-2 m-1 p-0">
             <div class="card-img-top-wrapper">
-                <img class="card-img-top" th:src="*{getImageUrl()}" alt="User image">
+                <img class="card-img-top" th:src="*{getPictureUrl() != null} ? *{getPictureUrl()} : '/img/profile.jpg'"
+                     th:alt="User image">
             </div>
             <div class="card-body pb-1">
                 <h5 th:text="|*{fullName}|" class="card-title">
@@ -25,7 +26,7 @@
                 </li>
             </ul>
             <div class="card-body">
-                <a class="card-link" th:href="@{/users/profile/{id}(id=*{id})}">Profile</a>
+                <a class="card-link" th:href="@{/users/profile/{id}/details(id=*{id})}">Profile</a>
             </div>
         </div>
     </div>

@@ -3,7 +3,7 @@ package com.example.sellers.model.entity;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "stores")
@@ -12,6 +12,7 @@ public class StoreEntity extends BaseEntity{
     private String name;
     private String description;
     private List<UserEntity> sellers;
+    private Set<SaleEntity> sales;
     //ToDo да направя колекция от таргети да се пази
     private BigDecimal targets;
     private List<Traffic> traffic;
@@ -37,6 +38,16 @@ public class StoreEntity extends BaseEntity{
 
     public StoreEntity setDescription(String description) {
         this.description = description;
+        return this;
+    }
+
+    @OneToMany(mappedBy = "storeEntity")
+    public Set<SaleEntity> getSales() {
+        return sales;
+    }
+
+    public StoreEntity setSales(Set<SaleEntity> sales) {
+        this.sales = sales;
         return this;
     }
 

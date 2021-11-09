@@ -15,7 +15,8 @@ nav ul li a {
 }
 
 footer {
-    position: fixed;
+    /*margin-top: 2rem;*/
+    /*padding: 1rem;*/
     left: 0;
     bottom: 0;
     width: 100%;

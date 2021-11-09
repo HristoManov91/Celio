@@ -1,5 +1,8 @@
 package com.example.sellers.model.binding;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 public class UserRemoveBindingModel {
 
     private String fullName;
@@ -7,6 +10,7 @@ public class UserRemoveBindingModel {
     public UserRemoveBindingModel() {
     }
 
+    @NotNull
     public String getFullName() {
         return fullName;
     }

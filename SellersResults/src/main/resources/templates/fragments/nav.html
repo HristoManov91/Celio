@@ -20,18 +20,17 @@
                     <div class="dropdown-menu" aria-labelledby="managerDropdown">
                         <!--            <a class="dropdown-item" href="/">Add training</a>-->
                         <a class="dropdown-item"
-                           href="/users/remove-sale">Remove sale</a>
-                        <!--            <div class="dropdown-divider"></div>-->
+                           th:href="@{/sales/remove}">Remove sale</a>
                         <a class="dropdown-item"
                            href="/products/add">Add product</a>
                         <a class="dropdown-item"
                            href="/users/change-user-store">Change store</a>
                         <a class="dropdown-item"
                            sec:authorize="hasRole('ROLE_ADMIN')"
-                           href="/products/remove">Remove product</a>
+                           th:href="@{/users/remove-user}">Remove user</a>
                         <a class="dropdown-item"
                            sec:authorize="hasRole('ROLE_ADMIN')"
-                           href="/users/remove-seller">Remove user</a>
+                           th:href="@{/users/approval}">Approve user</a>
                         <a class="dropdown-item"
                            sec:authorize="hasRole('ROLE_ADMIN')"
                            href="/users/add-role">Add Role</a>
@@ -60,7 +59,7 @@
                        aria-haspopup="true"
                        aria-expanded="false">Sellers</a>
                     <div class="dropdown-menu" aria-labelledby="sellersDropdown">
-                        <a class="dropdown-item" th:href="@{/users/profile/all}">Sellers profiles</a>
+                        <a class="dropdown-item" href="/users/profile/all">Sellers profiles</a>
                         <a class="dropdown-item" href="#">Sellers results</a>
                         <a class="dropdown-item" th:href="@{/sales/add}">Add sale</a>
                     </div>
@@ -79,10 +78,9 @@
                     <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/users/profile}">Profile</a>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <div class="form-inline my-2 my-lg-0 border px-3">
-                        <div class="logged-user" text="Welcome, Gosho"></div>
-                        <a class="nav-link" href="#">Logout</a>
-                    </div>
+                    <form th:action="@{/logout}" th:method="POST">
+                        <button class="form-inline my-2 my-lg-0 border px-3" type="submit" >Logout</button>
+                    </form>
                 </li>
             </ul>
         </div>

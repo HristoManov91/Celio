@@ -4,16 +4,22 @@ import com.example.sellers.model.entity.SaleEntity;
 import com.example.sellers.model.entity.UserEntity;
 import com.example.sellers.model.entity.UserRoleEntity;
 import com.example.sellers.model.entity.enums.UserRoleEnum;
+import com.example.sellers.model.service.ProfileUpdateServiceModel;
 import com.example.sellers.model.service.UserRegistrationServiceModel;
 import com.example.sellers.model.view.ProfileViewModel;
 import com.example.sellers.repository.UserRepository;
 import com.example.sellers.service.*;
+import com.example.sellers.web.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.DateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -30,7 +36,7 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     public UserServiceImpl(UserRepository userRepository, StoreService storeService, UserRoleService userRoleService,
-                           SaleService saleService, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
+                           @Lazy SaleService saleService, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.storeService = storeService;
         this.userRoleService = userRoleService;
@@ -84,7 +90,7 @@ public class UserServiceImpl implements UserService {
         Set<SaleEntity> sales = saleService.findAllByUserAndDateBetween(userEntity, fromDate, toDate);
         BigDecimal priceSum = sales.stream().map(SaleEntity::sumOfProductPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
         //ToDo да се тества дали работи правилно
-        return priceSum.divide(new BigDecimal(sales.size()),2 , RoundingMode.CEILING);
+        return priceSum.divide(new BigDecimal(sales.size()), 2, RoundingMode.CEILING);
     }
 
     @Override
@@ -93,7 +99,7 @@ public class UserServiceImpl implements UserService {
         BigDecimal priceSum = sales.stream().map(SaleEntity::sumOfProductPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
         long countOfAllProducts = sales.stream().map(SaleEntity::countOfProducts).count();
 
-        return priceSum.divide(new BigDecimal(countOfAllProducts) , 2 , RoundingMode.CEILING);
+        return priceSum.divide(new BigDecimal(countOfAllProducts), 2, RoundingMode.CEILING);
     }
 
     @Override
@@ -102,7 +108,7 @@ public class UserServiceImpl implements UserService {
         long countOfAllProducts = sales.stream().map(SaleEntity::countOfProducts).count();
 
         return BigDecimal.valueOf(countOfAllProducts)
-                .divide(new BigDecimal(sales.size()),2 , RoundingMode.CEILING);
+                .divide(new BigDecimal(sales.size()), 2, RoundingMode.CEILING);
     }
 
     @Override
@@ -111,8 +117,8 @@ public class UserServiceImpl implements UserService {
                 .findAllByUserAndDateBetween(userEntity, fromDate, toDate)
                 .stream()
                 .map(SaleEntity::sumOfProductPrice)
-                .reduce(BigDecimal.ZERO , BigDecimal::add)
-                .setScale(2 , RoundingMode.CEILING);
+                .reduce(BigDecimal.ZERO, BigDecimal::add)
+                .setScale(2, RoundingMode.CEILING);
     }
 
     @Override
@@ -133,7 +139,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void registrationUser(UserRegistrationServiceModel userRegistrationServiceModel) {
-        UserEntity user = modelMapper.map(userRegistrationServiceModel , UserEntity.class);
+        UserEntity user = modelMapper.map(userRegistrationServiceModel, UserEntity.class);
         user.setPassword(passwordEncoder.encode(userRegistrationServiceModel.getPassword()));
 
         UserRoleEntity userRole = userRoleService.findById(3L);
@@ -153,7 +159,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void changeUserStore(String fullName, String store) {
-        UserEntity user = userRepository.findUserEntityByFullName(fullName).orElseThrow(IllegalArgumentException::new);
+        UserEntity user = userRepository
+                .findUserEntityByFullNameAndLeftEmployeeIsFalseAndApprovedIsTrue(fullName)
+                .orElseThrow(IllegalArgumentException::new);
 
         user.setStore(storeService.findByName(store));
 
@@ -161,39 +169,38 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addUserRole(UserRoleEnum role , String userFullName) {
+    public void addUserRole(UserRoleEnum role, String userFullName) {
         UserRoleEntity userRole = userRoleService.findUserRoleByName(role);
 
-        UserEntity user = userRepository.findUserEntityByFullName(userFullName)
+        UserEntity user = userRepository.findUserEntityByFullNameAndLeftEmployeeIsFalseAndApprovedIsTrue(userFullName)
                 .orElseThrow(() -> new IllegalArgumentException("User with this full name not found"));
 
         user.addRole(userRole);
+
 
         userRepository.save(user);
     }
 
     @Override
     public void removeUser(String fullName) {
-        UserEntity user = userRepository.findUserEntityByFullName(fullName)
-                .orElseThrow(()-> new IllegalStateException("User with this full name not found"));
+        UserEntity user = userRepository.findUserEntityByFullNameAndLeftEmployeeIsFalseAndApprovedIsTrue(fullName)
+                .orElseThrow(() -> new IllegalStateException("User with this full name not found"));
 
-        userRepository.delete(user);
+        user.setLeftEmployee(true);
+        userRepository.save(user);
     }
 
     @Override
     public List<ProfileViewModel> findAllUsersViewModel() {
 
-        List<ProfileViewModel> collect = userRepository.findAll()
+        return userRepository.findAllByLeftEmployeeIsFalse()
                 .stream()
                 .map(this::mapToProfileView)
                 .collect(Collectors.toList());
-
-        System.out.println();
-        return null;
     }
 
     @Override
-    public ProfileViewModel findById(Long id) {
+    public ProfileViewModel findByIdProfileViewModel(Long id) {
         return userRepository.findById(id).map(this::mapToProfileView).get();
     }
 
@@ -202,13 +209,73 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
-    private ProfileViewModel mapToProfileView(UserEntity user){
-        ProfileViewModel profile = modelMapper.map(user , ProfileViewModel.class);
+    @Override
+    public void saveUser(UserEntity userEntity) {
+        userRepository.save(userEntity);
+    }
 
-        profile.setStore(user.getStore());
-        profile.setBestBill(user.getBestBill());
-        profile.setMostProductsInBill(user.getMostProductsInBill());
-        profile.setRoles(user.getRoles());
+    @Override
+    public ProfileViewModel findUserViewModelByEmail(String email) {
+        UserEntity userEntity = userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("User with this email not found"));
+
+        return mapToProfileView(userEntity);
+    }
+
+    @Override
+    public void editProfile(ProfileUpdateServiceModel profileModel) {
+        UserEntity userEntity = userRepository.findById(profileModel.getId())
+                .orElseThrow(() -> new ObjectNotFoundException("Offer with id " + profileModel.getId() + " not found!"));
+
+        userEntity
+                .setPicture(profileModel.getPicture())
+                .setBirthday(profileModel.getBirthday())
+                .setDateOfAppointment(profileModel.getDateOfAppointment())
+                .setDescription(profileModel.getDescription());
+        //   private Long id;
+        //    private String fullName;
+        //    private LocalDate birthday;
+        //    private LocalDate dateOfAppointment;
+        //    private String imageUrl;
+        //    private String description;
+        //    private StoreEntity store;
+        //    private UserRoleEnum role;
+        userRepository.save(userEntity);
+    }
+
+    @Override
+    public Set<String> findAllUsersFullNameWithoutApproval() {
+        return userRepository.findAllUsersFullNameWithoutApproval();
+    }
+
+    @Override
+    public void approvedUser(String fullName) {
+        UserEntity user = userRepository.findUserEntityByFullNameAndLeftEmployeeIsFalseAndApprovedIsFalse(fullName)
+                .orElseThrow(() -> new IllegalStateException("User with this full name not found"));
+
+        user.setApproved(true);
+
+        userRepository.save(user);
+    }
+
+    @Override
+    public UserEntity findById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("User with this full name not found"));
+    }
+
+    private ProfileViewModel mapToProfileView(UserEntity user) {
+        ProfileViewModel profile = modelMapper.map(user, ProfileViewModel.class);
+        //ToDo да направя по-добър формат за датите
+
+        if (user.getPicture() != null){
+            profile.setPictureUrl(user.getPicture().getUrl());
+        }
+
+        profile.setStore(user.getStore())
+                .setBestBill(user.getBestBill())
+                .setMostProductsInBill(user.getMostProductsInBill())
+                .setRole(user.findHighestRole());
 
         return profile;
     }

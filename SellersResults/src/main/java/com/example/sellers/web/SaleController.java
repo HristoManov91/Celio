@@ -2,6 +2,8 @@ package com.example.sellers.web;
 
 import com.example.sellers.model.binding.SaleAddBindingModel;
 import com.example.sellers.service.ProductService;
+import com.example.sellers.service.SaleService;
+import com.example.sellers.service.StoreService;
 import com.example.sellers.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,11 +19,15 @@ import javax.validation.Valid;
 @RequestMapping("/sales")
 public class SaleController {
 
+    private final SaleService saleService;
     private final ProductService productService;
+    private final StoreService storeService;
     private final UserService userService;
 
-    public SaleController(ProductService productService, UserService userService) {
+    public SaleController(SaleService saleService, ProductService productService, StoreService storeService, UserService userService) {
+        this.saleService = saleService;
         this.productService = productService;
+        this.storeService = storeService;
         this.userService = userService;
     }
 
@@ -29,6 +35,7 @@ public class SaleController {
     public String addSale(Model model){
         model.addAttribute("users" , userService.findAllUsersFullName());
         model.addAttribute("products" , productService.getAllProductsOrderByCategory());
+        model.addAttribute("stores" , storeService.findAllStoresNames());
         if (!model.containsAttribute("saleAddBindingModel")){
             model.addAttribute("saleAddBindingModel" , new SaleAddBindingModel());
         }
@@ -41,9 +48,19 @@ public class SaleController {
                                  RedirectAttributes redirectAttributes){
 
         if (bindingResult.hasErrors()){
-            //ToDo
+            redirectAttributes.addFlashAttribute("saleAddBindingModel" , saleAddBindingModel);
+            redirectAttributes.addFlashAttribute(
+                    "org.springframework.validation.BindingResult.saleAddBindingModel", bindingResult);
+            return "redirect:add";
         }
 
+        //ToDo да направя да се запазва в базата и да го взима като ServiceModel
+
         return "redirect:add";
+    }
+
+    @GetMapping("/remove")
+    public String removeSale(){
+        return "remove-sale";
     }
 }

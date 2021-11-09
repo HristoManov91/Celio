@@ -12,9 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
 
 @Controller
 @RequestMapping("/products")
@@ -28,8 +25,7 @@ public class ProductController {
 
     @GetMapping("/add")
     public String addProduct(Model model) {
-        List<CategoryEnum> categories = Arrays.stream(CategoryEnum.values()).toList();
-        model.addAttribute("categories", categories);
+        model.addAttribute("categories", CategoryEnum.values());
         if (!model.containsAttribute("productAddBindingModel")) {
             model.addAttribute("productAddBindingModel", new ProductAddBindingModel());
         }
@@ -51,16 +47,5 @@ public class ProductController {
                 productAddBindingModel.getPrice());
         //ToDo да проверя как може да изкара съобщение,че продукта е добавен успешно
         return "redirect:add";
-    }
-
-    @GetMapping("/remove")
-    public String removeProduct() {
-        return "remove-product";
-    }
-
-    @PostMapping("/remove")
-    public String removeProductConfirm() {
-        //ToDo
-        return "redirect:remove-product";
     }
 }

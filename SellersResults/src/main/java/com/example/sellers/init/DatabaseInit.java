@@ -1,5 +1,6 @@
 package com.example.sellers.init;
 
+import com.example.sellers.model.entity.UserEntity;
 import com.example.sellers.model.entity.enums.CategoryEnum;
 import com.example.sellers.service.*;
 import org.springframework.boot.CommandLineRunner;
@@ -7,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Component
 public class DatabaseInit implements CommandLineRunner {
@@ -35,7 +37,6 @@ public class DatabaseInit implements CommandLineRunner {
         storeService.initShops();
         addUsers();
         saleService.addSaleForTests();
-
     }
 
     private void addUsers() {

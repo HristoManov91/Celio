@@ -9,11 +9,8 @@ import java.math.BigDecimal;
 
 public class ProductAddBindingModel {
 
-    @NotBlank
     private String name;
-    @NotNull
     private BigDecimal price;
-    @NotNull
     private CategoryEnum category;
 
     public ProductAddBindingModel() {
@@ -39,7 +36,7 @@ public class ProductAddBindingModel {
         return this;
     }
 
-    @NotBlank
+    @NotNull
     public CategoryEnum getCategory() {
         return category;
     }

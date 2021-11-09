@@ -3,6 +3,7 @@ package com.example.sellers.service;
 import com.example.sellers.model.entity.SaleEntity;
 import com.example.sellers.model.entity.UserEntity;
 import com.example.sellers.model.entity.enums.UserRoleEnum;
+import com.example.sellers.model.service.ProfileUpdateServiceModel;
 import com.example.sellers.model.service.UserRegistrationServiceModel;
 import com.example.sellers.model.view.ProfileViewModel;
 
@@ -20,7 +21,7 @@ public interface UserService {
 
     void addUser(String fullName, String password, String email , Long shopId);
 
-    Optional<UserEntity> findUserByEmail(String fullName);
+    Optional<UserEntity> findUserByEmail(String email);
     //ToDo може да ги рефакторирам да не се повтаря толкова като има 1 метод да намира продажбите
     // и останалите вече си вършат тяхната работа
 
@@ -50,7 +51,19 @@ public interface UserService {
 
     List<ProfileViewModel> findAllUsersViewModel();
 
-    ProfileViewModel findById(Long id);
+    ProfileViewModel findByIdProfileViewModel(Long id);
 
     List<UserEntity> findAll();
+
+    void saveUser(UserEntity userEntity);
+
+    ProfileViewModel findUserViewModelByEmail(String email);
+
+    void editProfile(ProfileUpdateServiceModel serviceModel);
+
+    Set<String> findAllUsersFullNameWithoutApproval();
+
+    void approvedUser(String fullName);
+
+    UserEntity findById(Long id);
 }

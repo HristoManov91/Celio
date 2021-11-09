@@ -3,13 +3,11 @@ package com.example.sellers.model.view;
 
 import com.example.sellers.model.entity.SaleEntity;
 import com.example.sellers.model.entity.StoreEntity;
-import com.example.sellers.model.entity.UserRoleEntity;
+import com.example.sellers.model.entity.enums.UserRoleEnum;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.HashSet;
-
-import java.util.Set;
 
 public class ProfileViewModel {
 
@@ -17,13 +15,13 @@ public class ProfileViewModel {
     private String fullName;
     private LocalDate birthday;
     private LocalDate dateOfAppointment;
-    private String imageUrl;
+    private String pictureUrl;
     private String description;
     private StoreEntity store;
     private SaleEntity bestBill;
     private SaleEntity mostProductsInBill;
     private BigDecimal highestMonthlyTurnover;
-    private Set<UserRoleEntity> roles = new HashSet<>();
+    private UserRoleEnum role;
 
     public ProfileViewModel() {
     }
@@ -64,12 +62,12 @@ public class ProfileViewModel {
         return this;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getPictureUrl() {
+        return pictureUrl;
     }
 
-    public ProfileViewModel setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public ProfileViewModel setPictureUrl(String pictureUrl) {
+        this.pictureUrl = pictureUrl;
         return this;
     }
 
@@ -118,12 +116,12 @@ public class ProfileViewModel {
         return this;
     }
 
-    public Set<UserRoleEntity> getRoles() {
-        return roles;
+    public UserRoleEnum getRole() {
+        return role;
     }
 
-    public ProfileViewModel setRoles(Set<UserRoleEntity> roles) {
-        this.roles = roles;
+    public ProfileViewModel setRole(UserRoleEnum role) {
+        this.role = role;
         return this;
     }
 }

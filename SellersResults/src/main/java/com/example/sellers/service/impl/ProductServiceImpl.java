@@ -22,7 +22,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void addProduct(String name, CategoryEnum category, BigDecimal price) {
-        ProductEntity product = new ProductEntity().setName(name).setCategory(category).setPrice(price);
+        ProductEntity product = new ProductEntity()
+                .setName(name)
+                .setCategory(category)
+                .setPrice(price);
 
         productRepository.save(product);
     }

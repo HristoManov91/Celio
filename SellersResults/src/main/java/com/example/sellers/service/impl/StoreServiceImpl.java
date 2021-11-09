@@ -18,17 +18,19 @@ public class StoreServiceImpl implements StoreService {
 
     @Override
     public void initShops() {
-        StoreEntity theMall = new StoreEntity().setName("The Mall").setDescription("Description for TheMall");
-        storeRepository.save(theMall);
+        if (storeRepository.count() == 0) {
+            StoreEntity theMall = new StoreEntity().setName("The Mall").setDescription("Description for TheMall");
+            storeRepository.save(theMall);
 
-        StoreEntity paradise = new StoreEntity().setName("Paradise").setDescription("Description for Paradise");
-        storeRepository.save(paradise);
+            StoreEntity paradise = new StoreEntity().setName("Paradise").setDescription("Description for Paradise");
+            storeRepository.save(paradise);
 
-        StoreEntity mallOfSofia = new StoreEntity().setName("Mall Of Sofia").setDescription("Description for MallOfSofia");
-        storeRepository.save(mallOfSofia);
+            StoreEntity mallOfSofia = new StoreEntity().setName("Mall Of Sofia").setDescription("Description for MallOfSofia");
+            storeRepository.save(mallOfSofia);
 
-        StoreEntity parkCenter = new StoreEntity().setName("Park Center").setDescription("Description for Park Center");
-        storeRepository.save(parkCenter);
+            StoreEntity parkCenter = new StoreEntity().setName("Park Center").setDescription("Description for Park Center");
+            storeRepository.save(parkCenter);
+        }
     }
 
     @Override
@@ -44,5 +46,10 @@ public class StoreServiceImpl implements StoreService {
     @Override
     public StoreEntity findByName(String name) {
         return storeRepository.findByName(name).orElseThrow(IllegalArgumentException::new);
+    }
+
+    @Override
+    public List<StoreEntity> findAll() {
+        return storeRepository.findAll();
     }
 }

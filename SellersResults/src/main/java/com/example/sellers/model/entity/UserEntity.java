@@ -1,5 +1,7 @@
 package com.example.sellers.model.entity;
 
+import com.example.sellers.model.entity.enums.UserRoleEnum;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -14,15 +16,16 @@ public class UserEntity extends BaseEntity {
     private String email;
     private LocalDate birthday;
     private LocalDate dateOfAppointment;
-    private String imageUrl;
+    private PictureEntity picture;
     private String description;
     private List<SaleEntity> sales = new LinkedList<>();
-    private Set<UserRoleEntity> roles = new HashSet<>();
+    private Set<UserRoleEntity> roles = new LinkedHashSet<>();
     private StoreEntity store;
     private boolean isApproved;
+    private boolean leftEmployee;
     private SaleEntity bestBill;
     private SaleEntity mostProductsInBill;
-    private BigDecimal highestMonthlyTurnover;
+    private BigDecimal highestMonthlyTurnover;//ToDo да направя да го смята
 
     public UserEntity() {
     }
@@ -77,14 +80,13 @@ public class UserEntity extends BaseEntity {
         return this;
     }
 
-    //ToDo да проверя дали трябва да го сменя на BLOB
-    @Column(name = "image_url")
-    public String getImageUrl() {
-        return imageUrl;
+    @OneToOne
+    public PictureEntity getPicture() {
+        return picture;
     }
 
-    public UserEntity setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public UserEntity setPicture(PictureEntity picture) {
+        this.picture = picture;
         return this;
     }
 
@@ -98,7 +100,7 @@ public class UserEntity extends BaseEntity {
         return this;
     }
 
-    @OneToMany(mappedBy = "userEntity" , fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "userEntity", fetch = FetchType.EAGER)
     public List<SaleEntity> getSales() {
         return sales;
     }
@@ -108,7 +110,7 @@ public class UserEntity extends BaseEntity {
         return this;
     }
 
-    @ManyToMany (fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     public Set<UserRoleEntity> getRoles() {
         return roles;
     }
@@ -125,15 +127,6 @@ public class UserEntity extends BaseEntity {
 
     public UserEntity setStore(StoreEntity store) {
         this.store = store;
-        return this;
-    }
-
-    public void addSale(SaleEntity saleEntity) {
-        this.sales.add(saleEntity);
-    }
-
-    public UserEntity addRole(UserRoleEntity userRoleEntity) {
-        this.roles.add(userRoleEntity);
         return this;
     }
 
@@ -175,5 +168,36 @@ public class UserEntity extends BaseEntity {
     public UserEntity setHighestMonthlyTurnover(BigDecimal highestMonthlyTurnover) {
         this.highestMonthlyTurnover = highestMonthlyTurnover;
         return this;
+    }
+
+    public void addSale(SaleEntity saleEntity) {
+        this.sales.add(saleEntity);
+    }
+
+    public UserEntity addRole(UserRoleEntity userRoleEntity) {
+        this.roles.add(userRoleEntity);
+        return this;
+    }
+
+    public boolean isLeftEmployee() {
+        return leftEmployee;
+    }
+
+    public UserEntity setLeftEmployee(boolean leftEmployee) {
+        this.leftEmployee = leftEmployee;
+        return this;
+    }
+
+    public UserRoleEnum findHighestRole() {
+
+        //ToDo ако добавя нова Роля трябва да се пренапише
+        List<UserRoleEnum> list = new ArrayList<>();
+        this.roles.forEach(userRoleEntity -> list.add(userRoleEntity.getRole()));
+
+        if (list.contains(UserRoleEnum.MANAGER)) {
+            return UserRoleEnum.MANAGER;
+        } else {
+            return UserRoleEnum.SELLER;
+        }
     }
 }

@@ -15,7 +15,7 @@
                   th:object="${saleAddBindingModel}"
                   method="POST">
                 <!-- User -->
-                <!-- ToDo да разбера как да го направя обикновенният User автоматично да му е заключено за него -->
+                <!-- ToDo да направя да може да си добавяш продажба на теб,но не и на други хора,а Manager на всички -->
                 <div sec:authorize="hasRole('ROLE_ADMIN')">
                     <div class="col-auto">
                         <label for="user">Seller</label>
@@ -32,6 +32,23 @@
                     <small id="userError" class="invalid-feedback form-text bg-danger rounded">You must select
                         seller</small>
                 </div>
+                <!-- Store -->
+                <div>
+                    <div class="col-auto">
+                        <label for="store">Store</label>
+                        <select th:field="*{store}"
+                                id="store"
+                                class="custom-select">
+                            <option value="">Select Store</option>
+                            <option th:each="s : ${stores}"
+                                    th:value="${s}"
+                                    th:text="${s}">
+                            </option>
+                        </select>
+                    </div>
+                    <small id="storeError" class="invalid-feedback form-text bg-danger rounded">You must select
+                        store</small>
+                </div>
                 <!-- Product -->
                 <div>
                     <div class="col-auto">
@@ -40,6 +57,8 @@
                                 id="product"
                                 class="custom-select">
                             <!-- ToDo да разбера как става с optgroup -->
+                            <!--пример: <option value="">select а ... </option>
+                            <optgroup th:each="field1 : ${objA}" th:label="${field1.name}"-->
                             <option value="">Select Product</option>
                             <option th:each="p : ${products}"
                                     th:value="${p}"
@@ -49,6 +68,23 @@
                     </div>
                     <small id="productError" class="invalid-feedback form-text bg-danger rounded">You must select
                         product</small>
+                </div>
+                <!-- Date -->
+                <div>
+                    <div class="col-auto">
+                        <label for="saleDate" class="col-form-label">Sale Date</label>
+                    </div>
+                    <div class="col-auto">
+                        <input th:field="*{dateOfSale}"
+                               th:errorclass="is-invalid"
+                               type="date"
+                               id="saleDate"
+                               class="form-control"
+                               aria-describedby="saleDateHelpInLine">
+                        <small id="saleDateError"
+                               class="invalid-feedback form-text bg-danger rounded">
+                            Sale date cannot be in the future.</small>
+                    </div>
                 </div>
                 <!-- ToDo Adding button -->
 

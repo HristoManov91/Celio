@@ -1,5 +1,6 @@
 package com.example.sellers.model.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -17,6 +18,7 @@ public class Traffic extends BaseEntity{
     public Traffic() {
     }
 
+    @Column
     public LocalDate getDate() {
         return date;
     }
@@ -26,6 +28,7 @@ public class Traffic extends BaseEntity{
         return this;
     }
 
+    @Column
     public Long getQuantity() {
         return quantity;
     }

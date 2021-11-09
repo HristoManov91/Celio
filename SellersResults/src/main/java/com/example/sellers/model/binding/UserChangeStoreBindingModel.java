@@ -4,14 +4,13 @@ import javax.validation.constraints.NotNull;
 
 public class UserChangeStoreBindingModel {
 
-    @NotNull
     private String fullName;
-    @NotNull
     private String store;
 
     public UserChangeStoreBindingModel() {
     }
 
+    @NotNull
     public String getFullName() {
         return fullName;
     }
@@ -21,6 +20,7 @@ public class UserChangeStoreBindingModel {
         return this;
     }
 
+    @NotNull
     public String getStore() {
         return store;
     }
