@@ -10,8 +10,7 @@
     <div class="offers row mx-auto d-flex flex-row justify-content-center">
         <div th:each="u : ${users}" th:object="${u}" class="offer card col-sm-6 col-md-3  col-lg-2 m-1 p-0">
             <div class="card-img-top-wrapper">
-                <img class="card-img-top" th:src="*{getPictureUrl() != null} ? *{getPictureUrl()} : '/img/profile.jpg'"
-                     th:alt="User image">
+                <img class="card-img-top" th:src="*{getPictureUrl() != null} ? *{getPictureUrl()} : '/img/profile.jpg'">
             </div>
             <div class="card-body pb-1">
                 <h5 th:text="|*{fullName}|" class="card-title">
@@ -22,7 +21,10 @@
                     <div class="card-text"><span th:text="|Date of appointment: *{dateOfAppointment}|">• Date appointment</span>
                     </div>
                     <div class="card-text"><span th:text="|Store: *{store.getName()}|">• Store</span></div>
-                    <div class="card-text"><span th:text="|Birthday: *{birthday}|">• Birthday</span></div>
+                    <div class="card-text">
+                        <span th:if="*{birthday != null}" th:text="|Birthday: *{birthday}|">• Birthday</span>
+                        <span th:if="*{birthday == null}" th:text="'N/A'">• Birthday</span>
+                    </div>
                 </li>
             </ul>
             <div class="card-body">

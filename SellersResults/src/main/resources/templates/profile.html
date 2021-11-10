@@ -22,7 +22,9 @@
                         <span th:text="*{fullName}">Names</span>
                         <!-- Birthday -->
                         <h5 class="mt-2 mb-0">Birthday:</h5>
-                        <span th:text="|*{birthday.dayOfMonth}-*{birthday.month}-*{birthday.year}|">26-August-1991</span>
+                        <span th:if="*{birthday != null}"
+                              th:text="|*{birthday.dayOfMonth}-*{birthday.month}-*{birthday.year}|">26-August-1991</span>
+                        <span th:if="*{birthday == null}" th:text="'N/A'"></span>
                         <!-- Store -->
                         <h5 class="mt-4 mb-0">Store:</h5>
                         <span th:text="*{store.getName()}">Store name</span>
@@ -43,8 +45,11 @@
                                 *{getMostProductsInBill().countOfProducts()}|">
                             Date: 01.01.1900 Count of products: 10</span>
                         <!-- Turnover -->
+                        <!-- ToDo да оправя да се вижда и месец и година кога е постигнато -->
                         <h5 class="mt-2 mb-0">Highest Monthly Turnover:</h5>
-                        <span th:text="|Value: *{getHighestMonthlyTurnover()} lv|">Value: 10000lv April 2020></span>
+                        <span th:if="*{getHighestMonthlyTurnover() != null}"
+                              th:text="|Value: *{getHighestMonthlyTurnover()} lv|">Value: 10000lv April 2020></span>
+                        <span th:if="*{getHighestMonthlyTurnover() == null}" th:text="'N/A'"></span>
                         <!-- Description -->
                         <div class="px-4 mt-5">
                             <h5 class="mt-2 mb-0">Description:</h5>

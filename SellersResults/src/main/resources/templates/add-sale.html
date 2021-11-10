@@ -14,7 +14,7 @@
             <form th:action="@{/sales/add}"
                   th:object="${saleAddBindingModel}"
                   method="POST">
-                <!-- User -->
+                <!-- Seller -->
                 <!-- ToDo да направя да може да си добавяш продажба на теб,но не и на други хора,а Manager на всички -->
                 <div sec:authorize="hasRole('ROLE_ADMIN')">
                     <div class="col-auto">
@@ -23,7 +23,7 @@
                                 id="user"
                                 class="custom-select">
                             <option value="">Select Seller</option>
-                            <option th:each="s : ${users}"
+                            <option th:each="s : ${sellers}"
                                     th:value="${s}"
                                     th:text="${s}">
                             </option>

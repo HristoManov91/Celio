@@ -33,7 +33,7 @@ public class SaleController {
 
     @GetMapping("/add")
     public String addSale(Model model){
-        model.addAttribute("users" , userService.findAllUsersFullName());
+        model.addAttribute("sellers" , userService.findAllUsersFullName());
         model.addAttribute("products" , productService.getAllProductsOrderByCategory());
         model.addAttribute("stores" , storeService.findAllStoresNames());
         if (!model.containsAttribute("saleAddBindingModel")){
