@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public interface PictureService {
 
-    String findProfilePictureByUser();
-
     PictureEntity createPicture(MultipartFile multipartFile) throws IOException;
+
+    void deletePictureByPublicId(String pictureId);
 }

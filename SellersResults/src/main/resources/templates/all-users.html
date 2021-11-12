@@ -22,8 +22,8 @@
                     </div>
                     <div class="card-text"><span th:text="|Store: *{store.getName()}|">• Store</span></div>
                     <div class="card-text">
-                        <span th:if="*{birthday != null}" th:text="|Birthday: *{birthday}|">• Birthday</span>
-                        <span th:if="*{birthday == null}" th:text="'N/A'">• Birthday</span>
+                        <span th:if="*{birthday != null}" th:text="|Birthday: *{birthday}|"></span>
+                        <span th:if="*{birthday == null}" th:text="'Birthday: N/A'"></span>
                     </div>
                 </li>
             </ul>

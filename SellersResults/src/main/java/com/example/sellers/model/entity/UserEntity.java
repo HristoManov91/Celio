@@ -80,7 +80,7 @@ public class UserEntity extends BaseEntity {
         return this;
     }
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     public PictureEntity getPicture() {
         return picture;
     }

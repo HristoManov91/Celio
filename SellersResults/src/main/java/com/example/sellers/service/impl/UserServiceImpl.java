@@ -17,9 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DateFormat;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -31,15 +29,17 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final StoreService storeService;
     private final UserRoleService userRoleService;
+    private final PictureService pictureService;
     private final SaleService saleService;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
 
     public UserServiceImpl(UserRepository userRepository, StoreService storeService, UserRoleService userRoleService,
-                           @Lazy SaleService saleService, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
+                           PictureService pictureService, @Lazy SaleService saleService, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.storeService = storeService;
         this.userRoleService = userRoleService;
+        this.pictureService = pictureService;
         this.saleService = saleService;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
@@ -227,19 +227,19 @@ public class UserServiceImpl implements UserService {
         UserEntity userEntity = userRepository.findById(profileModel.getId())
                 .orElseThrow(() -> new ObjectNotFoundException("Offer with id " + profileModel.getId() + " not found!"));
 
+        if (userEntity.getPicture() != null){
+            String pictureId = userEntity.getPicture().getPublicId();
+            userEntity.setPicture(null);
+            userRepository.save(userEntity);
+            pictureService.deletePictureByPublicId(pictureId);
+        }
+
         userEntity
                 .setPicture(profileModel.getPicture())
                 .setBirthday(profileModel.getBirthday())
                 .setDateOfAppointment(profileModel.getDateOfAppointment())
                 .setDescription(profileModel.getDescription());
-        //   private Long id;
-        //    private String fullName;
-        //    private LocalDate birthday;
-        //    private LocalDate dateOfAppointment;
-        //    private String imageUrl;
-        //    private String description;
-        //    private StoreEntity store;
-        //    private UserRoleEnum role;
+
         userRepository.save(userEntity);
     }
 

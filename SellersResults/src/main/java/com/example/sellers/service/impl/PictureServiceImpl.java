@@ -9,6 +9,7 @@ import com.example.sellers.service.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 
 @Service
@@ -23,11 +24,6 @@ public class PictureServiceImpl implements PictureService {
     }
 
     @Override
-    public String findProfilePictureByUser() {
-        return null;
-    }
-
-    @Override
     public PictureEntity createPicture(MultipartFile multipartFile) throws IOException {
         CloudinaryImage uploaded = cloudinaryService.upload(multipartFile);
 
@@ -36,5 +32,13 @@ public class PictureServiceImpl implements PictureService {
                 .setUrl(uploaded.getUrl());
 
         return pictureRepository.save(picture);
+    }
+
+    @Transactional
+    @Override
+    public void deletePictureByPublicId(String publicId) {
+        if (cloudinaryService.delete(publicId)){
+            pictureRepository.deletePictureEntityByPublicId(publicId);
+        }
     }
 }

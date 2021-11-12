@@ -13,7 +13,7 @@
         <div class="row g-3" style="color: red">
             <form th:action="@{/sales/add}"
                   th:object="${saleAddBindingModel}"
-                  method="POST">
+                  th:method="POST">
                 <!-- Seller -->
                 <!-- ToDo да направя да може да си добавяш продажба на теб,но не и на други хора,а Manager на всички -->
                 <div sec:authorize="hasRole('ROLE_ADMIN')">
@@ -57,7 +57,7 @@
                                 id="product"
                                 class="custom-select">
                             <!-- ToDo да разбера как става с optgroup -->
-                            <!--пример: <option value="">select а ... </option>
+                            <!-- <option value="">select а ... </option>
                             <optgroup th:each="field1 : ${objA}" th:label="${field1.name}"-->
                             <option value="">Select Product</option>
                             <option th:each="p : ${products}"
@@ -68,6 +68,11 @@
                     </div>
                     <small id="productError" class="invalid-feedback form-text bg-danger rounded">You must select
                         product</small>
+                </div>
+                <div class="d-flex justify-content-center mt-4">
+                    <button type="button"
+                            class="add-product btn btn-outline-secondary col-lg-8">+ Add another product
+                    </button>
                 </div>
                 <!-- Date -->
                 <div>
@@ -97,5 +102,9 @@
     </div>
 </main>
 <th:block th:include="~{fragments/footer}"></th:block>
+
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"-->
+<!--        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"-->
+<!--        crossorigin="anonymous"></script>-->
 </body>
 </html>
