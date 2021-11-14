@@ -9,7 +9,9 @@ import com.example.sellers.service.CloudinaryService;
 import com.example.sellers.service.PictureService;
 import com.example.sellers.service.StoreService;
 import com.example.sellers.service.UserService;
+import com.example.sellers.web.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,14 +32,13 @@ public class UserController {
 
     private final UserService userService;
     private final StoreService storeService;
-    private final CloudinaryService cloudinaryService;
     private final PictureService pictureService;
     private final ModelMapper modelMapper;
 
-    public UserController(UserService userService, StoreService storeService, CloudinaryService cloudinaryService, PictureService pictureService, ModelMapper modelMapper) {
+    public UserController(UserService userService, StoreService storeService, PictureService pictureService,
+                          ModelMapper modelMapper) {
         this.userService = userService;
         this.storeService = storeService;
-        this.cloudinaryService = cloudinaryService;
         this.pictureService = pictureService;
         this.modelMapper = modelMapper;
     }
@@ -126,15 +127,16 @@ public class UserController {
         return "edit-user";
     }
 
-    @GetMapping("/profile/{id}/edit/errors")
-    public String editUserErrors(@PathVariable Long id, Model model) {
-        return "edit-user";
-    }
+//    @GetMapping("/profile/{id}/edit/errors")
+//    public String editUserErrors(@PathVariable Long id, Model model) {
+//        return "edit-user";
+//    }
 
     @PatchMapping("/profile/{id}/edit")
     public String editUser(@PathVariable Long id, @Valid ProfileUpdateBindingModel profileUpdateBindingModel,
                            BindingResult bindingResult, RedirectAttributes redirectAttributes) throws IOException {
 
+        System.out.println();
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("profileUpdateBindingModel", profileUpdateBindingModel);
             redirectAttributes
@@ -247,5 +249,15 @@ public class UserController {
         userService.approvedUser(userBindingModel.getFullName());
 
         return "redirect:approval";
+    }
+
+    //Exception
+    @ExceptionHandler(ObjectNotFoundException.class)
+    public ModelAndView handleObException(ObjectNotFoundException ex) {
+        ModelAndView modelAndView = new ModelAndView("error-404");
+        modelAndView.addObject("message", ex.getMessage());
+        modelAndView.addObject("Id", ex.getId());
+        modelAndView.setStatus(HttpStatus.NOT_FOUND);
+        return modelAndView;
     }
 }

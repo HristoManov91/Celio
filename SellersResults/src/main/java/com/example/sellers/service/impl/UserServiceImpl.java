@@ -161,7 +161,8 @@ public class UserServiceImpl implements UserService {
     public void changeUserStore(String fullName, String store) {
         UserEntity user = userRepository
                 .findUserEntityByFullNameAndLeftEmployeeIsFalseAndApprovedIsTrue(fullName)
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() ->
+                        new ObjectNotFoundException("User with this full name " + fullName + " not found", fullName));
 
         user.setStore(storeService.findByName(store));
 
@@ -173,10 +174,10 @@ public class UserServiceImpl implements UserService {
         UserRoleEntity userRole = userRoleService.findUserRoleByName(role);
 
         UserEntity user = userRepository.findUserEntityByFullNameAndLeftEmployeeIsFalseAndApprovedIsTrue(userFullName)
-                .orElseThrow(() -> new IllegalArgumentException("User with this full name not found"));
+                .orElseThrow(() ->
+                        new ObjectNotFoundException("User with this full name " + userFullName + " not found", userFullName));
 
         user.addRole(userRole);
-
 
         userRepository.save(user);
     }
@@ -184,7 +185,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public void removeUser(String fullName) {
         UserEntity user = userRepository.findUserEntityByFullNameAndLeftEmployeeIsFalseAndApprovedIsTrue(fullName)
-                .orElseThrow(() -> new IllegalStateException("User with this full name not found"));
+                .orElseThrow(() ->
+                        new ObjectNotFoundException("User with this full name " + fullName + " not found", fullName));
 
         user.setLeftEmployee(true);
         userRepository.save(user);
@@ -201,7 +203,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ProfileViewModel findByIdProfileViewModel(Long id) {
-        return userRepository.findById(id).map(this::mapToProfileView).get();
+        UserEntity userEntity = userRepository.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException("User with this id " + id + " not found", id.toString()));
+
+        return mapToProfileView(userEntity);
     }
 
     @Override
@@ -217,7 +222,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public ProfileViewModel findUserViewModelByEmail(String email) {
         UserEntity userEntity = userRepository.findByEmail(email)
-                .orElseThrow(() -> new IllegalArgumentException("User with this email not found"));
+                .orElseThrow(() -> new ObjectNotFoundException("User with this email " + email + " not found", email));
 
         return mapToProfileView(userEntity);
     }
@@ -225,9 +230,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void editProfile(ProfileUpdateServiceModel profileModel) {
         UserEntity userEntity = userRepository.findById(profileModel.getId())
-                .orElseThrow(() -> new ObjectNotFoundException("Offer with id " + profileModel.getId() + " not found!"));
+                .orElseThrow(() ->
+                        new ObjectNotFoundException("User with id " + profileModel.getId() + " not found!",
+                                profileModel.getId().toString()));
 
-        if (userEntity.getPicture() != null){
+        if (userEntity.getPicture() != null) {
             String pictureId = userEntity.getPicture().getPublicId();
             userEntity.setPicture(null);
             userRepository.save(userEntity);
@@ -251,7 +258,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public void approvedUser(String fullName) {
         UserEntity user = userRepository.findUserEntityByFullNameAndLeftEmployeeIsFalseAndApprovedIsFalse(fullName)
-                .orElseThrow(() -> new IllegalStateException("User with this full name not found"));
+                .orElseThrow(() ->
+                        new ObjectNotFoundException("User with this full name " + fullName + " not found", fullName));
 
         user.setApproved(true);
 
@@ -261,14 +269,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserEntity findById(Long id) {
         return userRepository.findById(id)
-                .orElseThrow(() -> new IllegalStateException("User with this full name not found"));
+                .orElseThrow(() -> new ObjectNotFoundException("User with this id " + id + " not found", id.toString()));
     }
 
     private ProfileViewModel mapToProfileView(UserEntity user) {
         ProfileViewModel profile = modelMapper.map(user, ProfileViewModel.class);
         //ToDo да направя по-добър формат за датите
 
-        if (user.getPicture() != null){
+        if (user.getPicture() != null) {
             profile.setPictureUrl(user.getPicture().getUrl());
         }
 

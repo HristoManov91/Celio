@@ -6,7 +6,14 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.NOT_FOUND)
 public class ObjectNotFoundException extends RuntimeException {
 
-    public ObjectNotFoundException(String message) {
+    private final String value;
+
+    public ObjectNotFoundException(String message, String value) {
         super(message);
+        this.value = value;
+    }
+
+    public String getId() {
+        return value;
     }
 }
