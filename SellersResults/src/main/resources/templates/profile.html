@@ -36,7 +36,7 @@
                         <h5 class="mt-2 mb-0">Best bill:</h5>
                         <!-- ToDo да питам как да форматирам датата до dd-MMM-yyyy -->
                         <span th:if="*{bestBill != null}"
-                              th:text="|Date: *{bestBill.getDateOfSale()} Sum: *{bestBill.sumOfProductPrice()} lv.|">
+                              th:text="|Date: *{bestBill.getDateOfSale().format(${dateFormat})} Sum: *{bestBill.sumOfProductPrice()} lv.|">
                             Date: 01.01.1900 Sum: 1000</span>
                         <!-- Bill with most products -->
                         <h5 class="mt-2 mb-0">Bill with the most products:</h5>
@@ -57,7 +57,7 @@
                                 adipisicing elit. Enim et nostrum optio perferendis quam quod ratione rem sit soluta
                                 ut! A dolor laborum, maiores neque nesciunt quis rerum sunt suscipit.</p>
                         </div>
-                        <!--ToDo да оправя бутона да изглежда по-добре и да ми сложа -->
+                        <!--ToDo да оправя бутона да изглежда по-добре и да му сложа -->
                         <!-- да се появява само ако User-a разгледа своя профил -->
                         <div class="card-body">
                             <a class="nav-link" th:href="@{/users/profile/{id}/edit(id=*{id})}">Edit Profile

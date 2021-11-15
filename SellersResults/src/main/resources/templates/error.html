@@ -3,16 +3,17 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <th:block th:include="~{fragments/head}"></th:block>
-<body>
+<body id="error-page">
 
 <th:block th:include="~{fragments/nav}"></th:block>
 
 <main class="p-5 align-content-center bg-blur">
 
-  Ups... something went wrong! <br/>
-  A team of highly trained monkeys has been dispatched to deal with this situation.
+  <!-- ToDo fix text -->
+  Ups... something went wrong! <br>
+  A team of highly trained monkeys has been dispatched to deal with this situation.<br>
+  Go back to the home page <a href="/home">here</a>
 
 </main>
-<th:block th:include="~{fragments/footer}"></th:block>
 </body>
 </html>

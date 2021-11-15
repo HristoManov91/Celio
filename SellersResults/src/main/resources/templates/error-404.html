@@ -3,19 +3,16 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <th:block th:include="~{fragments/head}"></th:block>
-<body>
+<body id="error-page-404">
 
-<th:block th:include="~{fragments/nav}"></th:block>
-
-<main class="p-5 align-content-center bg-blur">
+<main class="p-3 align-content-center bg-white">
 
   <h1>UUUPS!</h1>
-  <!-- ToDo fix nice UX -->
-  Sorry, <span th:text="${message}"></span>
+  <!-- ToDo fix text -->
+  Sorry, <span th:text="${message}"></span>!<br>
 
   Go back to the home page <a href="/home">here</a>
 
 </main>
-<th:block th:include="~{fragments/footer}"></th:block>
 </body>
 </html>

@@ -1,9 +1,29 @@
 body {
-    /*background-image: url("/static/img/background2.png");*/
     background-image: url("/img/background2.png");
     background-position: center;
     background-attachment: fixed;
     background-size: cover;
+}
+
+#error-page {
+    background-image: url("/img/error.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 700px 300px;
+}
+
+#error-page-404 {
+    background-image: url("/img/error-404.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 700px 500px;
+}
+
+#error-page-500 {
+    background-image: url("/img/error.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 700px 300px;
 }
 
 nav ul li a {

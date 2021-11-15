@@ -127,11 +127,6 @@ public class UserController {
         return "edit-user";
     }
 
-//    @GetMapping("/profile/{id}/edit/errors")
-//    public String editUserErrors(@PathVariable Long id, Model model) {
-//        return "edit-user";
-//    }
-
     @PatchMapping("/profile/{id}/edit")
     public String editUser(@PathVariable Long id, @Valid ProfileUpdateBindingModel profileUpdateBindingModel,
                            BindingResult bindingResult, RedirectAttributes redirectAttributes) throws IOException {

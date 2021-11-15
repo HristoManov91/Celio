@@ -3,21 +3,14 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <th:block th:include="~{fragments/head}"></th:block>
-<body>
-
-<th:block th:include="~{fragments/nav}"></th:block>
+<body id="error-page-500">
 
 <main class="p-5 align-content-center bg-blur">
 
-  <h1>UUUPS!</h1>
-  <!-- ToDo fix nice UX -->
-    <p class="text-light">
-      It seems that we made a small, negligible mistake!
-      Please excuse us, we are working on it...
-      Go back to the home page <a href="/home">here</a>
-    </p>
+    <h1> Ups... something went wrong!</h1>
+    A team of highly trained monkeys has been dispatched to deal with this situation.<br>
+    Go back to the home page <a href="/home">here</a>
 
 </main>
-<th:block th:include="~{fragments/footer}"></th:block>
 </body>
 </html>
