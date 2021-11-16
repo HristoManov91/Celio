@@ -5,7 +5,7 @@ public class UserRegistrationServiceModel {
     private String email;
     private String password;
     private String fullName;
-    private String shop;
+    private String store;
 
     public UserRegistrationServiceModel() {
     }
@@ -37,12 +37,12 @@ public class UserRegistrationServiceModel {
         return this;
     }
 
-    public String getShop() {
-        return shop;
+    public String getStore() {
+        return store;
     }
 
-    public UserRegistrationServiceModel setShop(String shop) {
-        this.shop = shop;
+    public UserRegistrationServiceModel setStore(String store) {
+        this.store = store;
         return this;
     }
 }

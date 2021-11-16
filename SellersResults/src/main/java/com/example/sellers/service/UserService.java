@@ -66,4 +66,8 @@ public interface UserService {
     void approvedUser(String fullName);
 
     UserEntity findById(Long id);
+
+    boolean isAdmin(UserEntity user);
+
+    boolean isAuthorize(String email , Long id);
 }

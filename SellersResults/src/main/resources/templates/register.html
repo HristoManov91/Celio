@@ -23,9 +23,9 @@
                                    class="form-control"
                                    aria-describedby="emailHelpInLine">
                             <small id="emailError"
-                                   class="invalid-feedback form-text bg-danger rounded">Email must be valid</small>
-                            <small id="usernameUniqueError"
-                                   class="text-light form-text bg-danger rounded">Username is already occupied</small>
+                                   class="invalid-feedback form-text bg-danger rounded text-white">Email must be valid</small>
+                            <small th:if="${userExistError}" id="usernameUniqueError"
+                                   class="text-light form-text bg-danger rounded text-white">Username is already occupied</small>
                         </div>
                     </div>
                     <!-- Password -->
@@ -42,7 +42,7 @@
                                    class="form-control"
                                    aria-describedby="passwordHelpInLine">
                             <small id="passwordError"
-                                   class="invalid-feedback form-text bg-danger rounded">
+                                   class="invalid-feedback form-text bg-danger rounded text-white">
                                 Length must be 6 and 20 characters</small>
                         </div>
                     </div>
@@ -60,8 +60,12 @@
                                    class="form-control"
                                    aria-describedby="confirmPasswordHelpInline">
                             <small id="confirmPasswordError"
-                                   class="invalid-feedback form-text bg-danger rounded">
-                                Password length must be between 6 and 20 characters and passwords should match.</small>
+                                   class="invalid-feedback form-text bg-danger rounded text-white">
+                                Password length must be between 6 and 20 characters.</small>
+                            <small th:if="${!equalsPassword}" id="equals-password"
+                                   class="form-text bg-danger rounded text-white">
+                                Passwords should be match.
+                            </small>
                         </div>
                     </div>
                     <!-- Full name -->
@@ -78,7 +82,7 @@
                                    class="form-control"
                                    aria-describedby="fullNameHelpInLine">
                             <small id="fullNameError"
-                                   class="invalid-feedback form-text bg-danger rounded">
+                                   class="invalid-feedback form-text bg-danger rounded text-white">
                                 Length must be 6 and 30 characters</small>
                         </div>
                     </div>
@@ -96,8 +100,8 @@
                                 </option>
                             </select>
                         </div>
-                        <small id="storeError" class="invalid-feedback form-text bg-danger rounded">You must select
-                            store</small>
+                        <small id="storeError" class="invalid-feedback form-text bg-danger rounded text-white">
+                            You must select store</small>
                     </div>
                     <!-- Button -->
                     <div class="d-flex justify-content-center mt-4">

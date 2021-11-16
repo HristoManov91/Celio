@@ -21,11 +21,7 @@
                         id="fullName"
                         th:field="*{fullName}"
                         th:errorclass="is-invalid"
-                        type="text" class="form-control"
-                        placeholder="Въведете име"/>
-                <p class="invalid-feedback errors alert alert-danger">
-                    Full name is required.
-                </p>
+                        type="text" class="form-control"/>
             </div>
             <!-- Birthday -->
             <div class="form-group col-md-6 mb-3">
@@ -51,8 +47,7 @@
                         id="store"
                         th:field="*{store.name}"
                         type="text"
-                        class="form-control"
-                        placeholder="Best bill is calculated by the program"/>
+                        class="form-control"/>
             </div>
             <!-- Role -->
             <div class="form-group col-md-6 mb-3">
@@ -61,8 +56,7 @@
                         id="role"
                         th:field="*{role.name}"
                         type="text"
-                        class="form-control"
-                        placeholder="Best bill is calculated by the program"/>
+                        class="form-control"/>
             </div>
         </div>
         <div class="row">
@@ -72,8 +66,7 @@
                 <input id="dateOfAppointment"
                         th:field="*{dateOfAppointment}"
                         type="date"
-                        class="form-control"
-                        placeholder="Date of appointment is required"/>
+                        class="form-control"/>
             </div>
             <!-- Image -->
             <div class="form-group col-md-6 mb-3">
@@ -82,9 +75,6 @@
                        th:field="*{picture}"
                        type="file"
                        class="form-control">
-                <p class="invalid-feedback errors alert alert-danger">
-                    Image is required.
-                </p>
             </div>
         </div>
         <!-- Description -->

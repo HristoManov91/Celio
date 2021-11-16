@@ -12,6 +12,7 @@ import com.example.sellers.service.UserService;
 import com.example.sellers.web.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -83,7 +84,7 @@ public class UserController {
             redirectAttributes.addFlashAttribute("userRegisterBindingModel", userRegisterBindingModel);
             redirectAttributes.addFlashAttribute(
                     "org.springframework.validation.BindingResult.userRegisterBindingModel", bindingResult);
-            redirectAttributes.addFlashAttribute("equalsPassword", false);
+            redirectAttributes.addFlashAttribute("equalsPassword", equalsPassword);
             return "redirect:register";
         }
 
@@ -106,8 +107,6 @@ public class UserController {
 
     @GetMapping("/profile")
     public String profile(Principal principal, Model model) {
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
-        model.addAttribute("dateFormat", dateFormat);
         String email = principal.getName();
         model.addAttribute("user", userService.findUserViewModelByEmail(email));
         return "profile";
@@ -119,17 +118,20 @@ public class UserController {
         return "profile";
     }
 
+    @PreAuthorize("@userServiceImpl.isAuthorize(#principal.name , #id)")
     @GetMapping("/profile/{id}/edit")
-    public String editUser(@PathVariable Long id, Model model) {
+    public String editUser(@PathVariable Long id, Model model , Principal principal) {
         ProfileViewModel view = this.userService.findByIdProfileViewModel(id);
         ProfileUpdateBindingModel map = modelMapper.map(view, ProfileUpdateBindingModel.class);
         model.addAttribute("user", map);
         return "edit-user";
     }
 
+    @PreAuthorize("@userServiceImpl.isAuthorize(#principal.name , #id)")
     @PatchMapping("/profile/{id}/edit")
     public String editUser(@PathVariable Long id, @Valid ProfileUpdateBindingModel profileUpdateBindingModel,
-                           BindingResult bindingResult, RedirectAttributes redirectAttributes) throws IOException {
+                           BindingResult bindingResult, RedirectAttributes redirectAttributes,
+                           Principal principal) throws IOException {
 
         System.out.println();
         if (bindingResult.hasErrors()) {
@@ -138,13 +140,15 @@ public class UserController {
                     .addFlashAttribute("org.springframework.validation.BindingResult.profileUpdateBindingModel",
                             bindingResult);
 
-            return "redirect:/users/profile/" + id + "/edit/errors";
+            return "redirect:/users/profile/" + id + "/edit";
         }
         ProfileUpdateServiceModel model = modelMapper.map(profileUpdateBindingModel, ProfileUpdateServiceModel.class);
-        model.setPicture(pictureService.createPicture(profileUpdateBindingModel.getPicture()));
+        if (profileUpdateBindingModel.getPicture() != null) {
+            model.setPicture(pictureService.createPicture(profileUpdateBindingModel.getPicture()));
+        }
         userService.editProfile(model);
 
-        return "redirect:/users/profile";
+        return "redirect:/users/profile/" + id + "/details";
     }
 
     @GetMapping("/profile/all")

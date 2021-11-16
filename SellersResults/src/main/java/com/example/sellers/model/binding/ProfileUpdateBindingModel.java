@@ -66,7 +66,6 @@ public class ProfileUpdateBindingModel {
         return this;
     }
 
-    @NotNull
     public MultipartFile getPicture() {
         return picture;
     }

@@ -147,7 +147,7 @@ public class UserServiceImpl implements UserService {
 
         user.setDateOfAppointment(LocalDate.now());
 
-        user.setStore(storeService.findByName(userRegistrationServiceModel.getShop()));
+        user.setStore(storeService.findByName(userRegistrationServiceModel.getStore()));
 
         userRepository.save(user);
     }
@@ -286,6 +286,25 @@ public class UserServiceImpl implements UserService {
                 .setRole(user.findHighestRole());
 
         return profile;
+    }
+
+    @Override
+    public boolean isAuthorize(String email, Long id) {
+        UserEntity user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ObjectNotFoundException("User with this email " + email + " not found!", email));
+
+        boolean admin = isAdmin(user);
+        boolean equals = user.getId().equals(id);
+
+        return isAdmin(user) || user.getId().equals(id);
+    }
+
+    @Override
+    public boolean isAdmin(UserEntity user) {
+        return user.getRoles()
+                .stream()
+                .map(UserRoleEntity::getRole)
+                .anyMatch(r -> r == UserRoleEnum.ADMIN);
     }
 
 }
