@@ -5,7 +5,7 @@ import com.example.sellers.model.entity.StoreEntity;
 import java.util.List;
 
 public interface StoreService {
-    void initShops();
+    void initStores();
 
     StoreEntity findById(Long shopId);
 

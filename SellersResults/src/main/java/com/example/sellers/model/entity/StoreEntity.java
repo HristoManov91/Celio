@@ -1,7 +1,6 @@
 package com.example.sellers.model.entity;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 
@@ -13,10 +12,9 @@ public class StoreEntity extends BaseEntity{
     private String description;
     private List<UserEntity> sellers;
     private Set<SaleEntity> sales;
-    //ToDo да направя колекция от таргети да се пази
-    private BigDecimal targets;
-    private List<Traffic> traffic;
-    //ToDo да добавя колекция със снимки
+    private List<VisitorEntity> visitors;
+    private List<TargetEntity> targets;
+    private List<PictureEntity> pictures;
 
     public StoreEntity() {
     }
@@ -41,7 +39,7 @@ public class StoreEntity extends BaseEntity{
         return this;
     }
 
-    @OneToMany(mappedBy = "storeEntity")
+    @OneToMany(mappedBy = "store")
     public Set<SaleEntity> getSales() {
         return sales;
     }
@@ -61,22 +59,33 @@ public class StoreEntity extends BaseEntity{
         return this;
     }
 
-    public BigDecimal getTargets() {
+    @OneToMany
+    public List<TargetEntity> getTargets() {
         return targets;
     }
 
-    public StoreEntity setTargets(BigDecimal targets) {
+    public StoreEntity setTargets(List<TargetEntity> targets) {
         this.targets = targets;
         return this;
     }
 
-    @OneToMany(mappedBy = "store")
-    public List<Traffic> getTraffic() {
-        return traffic;
+    @OneToMany
+    public List<PictureEntity> getPictures() {
+        return pictures;
     }
 
-    public StoreEntity setTraffic(List<Traffic> traffic) {
-        this.traffic = traffic;
+    public StoreEntity setPictures(List<PictureEntity> pictures) {
+        this.pictures = pictures;
+        return this;
+    }
+
+    @OneToMany()
+    public List<VisitorEntity> getVisitors() {
+        return visitors;
+    }
+
+    public StoreEntity setVisitors(List<VisitorEntity> visitors) {
+        this.visitors = visitors;
         return this;
     }
 }

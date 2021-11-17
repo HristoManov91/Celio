@@ -13,6 +13,7 @@ import com.example.sellers.web.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -108,12 +109,15 @@ public class UserController {
     @GetMapping("/profile")
     public String profile(Principal principal, Model model) {
         String email = principal.getName();
+        model.addAttribute("isAuthorize" , true);
         model.addAttribute("user", userService.findUserViewModelByEmail(email));
         return "profile";
     }
 
     @GetMapping("/profile/{id}/details")
-    public String showProfileDetails(@PathVariable Long id, Model model) {
+    public String showProfileDetails(@PathVariable Long id, Model model , Principal principal) {
+        boolean authorize = userService.isAuthorize(principal.getName(), id);
+        model.addAttribute("isAuthorize" , authorize);
         model.addAttribute("user", this.userService.findByIdProfileViewModel(id));
         return "profile";
     }

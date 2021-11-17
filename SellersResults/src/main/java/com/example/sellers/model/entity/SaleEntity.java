@@ -12,7 +12,7 @@ public class SaleEntity extends BaseEntity {
     private LocalDate dateOfSale;
     List<ProductEntity> products = new ArrayList<>();
     private UserEntity userEntity;
-    private StoreEntity storeEntity;
+    private StoreEntity store;
 
     public SaleEntity() {
     }
@@ -38,12 +38,12 @@ public class SaleEntity extends BaseEntity {
     }
 
     @ManyToOne
-    public StoreEntity getStoreEntity() {
-        return storeEntity;
+    public StoreEntity getStore() {
+        return store;
     }
 
-    public SaleEntity setStoreEntity(StoreEntity storeEntity) {
-        this.storeEntity = storeEntity;
+    public SaleEntity setStore(StoreEntity storeEntity) {
+        this.store = storeEntity;
         return this;
     }
 
@@ -61,12 +61,11 @@ public class SaleEntity extends BaseEntity {
         if (this.getProducts() == null) {
             return BigDecimal.ZERO;
         }
-        BigDecimal reduce = this.getProducts()
+
+        return this.getProducts()
                 .stream()
                 .map(ProductEntity::getPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-
-        return reduce;
     }
 
     public int countOfProducts() {

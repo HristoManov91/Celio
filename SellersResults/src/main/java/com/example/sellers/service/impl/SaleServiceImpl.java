@@ -48,7 +48,7 @@ public class SaleServiceImpl implements SaleService {
                 .setProducts(productEntities)
                 .setDateOfSale(LocalDate.now())
                 .setUserEntity(userEntity)
-                .setStoreEntity(storeEntity);
+                .setStore(storeEntity);
 
         saleRepository.save(saleEntity);
 

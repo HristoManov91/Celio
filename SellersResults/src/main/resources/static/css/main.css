@@ -54,7 +54,7 @@ body div main h1 {
     border: none;
 }
 
- /*така вместо да оцветяваме полетата слагама граница за показване на валидация*/
+ /* така вместо да оцветяваме полетата слагама граница за показване на валидация */
 input:valid {
     border: lawngreen solid 2px;
 }
@@ -96,34 +96,4 @@ input:invalid:required {
 .dropdown-item:hover {
     background-color: #dc3545;
 }
-
-/*.profile-card:before {*/
-/*    content: "";*/
-/*    position: absolute;*/
-/*    left: 0;*/
-/*    top: 0;*/
-/*    width: 4px;*/
-/*    height: 100%;*/
-/*    background-color: #bbbef5;*/
-/*    transform: scaleY(1);*/
-/*    transition: all 0.5s;*/
-/*    transform-origin: bottom*/
-/*}*/
-
-/*.profile-card:after {*/
-/*    content: "";*/
-/*    position: absolute;*/
-/*    left: 0;*/
-/*    top: 0;*/
-/*    width: 4px;*/
-/*    height: 100%;*/
-/*    background-color: #0833e3;*/
-/*    transform: scaleY(0);*/
-/*    transition: all 0.5s;*/
-/*    transform-origin: bottom*/
-/*}*/
-
-/*.profile-card:hover::after {*/
-/*    transform: scaleY(1)*/
-/*}*/
 

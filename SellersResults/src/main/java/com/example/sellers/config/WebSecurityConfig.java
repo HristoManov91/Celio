@@ -1,14 +1,17 @@
 package com.example.sellers.config;
 
+import com.example.sellers.model.entity.enums.UserRoleEnum;
 import com.example.sellers.security.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -32,6 +35,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/img/**", "/js/**" , "/css/**").permitAll()
                 // allow access to index, user login and registration to anyone
                 .antMatchers("/", "/users/login", "/users/register").permitAll()
+                // така слагаме защита на /statistics да се вижда само от User с роля Admin
+                .antMatchers("/statistics").hasRole(UserRoleEnum.ADMIN.name())
                 //така слагаме защита всички останали страници да не са достъпни
                 .antMatchers("/**").authenticated()
                 .and()
@@ -46,7 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // on login success redirect here
                 .defaultSuccessUrl("/home")
                 // on login failure redirect here
-                .failureForwardUrl("/users/login-error")//ToDo да направя error страница
+                .failureForwardUrl("/users/login-error")
                 .and()
                 .logout()
                 // which endpoint performs logout, e.g. http://localhost:8080/logout (!this should be POST request)

@@ -17,7 +17,7 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
-    public void initShops() {
+    public void initStores() {
         if (storeRepository.count() == 0) {
             StoreEntity theMall = new StoreEntity().setName("The Mall").setDescription("Description for TheMall");
             storeRepository.save(theMall);

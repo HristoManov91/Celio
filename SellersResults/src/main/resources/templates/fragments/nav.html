@@ -75,14 +75,27 @@
                     <a class="nav-link" sec:authorize="isAuthenticated()" href="#">Training</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" sec:authorize="!isAuthenticated()" href="/users/register">Register</a>
+                    <a class="nav-link" sec:authorize="!isAuthenticated()" th:text="#{registration}" href="/users/register">Register</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" sec:authorize="!isAuthenticated()" href="/users/login">Login</a>
+                    <a class="nav-link" sec:authorize="!isAuthenticated()" th:text="#{login}" href="/users/login">Login</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/users/profile}">Profile</a>
                 </li>
+                <form th:method="get">
+                    <label for="lang">
+                        <img th:src="${#locale.toString()} == 'en_US' ? '/img/usa-flag.jpg' : '/img/bg-flag.png'"
+                              width="35" height="25" alt="flag">
+                    </label>
+                    <select
+                            onchange="this.form.submit()"
+                            id="lang"
+                            name="lang">
+                        <option value="en_US" th:selected="${#locale.toString()} == 'en_US'">English</option>
+                        <option value="bg_BG" th:selected="${#locale.toString()} == 'bg_BG'">Български</option>
+                    </select>
+                </form>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
                     <form th:action="@{/logout}" th:method="POST">
                         <button class="form-inline my-2 my-lg-0 border px-3" type="submit" >Logout</button>

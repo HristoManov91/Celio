@@ -293,9 +293,6 @@ public class UserServiceImpl implements UserService {
         UserEntity user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ObjectNotFoundException("User with this email " + email + " not found!", email));
 
-        boolean admin = isAdmin(user);
-        boolean equals = user.getId().equals(id);
-
         return isAdmin(user) || user.getId().equals(id);
     }
 
@@ -306,5 +303,4 @@ public class UserServiceImpl implements UserService {
                 .map(UserRoleEntity::getRole)
                 .anyMatch(r -> r == UserRoleEnum.ADMIN);
     }
-
 }
