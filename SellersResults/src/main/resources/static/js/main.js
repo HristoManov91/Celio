@@ -6,22 +6,19 @@ $(document).ready(function () {
     $('.add-product').click(function () {
 
         if (index < max_fields) {
-            let newRow = jQuery('<div class="product row">' +
-                ' <div class="col-lg-6 mb-3">' +
-                ' Name' +
-                ' <input name="products[' + index + '].name" type="text" class="form-control form-control-lg"/>' +
-                ' </div>' +
-                // ' <div class="col-lg-6 mb-3">' +
-                // '  Quantity(grams)\n' +
-                // ' <input name="products[' + index + '].quantity" type="number" step="0.1" min="0"' +
-                // ' class="form-control form-control-lg"/>' +
-                // '</div>' +
+            let newRow = jQuery('<div class="col-auto"> ' +
+                ' <label for="product">Product</label> ' +
+                ' <select th:field="*{products}" id="product" class="custom-select" ' +
+                ' <option value="">Select Product</option> ' +
+                ' <option th:each="p : ${products}" ' +
+                'th:value="${p.name}" ' +
+                'th:text="|${p.category}: ${p.name} ${p.price}|"> ' +
+                ' </option> ' +
+                '  </select> ' +
                 '</div>');
-
             index++;
 
             $('.products').append(newRow)
         }
-
     });
 });

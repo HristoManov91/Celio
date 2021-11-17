@@ -37,7 +37,7 @@
                         <!-- ToDo да питам как да форматирам датата до dd-MMM-yyyy -->
                         <span th:if="*{bestBill != null}"
                               th:text="|Date: *{bestBill.getDateOfSale()} Sum: *{bestBill.sumOfProductPrice()} lv.
-                                 in store *{bestBill.getStoreEntity().name}.|">Date: 01.01.1900 Sum: 1000</span>
+                                 in store *{bestBill.getStore().name}.|">Date: 01.01.1900 Sum: 1000</span>
 
                         <span th:if="*{bestBill == null}" th:text="'N/A'"></span>
 
@@ -45,7 +45,7 @@
                         <h5 class="mt-2 mb-0">Bill with the most products:</h5>
                         <span th:if="*{mostProductsInBill != null}"
                               th:text="|Date: *{getMostProductsInBill().getDateOfSale()} Count of products:
-                                *{getMostProductsInBill().countOfProducts()} in store *{getMostProductsInBill().storeEntity.name}.|">
+                                *{getMostProductsInBill().countOfProducts()} in store *{getMostProductsInBill().store.name}.|">
                             Date: 01.01.1900 Count of products: 10</span>
 
                         <span th:if="*{mostProductsInBill == null}" th:text="'N/A'"></span>
@@ -64,7 +64,7 @@
                         </div>
                         <!--ToDo да оправя бутона да изглежда по-добре и да му сложа -->
                         <!-- да се появява само ако User-a разгледа своя профил -->
-                        <div class="card-body">
+                        <div class="card-body" th:if="${isAuthorize}">
                             <a class="nav-link" th:href="@{/users/profile/{id}/edit(id=*{id})}">Edit Profile
                             </a>
                         </div>

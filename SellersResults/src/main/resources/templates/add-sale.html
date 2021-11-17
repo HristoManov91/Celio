@@ -49,8 +49,8 @@
                     <small id="storeError" class="invalid-feedback form-text bg-danger rounded">You must select
                         store</small>
                 </div>
-                <!-- Product -->
-                <div>
+                <!-- Products -->
+                <div class="products">
                     <div class="col-auto">
                         <label for="product">Product</label>
                         <select th:field="*{products}"
@@ -60,9 +60,7 @@
                             <!-- <option value="">select а ... </option>
                             <optgroup th:each="field1 : ${objA}" th:label="${field1.name}"-->
                             <option value="">Select Product</option>
-                            <option th:each="p : ${products}"
-                                    th:value="${p}"
-                                    th:text="|${p.category}: ${p.name} ${p.price}|">
+                            <option th:each="p : ${products}" th:value="${p.name}" th:text="|${p.category}: ${p.name} ${p.price}|">
                             </option>
                         </select>
                     </div>
