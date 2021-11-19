@@ -3,76 +3,78 @@
 <th:block th:include="~{fragments/head}"></th:block>
 <body>
 <div>
-  <th:block th:include="~{fragments/nav}"></th:block>
+    <th:block th:include="~{fragments/nav}"></th:block>
 </div>
 <div class="container-fluid">
 </div>
 <main class="p-5 align-content-center my-login-div">
-  <h1 class="border-bottom">Add product</h1>
-  <div class="d-flex justify-content-center" style="font-family: Verdana,sans-serif">
-    <div class="row g-3 align-items-center" style="color: red">
-      <form th:action="@{/products/add}"
-            th:object="${productAddBindingModel}"
-            method="POST">
-        <!-- Name -->
-        <div>
-          <div class="col-auto">
-            <label for="name" class="col-form-label ">Name</label>
-          </div>
-          <div class="col-auto">
-            <input type="text"
-                   th:field="*{name}"
-                   name="name"
-                   required minlength="4" maxlength="15"
-                   id="name"
-                   class="form-control"
-                   aria-describedby="nameHelpInLine">
-          </div>
-          <small id="nameError" class="invalid-feedback form-text bg-danger rounded">
-            Name must be between 4 and 15 characters</small>
+    <h1 class="border-bottom" th:text="#{addProduct}">Add product</h1>
+    <div class="d-flex justify-content-center" style="font-family: Verdana,sans-serif">
+        <div class="row g-3 align-items-center" style="color: red">
+            <form th:action="@{/products/add}"
+                  th:object="${productAddBindingModel}"
+                  method="POST">
+                <!-- Name -->
+                <div>
+                    <div class="col-auto">
+                        <label for="name" class="col-form-label" th:text="#{productName}">Name</label>
+                    </div>
+                    <div class="col-auto">
+                        <input type="text"
+                               th:field="*{name}"
+                               name="name"
+                               required minlength="4" maxlength="15"
+                               id="name"
+                               class="form-control"
+                               aria-describedby="nameHelpInLine">
+                    </div>
+                    <small id="nameError" class="invalid-feedback form-text bg-danger rounded"
+                           th:text="#{productNameError}">
+                        Name must be between 4 and 15 characters</small>
+                </div>
+                <!-- Category -->
+                <div>
+                    <div class="col-auto">
+                        <label for="category" th:text="#{category}">Category</label>
+                        <select th:field="*{category}"
+                                id="category"
+                                class="custom-select">
+                            <option value="" th:text="#{selectCategory}">Select category</option>
+                            <option th:each="c : ${categories}"
+                                    th:value="${c}"
+                                    th:text="${c}">
+                            </option>
+                        </select>
+                    </div>
+                    <small id="categoryError" class="invalid-feedback form-text bg-danger rounded"
+                           th:text="#{selectCategoryError}">
+                        You must select category</small>
+                </div>
+                <div>
+                    <div class="col-auto">
+                        <label for="price" class="col-form-label" th:text="#{price}">Price</label>
+                    </div>
+                    <div class="col-auto">
+                        <input type="number"
+                               placeholder="0.00"
+                               th:field="*{price}"
+                               name="price"
+                               required min="0"
+                               id="price"
+                               step="0.01"
+                               class="form-control"
+                               aria-describedby="priceHelpInLine">
+                    </div>
+                    <small id="priceError" class="invalid-feedback form-text bg-danger rounded" th:text="#{priceError}">
+                        Price must be positive</small>
+                </div>
+                <!-- Button -->
+                <div class="d-flex justify-content-center mt-2">
+                    <button class="btn btn-primary btn-block w-50" type="submit" th:text="#{addProduct}">Add Product</button>
+                </div>
+            </form>
         </div>
-        <!-- Category -->
-        <div>
-          <div class="col-auto">
-            <label for="category">Category</label>
-            <select th:field="*{category}"
-                    id="category"
-                    class="custom-select">
-              <option value="">Select category</option>
-              <option th:each="c : ${categories}"
-                      th:value="${c}"
-                      th:text="${c}">
-              </option>
-            </select>
-          </div>
-          <small id="categoryError" class="invalid-feedback form-text bg-danger rounded">You must select
-            category</small>
-        </div>
-        <div>
-          <div class="col-auto">
-            <label for="price" class="col-form-label ">Price</label>
-          </div>
-          <div class="col-auto">
-            <input type="number"
-                   placeholder="0.00"
-                   th:field="*{price}"
-                   name="price"
-                   required min="0"
-                   id="price"
-                   step="0.01"
-                   class="form-control"
-                   aria-describedby="priceHelpInLine">
-          </div>
-          <small id="priceError" class="invalid-feedback form-text bg-danger rounded">Price must be
-            positive</small>
-        </div>
-        <!-- Button -->
-        <div class="d-flex justify-content-center mt-2">
-          <button class="btn btn-primary btn-block w-50" type="submit">Add Product</button>
-        </div>
-      </form>
     </div>
-  </div>
 </main>
 <th:block th:include="~{fragments/footer}"></th:block>
 </body>

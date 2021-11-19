@@ -16,11 +16,12 @@
                        role="button"
                        data-toggle="dropdown"
                        aria-haspopup="true"
-                       aria-expanded="false">Admin</a>
+                       aria-expanded="false"
+                       th:text="#{admin}">Admin</a>
                     <div class="dropdown-menu" aria-labelledby="adminDropdown">
-                        <a class="dropdown-item" href="/users/add-role">Add Role</a>
-                        <a class="dropdown-item" th:href="@{/users/remove-user}">Remove user</a>
-                        <a class="dropdown-item" th:href="@{/statistics}">Statistics</a>
+                        <a class="dropdown-item" href="/users/add-role" th:text="#{addRole}">Add Role</a>
+                        <a class="dropdown-item" th:href="@{/users/remove-user}" th:text="#{removeUser}">Remove User</a>
+                        <a class="dropdown-item" th:href="@{/statistics}" th:text="#{statistics}">Statistics</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -30,17 +31,18 @@
                        role="button"
                        data-toggle="dropdown"
                        aria-haspopup="true"
-                       aria-expanded="false">Manager</a>
+                       aria-expanded="false"
+                       th:text="#{manager}">Manager</a>
                     <div class="dropdown-menu" aria-labelledby="managerDropdown">
                         <!--            <a class="dropdown-item" href="/">Add training</a>-->
                         <a class="dropdown-item"
-                           th:href="@{/sales/remove}">Remove sale</a>
+                           th:href="@{/sales/remove}" th:text="#{removeSale}">Remove sale</a>
                         <a class="dropdown-item"
-                           href="/products/add">Add product</a>
+                           href="/products/add" th:text="#{addProduct}">Add product</a>
                         <a class="dropdown-item"
-                           href="/users/change-user-store">Change store</a>
+                           href="/users/change-user-store" th:text="#{changeStore}">Change store</a>
                         <a class="dropdown-item"
-                           th:href="@{/users/approval}">Approve user</a>
+                           th:href="@{/users/approval}" th:text="#{approveUser}">Approve user</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -50,11 +52,14 @@
                        role="button"
                        data-toggle="dropdown"
                        aria-haspopup="true"
-                       aria-expanded="false">Stores</a>
+                       aria-expanded="false"
+                       th:text="#{stores}">Stores</a>
                     <div class="dropdown-menu" aria-labelledby="storeDropdown">
-                        <a class="dropdown-item" href="/shops/store-results">Results for store</a>
-                        <a class="dropdown-item" href="/shops/all-shops-results">Results for all store</a>
-                        <a class="dropdown-item" href="/shops/store-information">Information</a>
+                        <a class="dropdown-item" href="/shops/store-results" th:text="#{resultForStore}">Results for
+                            store</a>
+                        <a class="dropdown-item" href="/shops/all-shops-results" th:text="#{resultAllStores}">Results
+                            for all store</a>
+                        <a class="dropdown-item" href="/shops/store-information" th:text="#{storeInformation}">Information</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -64,29 +69,34 @@
                        role="button"
                        data-toggle="dropdown"
                        aria-haspopup="true"
-                       aria-expanded="false">Sellers</a>
+                       aria-expanded="false"
+                       th:text="#{consultants}">Consultants</a>
                     <div class="dropdown-menu" aria-labelledby="sellersDropdown">
-                        <a class="dropdown-item" href="/users/profile/all">Sellers profiles</a>
-                        <a class="dropdown-item" href="#">Sellers results</a>
-                        <a class="dropdown-item" th:href="@{/sales/add}">Add sale</a>
+                        <a class="dropdown-item" href="/users/profile/all" th:text="#{consultantsProfiles}">Consultants
+                            profiles</a>
+                        <a class="dropdown-item" href="#" th:text="#{consultantsResults}">Consultants results</a>
+                        <a class="dropdown-item" th:href="@{/sales/add}" th:text="#{addSale}">Add sale</a>
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" sec:authorize="isAuthenticated()" href="#">Training</a>
+                    <a class="nav-link" sec:authorize="isAuthenticated()" href="#" th:text="#{training}">Training</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" sec:authorize="!isAuthenticated()" th:text="#{registration}" href="/users/register">Register</a>
+                    <a class="nav-link" sec:authorize="!isAuthenticated()" th:text="#{registration}"
+                       href="/users/register">Register</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" sec:authorize="!isAuthenticated()" th:text="#{login}" href="/users/login">Login</a>
+                    <a class="nav-link" sec:authorize="!isAuthenticated()" th:text="#{login}"
+                       href="/users/login">Login</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/users/profile}">Profile</a>
+                    <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/users/profile}"
+                       th:text="#{profile}">Profile</a>
                 </li>
                 <form th:method="get">
                     <label for="lang">
                         <img th:src="${#locale.toString()} == 'en_US' ? '/img/usa-flag.jpg' : '/img/bg-flag.png'"
-                              width="35" height="25" alt="flag">
+                             width="35" height="25" alt="flag">
                     </label>
                     <select
                             onchange="this.form.submit()"
@@ -98,7 +108,9 @@
                 </form>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
                     <form th:action="@{/logout}" th:method="POST">
-                        <button class="form-inline my-2 my-lg-0 border px-3" type="submit" >Logout</button>
+                        <button class="form-inline my-2 my-lg-0 border px-3" type="submit"
+                                th:text="#{logout}">Logout
+                        </button>
                     </form>
                 </li>
             </ul>

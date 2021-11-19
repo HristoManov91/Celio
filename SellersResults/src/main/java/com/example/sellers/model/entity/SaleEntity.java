@@ -62,16 +62,19 @@ public class SaleEntity extends BaseEntity {
             return BigDecimal.ZERO;
         }
 
-        return this.getProducts()
+        BigDecimal reduce = this.getProducts()
                 .stream()
                 .map(ProductEntity::getPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        return reduce;
     }
 
     public int countOfProducts() {
         if (this.getProducts() == null) {
             return 0;
         }
-        return this.getProducts().size();
+        int size = this.getProducts().size();
+        return size;
     }
 }

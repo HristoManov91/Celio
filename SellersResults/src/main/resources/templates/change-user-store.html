@@ -6,7 +6,7 @@
   <th:block th:include="~{fragments/nav}"></th:block>
 </div>
 <main class="p-5 align-content-center my-register-div">
-  <h1 class="border-bottom">Change User Store</h1>
+  <h1 class="border-bottom" th:text="#{changeStore}">Change Employee Store</h1>
   <div class="d-flex justify-content-center">
     <div class="row g-3" style="color: red">
       <form th:action="@{/users/change-user-store}"
@@ -15,9 +15,9 @@
         <!-- User -->
         <div>
           <div class="col-auto">
-            <label for="user">User</label>
+            <label for="employee" th:text="#{employeeName}">Employee name</label>
             <select th:field="*{fullName}"
-                    id="user"
+                    id="employee"
                     class="custom-select">
               <option value="">Select User</option>
               <option th:each="u : ${users}"
@@ -26,29 +26,29 @@
               </option>
             </select>
           </div>
-          <small id="userError" class="invalid-feedback form-text bg-danger rounded">You must select
-            user</small>
+          <small id="employeeError" class="invalid-feedback form-text bg-danger rounded" th:text="#{selectEmployeeError}">
+            You must select employee</small>
         </div>
         <!-- New Store -->
         <div>
           <div class="col-auto">
-            <label for="store">Store</label>
+            <label for="store" th:text="#{store}">Store</label>
             <select th:field="*{store}"
                     id="store"
                     class="custom-select">
-              <option value="">Select Store</option>
+              <option value="" th:text="#{selectStore}">Select Store</option>
               <option th:each="s : ${stores}"
                       th:value="${s}"
                       th:text="${s}">
               </option>
             </select>
           </div>
-          <small id="storeError" class="invalid-feedback form-text bg-danger rounded">You must select
-            store</small>
+          <small id="storeError" class="invalid-feedback form-text bg-danger rounded" th:text="#{selectStoreError}">
+            You must select store</small>
         </div>
         <!-- Button -->
         <div class="d-flex justify-content-center mt-4">
-          <button class="btn btn-primary btn-block w-50" type="submit">Submit</button>
+          <button class="btn btn-primary btn-block w-50" type="submit" th:text="#{changeStoreButton}">Change store</button>
         </div>
       </form>
     </div>

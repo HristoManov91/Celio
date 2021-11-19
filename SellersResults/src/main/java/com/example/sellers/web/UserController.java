@@ -110,7 +110,8 @@ public class UserController {
     public String profile(Principal principal, Model model) {
         String email = principal.getName();
         model.addAttribute("isAuthorize" , true);
-        model.addAttribute("user", userService.findUserViewModelByEmail(email));
+        ProfileViewModel userViewModelByEmail = userService.findUserViewModelByEmail(email);
+        model.addAttribute("user", userViewModelByEmail);
         return "profile";
     }
 

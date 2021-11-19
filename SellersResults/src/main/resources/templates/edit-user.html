@@ -6,7 +6,7 @@
     <th:block th:include="~{fragments/nav}"></th:block>
 </div>
 <div class="container">
-    <h2 class="text-center text-white">Edit Profile</h2>
+    <h2 class="text-center text-white" th:text="#{editProfile}">Edit Profile</h2>
     <form
             th:object="${user}"
             th:action="@{/users/profile/{id}/edit(id=*{id})}"
@@ -16,7 +16,7 @@
         <div class="row">
             <!-- Full name -->
             <div class="form-group col-md-6 mb-3">
-                <label for="fullName" class="text-white font-weight-bold">Full name</label>
+                <label for="fullName" class="text-white font-weight-bold" th:text="#{employeeName}">Employee name</label>
                 <input disabled
                         id="fullName"
                         th:field="*{fullName}"
@@ -25,7 +25,7 @@
             </div>
             <!-- Birthday -->
             <div class="form-group col-md-6 mb-3">
-                <label for="birthday" class="text-white font-weight-bold">Birthday</label>
+                <label for="birthday" class="text-white font-weight-bold" th:text="#{birthday}">Birthday</label>
                 <input
                         id="birthday"
                         th:field="*{birthday}"
@@ -33,7 +33,7 @@
                         type="date"
                         class="form-control"
                         placeholder="Date must be in past or present"/>
-                <p class="invalid-feedback errors alert alert-danger">
+                <p class="invalid-feedback errors alert alert-danger" th:text="#{birthdayError}">
                     Birthday is required.
                 </p>
             </div>
@@ -42,7 +42,7 @@
         <div class="row">
             <!-- Store -->
             <div class="form-group col-md-6 mb-3">
-                <label for="store" class="text-white font-weight-bold">Store</label>
+                <label for="store" class="text-white font-weight-bold" th:text="#{store}">Store</label>
                 <input disabled
                         id="store"
                         th:field="*{store.name}"
@@ -51,7 +51,7 @@
             </div>
             <!-- Role -->
             <div class="form-group col-md-6 mb-3">
-                <label for="role" class="text-white font-weight-bold">Role</label>
+                <label for="role" class="text-white font-weight-bold" th:text="#{role}">Role</label>
                 <input disabled
                         id="role"
                         th:field="*{role.name}"
@@ -62,7 +62,8 @@
         <div class="row">
             <!-- Date of appointment -->
             <div class="form-group col-md-6 mb-3">
-                <label for="dateOfAppointment" class="text-white font-weight-bold">Date of Appointment</label>
+                <label for="dateOfAppointment" class="text-white font-weight-bold" th:text="#{dateOfAppointment}">
+                    Date of Appointment</label>
                 <input id="dateOfAppointment"
                         th:field="*{dateOfAppointment}"
                         type="date"
@@ -70,7 +71,7 @@
             </div>
             <!-- Image -->
             <div class="form-group col-md-6 mb-3">
-                <label class="text-white font-weight-bold" for="picture">Choose image</label>
+                <label class="text-white font-weight-bold" for="picture" th:text="#{chooseImage}">Choose image</label>
                 <input id="picture"
                        th:field="*{picture}"
                        type="file"
@@ -79,13 +80,13 @@
         </div>
         <!-- Description -->
         <div class="form-group">
-            <label class="text-white font-weight-bold" for="description">Description</label>
+            <label class="text-white font-weight-bold" for="description" th:text="#{description}">Description</label>
             <textarea id="description"
                       th:field="*{description}"
                       th:errorclass="is-invalid"
                       type="textarea" class="form-control" rows="3"
                       placeholder="Description"></textarea>
-            <p class="invalid-feedback errors alert alert-danger">
+            <p class="invalid-feedback errors alert alert-danger" th:text="#{descriptionError}">
                 Description is required.
             </p>
         </div>

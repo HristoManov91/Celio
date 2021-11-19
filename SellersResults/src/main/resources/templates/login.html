@@ -5,17 +5,17 @@
 <div>
     <th:block th:include="~{fragments/nav}"></th:block>
     <main class="p-5 align-content-center my-login-div">
-        <h1 class="border-bottom">Login</h1>
+        <h1 class="border-bottom" th:text="#{loginPage}">Login</h1>
         <div class="d-flex justify-content-center" style="font-family: Verdana,sans-serif">
             <div class="row g-3 align-items-center" style="color: red">
-                <div th:if="${bad_credentials}" class="alert alert-danger" role="alert">
+                <div th:if="${bad_credentials}" class="alert alert-danger" role="alert" th:text="#{badCredentials}">
                     This email and password combination does not exist!
                 </div>
                 <form th:action="@{/users/login}" method="POST">
                     <!-- Email -->
                     <div>
                         <div class="col-auto">
-                            <label for="email" class="col-form-label ">Email</label>
+                            <label for="email" class="col-form-label" th:text="#{email}">Email</label>
                         </div>
                         <div class="col-auto">
                             <input type="email"
@@ -30,7 +30,7 @@
                     <!-- Password -->
                     <div>
                         <div class="col-auto">
-                            <label for="password" class="col-form-label ">Password</label>
+                            <label for="password" class="col-form-label" th:text="#{password}">Password</label>
                         </div>
                         <div class="col-auto">
                             <input type="password"
@@ -43,7 +43,7 @@
                     </div>
                     <!-- Button -->
                     <div class="d-flex justify-content-center mt-2">
-                        <button class="btn btn-primary btn-block w-50" type="submit">Login</button>
+                        <button class="btn btn-primary btn-block w-50" type="submit" th:text="#{login}">Login</button>
                     </div>
                 </form>
             </div>

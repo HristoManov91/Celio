@@ -7,7 +7,7 @@
 </div>
 <div class="container-fluid"></div>
 <main class="p-5 align-content-center my-register-div">
-    <h1 class="border-bottom">Add role</h1>
+    <h1 class="border-bottom" th:text="#{addRole}">Add role</h1>
     <div class="d-flex justify-content-center">
         <div class="row g-3" style="color: red">
             <form th:action="@{/users/add-role}"
@@ -16,40 +16,40 @@
                 <!-- User -->
                 <div>
                     <div class="col-auto">
-                        <label for="user">User</label>
+                        <label for="user" th:text="#{employeeName}">Employee name</label>
                         <select th:field="*{fullName}"
                                 id="user"
                                 class="custom-select">
-                            <option value="">Select User</option>
+                            <option value="" th:text="#{selectEmployee}">Select employee</option>
                             <option th:each="u : ${users}"
                                     th:value="${u}"
                                     th:text="${u}">
                             </option>
                         </select>
                     </div>
-                    <small id="userError" class="invalid-feedback form-text bg-danger rounded">You must select
-                        user</small>
+                    <small id="userError" class="invalid-feedback form-text bg-danger rounded" th:text="#{selectEmployeeError}">
+                        You must select employee</small>
                 </div>
                 <!-- Role -->
                 <div>
                     <div class="col-auto">
-                        <label for="role">Role</label>
+                        <label for="role" th:text="#{role}">Role</label>
                         <select th:field="*{role}"
                                 id="role"
                                 class="custom-select">
-                            <option value="">Select Role</option>
+                            <option value="" th:text="#{selectRole}">Select Role</option>
                             <option th:each="r : ${roles}"
                                     th:value="${r}"
                                     th:text="${r}">
                             </option>
                         </select>
                     </div>
-                    <small id="shopError" class="invalid-feedback form-text bg-danger rounded">You must select
-                        role</small>
+                    <small id="roleError" class="invalid-feedback form-text bg-danger rounded" th:text="#{selectRoleError}">
+                        You must select role</small>
                 </div>
                 <!-- Button -->
                 <div class="d-flex justify-content-center mt-4">
-                    <button class="btn btn-primary btn-block w-50" type="submit">Submit</button>
+                    <button class="btn btn-primary btn-block w-50" type="submit" th:text="#{addRole}">Add role</button>
                 </div>
             </form>
         </div>

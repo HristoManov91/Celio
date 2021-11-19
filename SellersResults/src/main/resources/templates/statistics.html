@@ -9,14 +9,14 @@
 <th:block th:include="~{fragments/nav}"></th:block>
 
 <div class="container-fluid">
-    <h1 class="text-center text-white mt-5">Welcome to Stats!</h1>
-    <h3 class="text-center text-white mt-5">Total requests
+    <h1 class="text-center text-white mt-5" th:text="#{statistics}">Statistics</h1>
+    <h3 class="text-center text-white mt-5" th:text="#{totalRequests}">Total requests
         <th:block th:text="${stats.getTotalRequests()}"></th:block>
     </h3>
-    <h3 class="text-center text-white mt-5">Anonymous requests
+    <h3 class="text-center text-white mt-5" th:text="#{anonymousRequests}">Anonymous requests
         <th:block th:text="${stats.getAnonRequests()}"></th:block>
     </h3>
-    <h3 class="text-center text-white mt-5">Authorized requests
+    <h3 class="text-center text-white mt-5" th:text="#{authorizedRequests}">Authorized requests
         <th:block th:text="${stats.getAuthRequests()}"></th:block>
     </h3>
 </div>

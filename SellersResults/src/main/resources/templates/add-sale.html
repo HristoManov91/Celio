@@ -8,7 +8,7 @@
 <div class="container-fluid">
 </div>
 <main class="p-5 align-content-center my-register-div">
-    <h1 class="border-bottom">Add Sale</h1>
+    <h1 class="border-bottom" th:text="#{addSale}">Add Sale</h1>
     <div class="d-flex justify-content-center">
         <div class="row g-3" style="color: red">
             <form th:action="@{/sales/add}"
@@ -18,64 +18,69 @@
                 <!-- ToDo да направя да може да си добавяш продажба на теб,но не и на други хора,а Manager на всички -->
                 <div sec:authorize="hasRole('ROLE_ADMIN')">
                     <div class="col-auto">
-                        <label for="user">Seller</label>
+                        <label for="user" th:text="#{employeeName}">Seller</label>
                         <select th:field="*{seller}"
                                 id="user"
                                 class="custom-select">
-                            <option value="">Select Seller</option>
+                            <option value="" th:text="#{selectEmployee}">Select employee</option>
                             <option th:each="s : ${sellers}"
                                     th:value="${s}"
                                     th:text="${s}">
                             </option>
                         </select>
                     </div>
-                    <small id="userError" class="invalid-feedback form-text bg-danger rounded">You must select
-                        seller</small>
+                    <small id="userError" class="invalid-feedback form-text bg-danger rounded"
+                           th:text="#{selectEmployeeError}">
+                        You must select employee</small>
                 </div>
                 <!-- Store -->
                 <div>
                     <div class="col-auto">
-                        <label for="store">Store</label>
+                        <label for="store" th:text="#{store}">Store</label>
                         <select th:field="*{store}"
                                 id="store"
                                 class="custom-select">
-                            <option value="">Select Store</option>
+                            <option value="" th:text="#{selectStore}">Select Store</option>
                             <option th:each="s : ${stores}"
                                     th:value="${s}"
                                     th:text="${s}">
                             </option>
                         </select>
                     </div>
-                    <small id="storeError" class="invalid-feedback form-text bg-danger rounded">You must select
-                        store</small>
+                    <small id="storeError" class="invalid-feedback form-text bg-danger rounded"
+                           th:text="#{selectStoreError}">
+                        You must select store</small>
                 </div>
                 <!-- Products -->
                 <div class="products">
                     <div class="col-auto">
-                        <label for="product">Product</label>
+                        <label for="product" th:text="#{product}">Product</label>
                         <select th:field="*{products}"
                                 id="product"
                                 class="custom-select">
                             <!-- ToDo да разбера как става с optgroup -->
                             <!-- <option value="">select а ... </option>
                             <optgroup th:each="field1 : ${objA}" th:label="${field1.name}"-->
-                            <option value="">Select Product</option>
-                            <option th:each="p : ${products}" th:value="${p.name}" th:text="|${p.category}: ${p.name} ${p.price}|">
+                            <option value="" th:text="#{selectProduct}">Select Product</option>
+                            <option th:each="p : ${products}" th:value="${p.name}"
+                                    th:text="|${p.category}: ${p.name} ${p.price}|">
                             </option>
                         </select>
                     </div>
-                    <small id="productError" class="invalid-feedback form-text bg-danger rounded">You must select
-                        product</small>
+                    <small id="productError" class="invalid-feedback form-text bg-danger rounded"
+                           th:text="#{selectProductError}">
+                        You must select product</small>
                 </div>
                 <div class="d-flex justify-content-center mt-4">
                     <button type="button"
-                            class="add-product btn btn-outline-secondary col-lg-8">+ Add another product
+                            class="add-product btn btn-outline-secondary col-lg-8"
+                            th:text="#{addAnotherProduct}">+ Add another product
                     </button>
                 </div>
                 <!-- Date -->
                 <div>
                     <div class="col-auto">
-                        <label for="saleDate" class="col-form-label">Sale Date</label>
+                        <label for="saleDate" class="col-form-label" th:text="#{dateSale}">Date of sale</label>
                     </div>
                     <div class="col-auto">
                         <input th:field="*{dateOfSale}"
@@ -85,15 +90,13 @@
                                class="form-control"
                                aria-describedby="saleDateHelpInLine">
                         <small id="saleDateError"
-                               class="invalid-feedback form-text bg-danger rounded">
+                               class="invalid-feedback form-text bg-danger rounded" th:text="#{dateSaleError}">
                             Sale date cannot be in the future.</small>
                     </div>
                 </div>
-                <!-- ToDo Adding button -->
-
                 <!-- Finish button -->
                 <div class="d-flex justify-content-center mt-4">
-                    <button class="btn btn-primary btn-block w-50" type="submit">Submit</button>
+                    <button class="btn btn-primary btn-block w-50" type="submit" th:text="#{addSale}">Add sale</button>
                 </div>
             </form>
         </div>

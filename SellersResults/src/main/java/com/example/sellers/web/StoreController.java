@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/stores")
 public class StoreController {
-
+    //ToDo add store
     @GetMapping("/store-information")
     public String storeInformation(){
         //ToDo

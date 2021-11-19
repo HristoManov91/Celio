@@ -26,14 +26,12 @@ public class SaleServiceImpl implements SaleService {
     private final ProductService productService;
     private final StoreService storeService;
     private final UserService userService;
-    private final ModelMapper modelMapper;
 
-    public SaleServiceImpl(SaleRepository saleRepository, UserService userService, ProductService productService, StoreService storeService, ModelMapper modelMapper) {
+    public SaleServiceImpl(SaleRepository saleRepository, UserService userService, ProductService productService, StoreService storeService) {
         this.saleRepository = saleRepository;
         this.productService = productService;
         this.userService = userService;
         this.storeService = storeService;
-        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -57,36 +55,36 @@ public class SaleServiceImpl implements SaleService {
                 ? BigDecimal.ZERO
                 : userEntity.getBestBill().sumOfProductPrice()) > 0) {
             userEntity.setBestBill(saleEntity);
-            userService.saveUser(userEntity);
         }
 
-        if (saleEntity.countOfProducts() > (
+        if (saleEntity.countOfProducts() >= (
                 userEntity.getMostProductsInBill() == null
                         ? 0
                         : userEntity.getMostProductsInBill().countOfProducts())) {
             userEntity.setMostProductsInBill(saleEntity);
-            userService.saveUser(userEntity);
         }
+        userService.saveUser(userEntity);
     }
 
     @Override
     public void addSaleForTests() {
-        if (saleRepository.count() == 0) {
-            List<UserEntity> allUsers = userService.findAll();
-            List<ProductEntity> allProducts = productService.findAll();
-            List<StoreEntity> allStores = storeService.findAll();
+        List<UserEntity> allUsers = userService.findAll();
+        List<ProductEntity> allProducts = productService.findAll();
+//        List<StoreEntity> allStores = storeService.findAll();
 
-            for (UserEntity userEntity : allUsers) {
-                for (int j = 0; j < 2; j++) {
-                    List<ProductEntity> products = new ArrayList<>();
-                    for (int k = 0; k < 3; k++) {
-                        int randomProductId = ThreadLocalRandom.current().nextInt(0, allProducts.size());
-                        products.add(allProducts.get(randomProductId));
-                    }
-                    long randomShopId = ThreadLocalRandom.current().nextLong(1, allStores.size() + 1);
-                    StoreEntity store = storeService.findById(randomShopId);
-                    addSale(products, userEntity, store);
+        for (UserEntity userEntity : allUsers) {
+            int countSales = ThreadLocalRandom.current().nextInt(0, 10);
+            for (int j = 0; j < countSales; j++) {
+                List<ProductEntity> products = new ArrayList<>();
+                int countProducts = ThreadLocalRandom.current().nextInt(1, 10);
+                for (int k = 0; k < countProducts; k++) {
+                    int randomProductId = ThreadLocalRandom.current().nextInt(0, allProducts.size());
+                    products.add(allProducts.get(randomProductId));
                 }
+//                long randomShopId = ThreadLocalRandom.current().nextLong(1, allStores.size() + 1);
+                long shopId = userEntity.getStore().getId();
+                StoreEntity store = storeService.findById(shopId);
+                addSale(products, userEntity, store);
             }
         }
     }

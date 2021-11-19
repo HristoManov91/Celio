@@ -18,7 +18,7 @@ public class UserEntity extends BaseEntity {
     private LocalDate dateOfAppointment;
     private PictureEntity picture;
     private String description;
-    private List<SaleEntity> sales = new LinkedList<>();
+    private List<SaleEntity> sales;
     private Set<UserRoleEntity> roles = new LinkedHashSet<>();
     private StoreEntity store;
     private boolean isApproved;
@@ -168,10 +168,6 @@ public class UserEntity extends BaseEntity {
     public UserEntity setHighestMonthlyTurnover(BigDecimal highestMonthlyTurnover) {
         this.highestMonthlyTurnover = highestMonthlyTurnover;
         return this;
-    }
-
-    public void addSale(SaleEntity saleEntity) {
-        this.sales.add(saleEntity);
     }
 
     public UserEntity addRole(UserRoleEntity userRoleEntity) {

@@ -18,23 +18,22 @@
                         <!-- Role -->
                         <span th:text="*{role.name()}" class="bg-dark p-1 px-4 rounded text-white">Role</span>
                         <!-- Full Name -->
-                        <h5 class="mt-4 mb-0">Full Name:</h5>
-                        <span th:text="*{fullName}">Names</span>
+                        <h5 class="mt-4 mb-0" th:text="#{employeeName}">Employee name:</h5>
+                        <span th:text="*{fullName}">Hristo Manov</span>
                         <!-- Birthday -->
-                        <h5 class="mt-2 mb-0">Birthday:</h5>
+                        <h5 class="mt-2 mb-0" th:text="#{birthday}">Birthday:</h5>
                         <span th:if="*{birthday != null}"
                               th:text="|*{birthday.dayOfMonth}-*{birthday.month}-*{birthday.year}|">26-August-1991</span>
                         <span th:if="*{birthday == null}" th:text="'N/A'"></span>
                         <!-- Store -->
-                        <h5 class="mt-4 mb-0">Store:</h5>
-                        <span th:text="*{store.getName()}">Store name</span>
+                        <h5 class="mt-4 mb-0" th:text="#{store}">Store:</h5>
+                        <span th:text="*{store.getName()}">The Mall</span>
                         <!-- Date of appointment -->
-                        <h5 class="mt-4 mb-0">Date of appointment:</h5>
+                        <h5 class="mt-4 mb-0" th:text="#{dateOfAppointment}">Date of appointment:</h5>
                         <span th:text="|*{dateOfAppointment.dayOfMonth}-*{dateOfAppointment.month.name()}-*{dateOfAppointment.year}|">
                             01-AUGUST-2021</span>
                         <!-- Best bill -->
-                        <h5 class="mt-2 mb-0">Best bill:</h5>
-                        <!-- ToDo да питам как да форматирам датата до dd-MMM-yyyy -->
+                        <h5 class="mt-2 mb-0" th:text="#{bestBill}">Best bill:</h5>
                         <span th:if="*{bestBill != null}"
                               th:text="|Date: *{bestBill.getDateOfSale()} Sum: *{bestBill.sumOfProductPrice()} lv.
                                  in store *{bestBill.getStore().name}.|">Date: 01.01.1900 Sum: 1000</span>
@@ -42,7 +41,7 @@
                         <span th:if="*{bestBill == null}" th:text="'N/A'"></span>
 
                         <!-- Bill with most products -->
-                        <h5 class="mt-2 mb-0">Bill with the most products:</h5>
+                        <h5 class="mt-2 mb-0" th:text="#{billWithMostProducts}">Bill with the most products:</h5>
                         <span th:if="*{mostProductsInBill != null}"
                               th:text="|Date: *{getMostProductsInBill().getDateOfSale()} Count of products:
                                 *{getMostProductsInBill().countOfProducts()} in store *{getMostProductsInBill().store.name}.|">
@@ -51,22 +50,21 @@
                         <span th:if="*{mostProductsInBill == null}" th:text="'N/A'"></span>
                         <!-- Turnover -->
                         <!-- ToDo да оправя да се вижда и месец и година кога е постигнато -->
-                        <h5 class="mt-2 mb-0">Highest Monthly Turnover:</h5>
+                        <h5 class="mt-2 mb-0" th:text="#{highestMonthlyTurnover}">Highest Monthly Turnover:</h5>
                         <span th:if="*{getHighestMonthlyTurnover() != null}"
                               th:text="|Value: *{getHighestMonthlyTurnover()} lv|">Value: 10000lv April 2020></span>
                         <span th:if="*{getHighestMonthlyTurnover() == null}" th:text="'N/A'"></span>
                         <!-- Description -->
                         <div class="px-4 mt-5">
-                            <h5 class="mt-2 mb-0">Description:</h5>
+                            <h5 class="mt-2 mb-0" th:text="#{description}">Description:</h5>
                             <p th:text="*{description}" class="fonts"> Lorem ipsum dolor sit amet, consectetur
                                 adipisicing elit. Enim et nostrum optio perferendis quam quod ratione rem sit soluta
                                 ut! A dolor laborum, maiores neque nesciunt quis rerum sunt suscipit.</p>
                         </div>
-                        <!--ToDo да оправя бутона да изглежда по-добре и да му сложа -->
-                        <!-- да се появява само ако User-a разгледа своя профил -->
+                        <!--ToDo да оправя бутона да изглежда по-добре -->
                         <div class="card-body" th:if="${isAuthorize}">
-                            <a class="nav-link" th:href="@{/users/profile/{id}/edit(id=*{id})}">Edit Profile
-                            </a>
+                            <a class="nav-link" th:href="@{/users/profile/{id}/edit(id=*{id})}" th:text="#{editProfile}">
+                                Edit Profile</a>
                         </div>
                     </div>
                 </div>

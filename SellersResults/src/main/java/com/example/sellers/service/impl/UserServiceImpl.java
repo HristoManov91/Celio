@@ -280,10 +280,7 @@ public class UserServiceImpl implements UserService {
             profile.setPictureUrl(user.getPicture().getUrl());
         }
 
-        profile.setStore(user.getStore())
-                .setBestBill(user.getBestBill())
-                .setMostProductsInBill(user.getMostProductsInBill())
-                .setRole(user.findHighestRole());
+        profile.setStore(user.getStore()).setRole(user.findHighestRole());
 
         return profile;
     }
