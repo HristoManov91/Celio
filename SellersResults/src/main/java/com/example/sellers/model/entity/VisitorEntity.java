@@ -2,6 +2,7 @@ package com.example.sellers.model.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.time.LocalDate;
 
@@ -11,6 +12,7 @@ public class VisitorEntity extends BaseEntity{
 
     private LocalDate date;
     private Long quantity;
+    private StoreEntity store;
 
     public VisitorEntity() {
     }
@@ -32,6 +34,16 @@ public class VisitorEntity extends BaseEntity{
 
     public VisitorEntity setQuantity(Long quantity) {
         this.quantity = quantity;
+        return this;
+    }
+
+    @ManyToOne
+    public StoreEntity getStore() {
+        return store;
+    }
+
+    public VisitorEntity setStore(StoreEntity store) {
+        this.store = store;
         return this;
     }
 }

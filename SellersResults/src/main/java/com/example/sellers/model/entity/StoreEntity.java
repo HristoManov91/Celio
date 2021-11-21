@@ -10,11 +10,11 @@ public class StoreEntity extends BaseEntity{
 
     private String name;
     private String description;
-    private List<UserEntity> sellers;
+    private Set<UserEntity> sellers;
     private Set<SaleEntity> sales;
-    private List<VisitorEntity> visitors;
-    private List<TargetEntity> targets;
-    private List<PictureEntity> pictures;
+    private Set<VisitorEntity> visitors;
+    private Set<TargetEntity> targets;
+    private Set<PictureEntity> pictures;
 
     public StoreEntity() {
     }
@@ -39,7 +39,7 @@ public class StoreEntity extends BaseEntity{
         return this;
     }
 
-    @OneToMany(mappedBy = "store")
+    @OneToMany(mappedBy = "store", fetch = FetchType.EAGER)
     public Set<SaleEntity> getSales() {
         return sales;
     }
@@ -50,41 +50,41 @@ public class StoreEntity extends BaseEntity{
     }
 
     @OneToMany(mappedBy = "store")
-    public List<UserEntity> getSellers() {
+    public Set<UserEntity> getSellers() {
         return sellers;
     }
 
-    public StoreEntity setSellers(List<UserEntity> sellers) {
+    public StoreEntity setSellers(Set<UserEntity> sellers) {
         this.sellers = sellers;
         return this;
     }
 
     @OneToMany
-    public List<TargetEntity> getTargets() {
+    public Set<TargetEntity> getTargets() {
         return targets;
     }
 
-    public StoreEntity setTargets(List<TargetEntity> targets) {
+    public StoreEntity setTargets(Set<TargetEntity> targets) {
         this.targets = targets;
         return this;
     }
 
     @OneToMany
-    public List<PictureEntity> getPictures() {
+    public Set<PictureEntity> getPictures() {
         return pictures;
     }
 
-    public StoreEntity setPictures(List<PictureEntity> pictures) {
+    public StoreEntity setPictures(Set<PictureEntity> pictures) {
         this.pictures = pictures;
         return this;
     }
 
     @OneToMany()
-    public List<VisitorEntity> getVisitors() {
+    public Set<VisitorEntity> getVisitors() {
         return visitors;
     }
 
-    public StoreEntity setVisitors(List<VisitorEntity> visitors) {
+    public StoreEntity setVisitors(Set<VisitorEntity> visitors) {
         this.visitors = visitors;
         return this;
     }

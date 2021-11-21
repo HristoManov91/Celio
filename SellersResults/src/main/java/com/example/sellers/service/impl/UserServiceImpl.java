@@ -1,6 +1,5 @@
 package com.example.sellers.service.impl;
 
-import com.example.sellers.model.entity.SaleEntity;
 import com.example.sellers.model.entity.UserEntity;
 import com.example.sellers.model.entity.UserRoleEntity;
 import com.example.sellers.model.entity.enums.UserRoleEnum;
@@ -11,12 +10,9 @@ import com.example.sellers.repository.UserRepository;
 import com.example.sellers.service.*;
 import com.example.sellers.web.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -30,17 +26,15 @@ public class UserServiceImpl implements UserService {
     private final StoreService storeService;
     private final UserRoleService userRoleService;
     private final PictureService pictureService;
-    private final SaleService saleService;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
 
     public UserServiceImpl(UserRepository userRepository, StoreService storeService, UserRoleService userRoleService,
-                           PictureService pictureService, @Lazy SaleService saleService, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
+                           PictureService pictureService, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.storeService = storeService;
         this.userRoleService = userRoleService;
         this.pictureService = pictureService;
-        this.saleService = saleService;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
     }
@@ -83,53 +77,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<UserEntity> findUserByEmail(String email) {
         return userRepository.findByEmail(email);
-    }
-
-    @Override
-    public BigDecimal find_AB_betweenDate(UserEntity userEntity, LocalDate fromDate, LocalDate toDate) {
-        Set<SaleEntity> sales = saleService.findAllByUserAndDateBetween(userEntity, fromDate, toDate);
-        BigDecimal priceSum = sales.stream().map(SaleEntity::sumOfProductPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
-        //ToDo да се тества дали работи правилно
-        return priceSum.divide(new BigDecimal(sales.size()), 2, RoundingMode.CEILING);
-    }
-
-    @Override
-    public BigDecimal find_AP_betweenDate(UserEntity userEntity, LocalDate fromDate, LocalDate toDate) {
-        Set<SaleEntity> sales = saleService.findAllByUserAndDateBetween(userEntity, fromDate, toDate);
-        BigDecimal priceSum = sales.stream().map(SaleEntity::sumOfProductPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
-        long countOfAllProducts = sales.stream().map(SaleEntity::countOfProducts).count();
-
-        return priceSum.divide(new BigDecimal(countOfAllProducts), 2, RoundingMode.CEILING);
-    }
-
-    @Override
-    public BigDecimal find_UPT_betweenDate(UserEntity userEntity, LocalDate fromDate, LocalDate toDate) {
-        Set<SaleEntity> sales = saleService.findAllByUserAndDateBetween(userEntity, fromDate, toDate);
-        long countOfAllProducts = sales.stream().map(SaleEntity::countOfProducts).count();
-
-        return BigDecimal.valueOf(countOfAllProducts)
-                .divide(new BigDecimal(sales.size()), 2, RoundingMode.CEILING);
-    }
-
-    @Override
-    public BigDecimal findTotalSumBetweenDate(UserEntity userEntity, LocalDate fromDate, LocalDate toDate) {
-        return saleService
-                .findAllByUserAndDateBetween(userEntity, fromDate, toDate)
-                .stream()
-                .map(SaleEntity::sumOfProductPrice)
-                .reduce(BigDecimal.ZERO, BigDecimal::add)
-                .setScale(2, RoundingMode.CEILING);
-    }
-
-    @Override
-    public int countTotalSalesBetweenDate(UserEntity userEntity, LocalDate fromDate, LocalDate toDate) {
-        return saleService.findAllByUserAndDateBetween(userEntity, fromDate, toDate).size();
-    }
-
-    @Override
-    public long countTotalProductsBetweenDate(UserEntity userEntity, LocalDate fromDate, LocalDate toDate) {
-        Set<SaleEntity> sales = saleService.findAllByUserAndDateBetween(userEntity, fromDate, toDate);
-        return sales.stream().map(SaleEntity::countOfProducts).count();
     }
 
     @Override

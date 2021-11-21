@@ -1,21 +1,22 @@
 package com.example.sellers.service.impl;
 
-import com.example.sellers.model.entity.ProductEntity;
-import com.example.sellers.model.entity.SaleEntity;
-import com.example.sellers.model.entity.StoreEntity;
-import com.example.sellers.model.entity.UserEntity;
+import com.example.sellers.model.entity.*;
+import com.example.sellers.model.entity.results.SellerWeekResultEntity;
+import com.example.sellers.model.entity.results.StoreWeekResultEntity;
 import com.example.sellers.repository.SaleRepository;
 import com.example.sellers.service.ProductService;
 import com.example.sellers.service.SaleService;
 import com.example.sellers.service.StoreService;
 import com.example.sellers.service.UserService;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -35,8 +36,17 @@ public class SaleServiceImpl implements SaleService {
     }
 
     @Override
-    public Set<SaleEntity> findAllByUserAndDateBetween(UserEntity userEntity, LocalDate fromDate, LocalDate toDate) {
-        return saleRepository.findAllByUserEntityAndDateOfSaleBetween(userEntity, fromDate, toDate).orElseThrow();
+    public Set<SaleEntity> findUserSalesBetweenDates(String fullName, LocalDate fromDate, LocalDate toDate) {
+        return saleRepository
+                .findUserSalesBetweenDates(fullName, fromDate, toDate)
+                .orElse(null);
+    }
+
+    @Override
+    public Set<SaleEntity> findStoreSalesBetweenDates(String storeName, LocalDate fromDate, LocalDate toDate) {
+        return saleRepository
+                .findStoreSalesBetweenDates(storeName, fromDate, toDate)
+                .orElse(null);
     }
 
     @Override
@@ -45,7 +55,7 @@ public class SaleServiceImpl implements SaleService {
         SaleEntity saleEntity = new SaleEntity()
                 .setProducts(productEntities)
                 .setDateOfSale(LocalDate.now())
-                .setUserEntity(userEntity)
+                .setUser(userEntity)
                 .setStore(storeEntity);
 
         saleRepository.save(saleEntity);
@@ -64,6 +74,88 @@ public class SaleServiceImpl implements SaleService {
             userEntity.setMostProductsInBill(saleEntity);
         }
         userService.saveUser(userEntity);
+    }
+
+    @Override
+    public BigDecimal findAB(Set<SaleEntity> sales) {
+        BigDecimal reduce = sales.stream()
+                .map(SaleEntity::sumOfProductPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        //ToDo да се тества дали работи правилно
+        return reduce.divide(new BigDecimal(sales.size()), 2, RoundingMode.CEILING);
+    }
+
+    @Override
+    public BigDecimal findAP(Set<SaleEntity> sales) {
+        BigDecimal priceSum = sales
+                .stream()
+                .map(SaleEntity::sumOfProductPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        long countOfAllProducts = sales
+                .stream()
+                .map(SaleEntity::countOfProducts).count();
+
+        return priceSum.divide(new BigDecimal(countOfAllProducts), 2, RoundingMode.CEILING);
+    }
+
+    @Override
+    public BigDecimal findUPT(Set<SaleEntity> sales) {
+        long countOfAllProducts = sales
+                .stream()
+                .map(SaleEntity::countOfProducts)
+                .count();
+
+        return BigDecimal.valueOf(countOfAllProducts)
+                .divide(new BigDecimal(sales.size()), 2, RoundingMode.CEILING);
+    }
+
+    @Override
+    public BigDecimal findTurnover(Set<SaleEntity> sales) {
+        return sales.stream()
+                .map(SaleEntity::sumOfProductPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add)
+                .setScale(2, RoundingMode.CEILING);
+    }
+
+    @Override
+    public SellerWeekResultEntity calculateEmployeeWeekResults(String fullName, LocalDate fromDate, LocalDate toDate) {
+        Set<SaleEntity> sales = findUserSalesBetweenDates(fullName, fromDate, toDate);
+
+        if (sales == null){
+            return null;
+        }
+        int woy = fromDate.minusDays(1).get(WeekFields.of(Locale.getDefault()).weekOfYear());
+
+        return (SellerWeekResultEntity) new SellerWeekResultEntity()
+                .setEmployeeName(fullName)
+                .setWeakOfYear(woy)
+                .setAveragePricePerBasket(findAB(sales))
+                .setAveragePricePerProducts(findAP(sales))
+                .setUpt(findUPT(sales))
+                .setCountOfSales(sales.size())
+                .setTurnover(findTurnover(sales));
+    }
+
+    @Override
+    public StoreWeekResultEntity calculateStoreWeekResults(String storeName, LocalDate fromDate, LocalDate toDate) {
+        Set<SaleEntity> sales = findStoreSalesBetweenDates(storeName, fromDate, toDate);
+
+        if (sales == null){
+            return null;
+        }
+        int woy = fromDate.minusDays(1).get(WeekFields.of(Locale.getDefault()).weekOfYear());
+
+        new StoreWeekResultEntity()
+                .setStoreName(storeName)
+                .setWeekOfYear(woy)
+                .setPercentageSales(storeService.calculatePercentage(storeName , sales.size() , fromDate , toDate))
+                .setAveragePricePerBasket(findAB(sales))
+                .setAveragePricePerProducts(findAP(sales))
+                .setUpt(findUPT(sales))
+                .setCountOfSales(sales.size())
+                .setTurnover(findTurnover(sales));
     }
 
     @Override

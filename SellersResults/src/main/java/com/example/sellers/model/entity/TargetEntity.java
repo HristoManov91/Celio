@@ -1,16 +1,16 @@
 package com.example.sellers.model.entity;
 
-import com.example.sellers.model.entity.enums.MonthEnum;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.Month;
+import java.time.Year;
 
 @Entity
 @Table(name = "targets")
 public class TargetEntity extends BaseEntity{
 
     private BigDecimal target;
-    private MonthEnum month;
+    private Month month;
     private Integer year;
 
     public TargetEntity() {
@@ -26,12 +26,11 @@ public class TargetEntity extends BaseEntity{
         return this;
     }
 
-    @Enumerated(EnumType.STRING)
-    public MonthEnum getMonth() {
+    public Month getMonth() {
         return month;
     }
 
-    public TargetEntity setMonth(MonthEnum month) {
+    public TargetEntity setMonth(Month month) {
         this.month = month;
         return this;
     }

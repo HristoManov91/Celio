@@ -1,8 +1,11 @@
 package com.example.sellers.model.entity;
 
 import com.example.sellers.model.entity.enums.UserRoleEnum;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
@@ -18,14 +21,14 @@ public class UserEntity extends BaseEntity {
     private LocalDate dateOfAppointment;
     private PictureEntity picture;
     private String description;
-    private List<SaleEntity> sales;
+    private Set<SaleEntity> sales;
     private Set<UserRoleEntity> roles = new LinkedHashSet<>();
     private StoreEntity store;
     private boolean isApproved;
     private boolean leftEmployee;
     private SaleEntity bestBill;
     private SaleEntity mostProductsInBill;
-    private BigDecimal highestMonthlyTurnover;//ToDo да направя да го смята
+    private BigDecimal highestMonthlyTurnover;
 
     public UserEntity() {
     }
@@ -100,17 +103,19 @@ public class UserEntity extends BaseEntity {
         return this;
     }
 
-    @OneToMany(mappedBy = "userEntity", fetch = FetchType.EAGER)
-    public List<SaleEntity> getSales() {
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
+    public Set<SaleEntity> getSales() {
         return sales;
     }
 
-    public UserEntity setSales(List<SaleEntity> sales) {
+    public UserEntity setSales(Set<SaleEntity> sales) {
         this.sales = sales;
         return this;
     }
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
     public Set<UserRoleEntity> getRoles() {
         return roles;
     }
