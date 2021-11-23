@@ -12,13 +12,15 @@ import java.util.Set;
 public interface StoreService {
     void initStores();
 
+    void addStore();
+
     StoreEntity findById(Long shopId);
 
     Set<String> findAllStoresNames();
 
     StoreEntity findByName(String name);
 
-    BigDecimal calculatePercentage(String storeName , Integer salesCount , LocalDate fromDate , LocalDate toDate);
+    Integer findVisitorsBetweenDates(String storeName , LocalDate fromDate , LocalDate toDate);
 
     List<StoreEntity> findAll();
 }

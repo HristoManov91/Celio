@@ -1,5 +1,6 @@
 package com.example.sellers.model.entity.results;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -13,6 +14,7 @@ public class SellerWeekResultEntity extends ResultAbs {
     public SellerWeekResultEntity() {
     }
 
+    @Column
     public String getEmployeeName() {
         return employeeName;
     }
@@ -22,6 +24,7 @@ public class SellerWeekResultEntity extends ResultAbs {
         return this;
     }
 
+    @Column
     public Integer getWeakOfYear() {
         return weakOfYear;
     }
@@ -30,4 +33,6 @@ public class SellerWeekResultEntity extends ResultAbs {
         this.weakOfYear = weakOfYear;
         return this;
     }
+
+
 }

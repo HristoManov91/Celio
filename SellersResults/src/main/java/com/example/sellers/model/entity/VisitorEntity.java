@@ -8,10 +8,10 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "visitors")
-public class VisitorEntity extends BaseEntity{
+public class VisitorEntity extends BaseEntity {
 
     private LocalDate date;
-    private Long quantity;
+    private Integer quantity;
     private StoreEntity store;
 
     public VisitorEntity() {
@@ -28,11 +28,11 @@ public class VisitorEntity extends BaseEntity{
     }
 
     @Column
-    public Long getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public VisitorEntity setQuantity(Long quantity) {
+    public VisitorEntity setQuantity(Integer quantity) {
         this.quantity = quantity;
         return this;
     }

@@ -19,7 +19,7 @@ public class StoreEntity extends BaseEntity{
     public StoreEntity() {
     }
 
-    @Column(length = 50)
+    @Column(length = 50 , nullable = false)
     public String getName() {
         return name;
     }
@@ -39,7 +39,7 @@ public class StoreEntity extends BaseEntity{
         return this;
     }
 
-    @OneToMany(mappedBy = "store", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "store")
     public Set<SaleEntity> getSales() {
         return sales;
     }
@@ -79,7 +79,7 @@ public class StoreEntity extends BaseEntity{
         return this;
     }
 
-    @OneToMany()
+    @OneToMany(mappedBy = "store")
     public Set<VisitorEntity> getVisitors() {
         return visitors;
     }

@@ -20,21 +20,29 @@ public interface UserService {
 
     void registrationUser(UserRegistrationServiceModel userRegistrationServiceModel);
 
-    boolean emailExist(String email);
-
     void addUserRole(UserRoleEnum role , String userFullName);
 
     void saveUser(UserEntity userEntity);
 
     void approvedUser(String fullName);
 
-    Optional<UserEntity> findUserByEmail(String email);
-
-    Set<String> findAllUsersFullName();
-
     void changeUserStore(String fullName , String store);
 
     void removeUser(String fullName);
+
+    void editProfile(ProfileUpdateServiceModel serviceModel);
+
+    boolean emailExist(String email);
+
+    boolean isAdmin(UserEntity user);
+
+    boolean isAuthorize(String email , Long id);
+
+    Optional<UserEntity> findUserByEmail(String email);
+
+    UserEntity findById(Long id);
+
+    Set<String> findAllUsersFullName();
 
     List<ProfileViewModel> findAllUsersViewModel();
 
@@ -44,13 +52,5 @@ public interface UserService {
 
     ProfileViewModel findUserViewModelByEmail(String email);
 
-    void editProfile(ProfileUpdateServiceModel serviceModel);
-
     Set<String> findAllUsersFullNameWithoutApproval();
-
-    UserEntity findById(Long id);
-
-    boolean isAdmin(UserEntity user);
-
-    boolean isAuthorize(String email , Long id);
 }

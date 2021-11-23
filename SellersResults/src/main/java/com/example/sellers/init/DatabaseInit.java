@@ -17,24 +17,34 @@ public class DatabaseInit implements CommandLineRunner {
     private final UserService userService;
     private final SaleService saleService;
     private final PasswordEncoder passwordEncoder;
+    private final StWRService stWRService;
+    private final SWRService swrService;
+    private final VisitorService visitorService;
 
     public DatabaseInit(UserRoleService userRoleService, ProductService productService,
-                        StoreService storeService, UserService userService, SaleService saleService, PasswordEncoder passwordEncoder) {
+                        StoreService storeService, UserService userService, SaleService saleService, PasswordEncoder passwordEncoder, StWRService stWRService, SWRService swrService, VisitorService visitorService) {
         this.userRoleService = userRoleService;
         this.productService = productService;
         this.storeService = storeService;
         this.userService = userService;
         this.saleService = saleService;
         this.passwordEncoder = passwordEncoder;
+        this.stWRService = stWRService;
+        this.swrService = swrService;
+        this.visitorService = visitorService;
     }
 
     @Override
     public void run(String... args) throws Exception {
+        //ToDo когато ги кача в Heroku да спра извикването на методите
         userRoleService.initUserRoles();
         addProducts();
         storeService.initStores();
         addUsers();
-        saleService.addSaleForTests();
+//        saleService.addSaleForTests();
+//        visitorService.addTestVisitors(storeService.findAll());
+//        swrService.weekTestResults();
+//        stWRService.weekTestResults();
     }
 
     private void addUsers() {

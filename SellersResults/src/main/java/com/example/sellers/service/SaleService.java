@@ -15,17 +15,19 @@ public interface SaleService {
 
     Set<SaleEntity> findStoreSalesBetweenDates(String storeName , LocalDate fromDate , LocalDate toDate);
 
-    void addSale(List<ProductEntity> productEntities , UserEntity userEntity , StoreEntity storeEntity);
+    void addSale(List<ProductEntity> productEntities , UserEntity userEntity , StoreEntity storeEntity , LocalDate date);
 
     void addSaleForTests();
 
-    BigDecimal findAB(Set<SaleEntity> sales);
+    BigDecimal findAB(BigDecimal turnover , Integer countOfSales);
 
-    BigDecimal findAP(Set<SaleEntity> sales);
+    BigDecimal findAP(BigDecimal turnover , Integer countOfProducts);
 
-    BigDecimal findUPT(Set<SaleEntity> sales);
+    BigDecimal findUPT(Integer countOfProducts , Integer countOfSales);
 
     BigDecimal findTurnover(Set<SaleEntity> sales);
+
+    Integer findCountOfProducts(Set<SaleEntity> sales);
 
     SellerWeekResultEntity calculateEmployeeWeekResults(String fullName , LocalDate fromDate , LocalDate toDate);
 

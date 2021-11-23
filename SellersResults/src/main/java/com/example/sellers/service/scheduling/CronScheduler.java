@@ -2,7 +2,7 @@ package com.example.sellers.service.scheduling;
 
 import com.example.sellers.service.SWRService;
 import com.example.sellers.service.SaleService;
-import com.example.sellers.service.StoreService;
+import com.example.sellers.service.StWRService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -15,11 +15,12 @@ public class CronScheduler {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(CronScheduler.class);
 
-
+    private final StWRService stWRService;
     private final SWRService swrService;
     private final SaleService saleService;
 
-    public CronScheduler(SWRService swrService, SaleService saleService) {
+    public CronScheduler(StWRService stWRService, SWRService swrService, SaleService saleService) {
+        this.stWRService = stWRService;
         this.swrService = swrService;
         this.saleService = saleService;
     }
@@ -38,7 +39,8 @@ public class CronScheduler {
     @Scheduled(cron = "* 0 1 * * 1")
     public void storesWeakResults() {
         LOGGER.info("Start shops weak result method at {}", LocalDateTime.now());
-        //ToDo implement
+
+        stWRService.weekResults();
 
         LOGGER.info("Finish shops weak result method at {}", LocalDateTime.now());
     }

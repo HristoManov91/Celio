@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,11 +51,11 @@ public class SaleServiceImpl implements SaleService {
     }
 
     @Override
-    public void addSale(List<ProductEntity> productEntities, UserEntity userEntity, StoreEntity storeEntity) {
+    public void addSale(List<ProductEntity> productEntities, UserEntity userEntity, StoreEntity storeEntity, LocalDate date) {
 
         SaleEntity saleEntity = new SaleEntity()
                 .setProducts(productEntities)
-                .setDateOfSale(LocalDate.now())
+                .setDateOfSale(date)
                 .setUser(userEntity)
                 .setStore(storeEntity);
 
@@ -77,38 +78,18 @@ public class SaleServiceImpl implements SaleService {
     }
 
     @Override
-    public BigDecimal findAB(Set<SaleEntity> sales) {
-        BigDecimal reduce = sales.stream()
-                .map(SaleEntity::sumOfProductPrice)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-
-        //ToDo да се тества дали работи правилно
-        return reduce.divide(new BigDecimal(sales.size()), 2, RoundingMode.CEILING);
+    public BigDecimal findAB(BigDecimal turnover, Integer countOfSales) {
+        return turnover.divide(new BigDecimal(countOfSales), 2, RoundingMode.CEILING);
     }
 
     @Override
-    public BigDecimal findAP(Set<SaleEntity> sales) {
-        BigDecimal priceSum = sales
-                .stream()
-                .map(SaleEntity::sumOfProductPrice)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-
-        long countOfAllProducts = sales
-                .stream()
-                .map(SaleEntity::countOfProducts).count();
-
-        return priceSum.divide(new BigDecimal(countOfAllProducts), 2, RoundingMode.CEILING);
+    public BigDecimal findAP(BigDecimal turnover, Integer countOfProducts) {
+        return turnover.divide(new BigDecimal(countOfProducts), 2, RoundingMode.CEILING);
     }
 
     @Override
-    public BigDecimal findUPT(Set<SaleEntity> sales) {
-        long countOfAllProducts = sales
-                .stream()
-                .map(SaleEntity::countOfProducts)
-                .count();
-
-        return BigDecimal.valueOf(countOfAllProducts)
-                .divide(new BigDecimal(sales.size()), 2, RoundingMode.CEILING);
+    public BigDecimal findUPT(Integer countOfProducts, Integer countOfSales) {
+        return BigDecimal.valueOf(countOfProducts).divide(new BigDecimal(countOfSales), 2, RoundingMode.CEILING);
     }
 
     @Override
@@ -120,41 +101,61 @@ public class SaleServiceImpl implements SaleService {
     }
 
     @Override
+    public Integer findCountOfProducts(Set<SaleEntity> sales) {
+        return sales.stream().mapToInt(SaleEntity::countOfProducts).sum();
+    }
+
+    @Override
     public SellerWeekResultEntity calculateEmployeeWeekResults(String fullName, LocalDate fromDate, LocalDate toDate) {
         Set<SaleEntity> sales = findUserSalesBetweenDates(fullName, fromDate, toDate);
 
-        if (sales == null){
+        if (sales == null) {
             return null;
         }
+
+        int countOfSales = sales.size();
+        int countOfProducts = findCountOfProducts(sales);
+        BigDecimal turnover = findTurnover(sales);
+
         int woy = fromDate.minusDays(1).get(WeekFields.of(Locale.getDefault()).weekOfYear());
 
         return (SellerWeekResultEntity) new SellerWeekResultEntity()
                 .setEmployeeName(fullName)
                 .setWeakOfYear(woy)
-                .setAveragePricePerBasket(findAB(sales))
-                .setAveragePricePerProducts(findAP(sales))
-                .setUpt(findUPT(sales))
-                .setCountOfSales(sales.size())
-                .setTurnover(findTurnover(sales));
+                .setAveragePricePerBasket(findAB(turnover, countOfSales))
+                .setAveragePricePerProducts(findAP(turnover, countOfProducts))
+                .setUpt(findUPT(countOfProducts, countOfSales))
+                .setCountOfSales(countOfSales)
+                .setCountOfProducts(countOfProducts)
+                .setTurnover(turnover);
     }
 
     @Override
     public StoreWeekResultEntity calculateStoreWeekResults(String storeName, LocalDate fromDate, LocalDate toDate) {
         Set<SaleEntity> sales = findStoreSalesBetweenDates(storeName, fromDate, toDate);
 
-        if (sales == null){
+        if (sales == null) {
             return null;
         }
+
+        int countOfSales = sales.size();
+        int countOfProducts = findCountOfProducts(sales);
+        BigDecimal turnover = findTurnover(sales);
+        Integer visitors = storeService.findVisitorsBetweenDates(storeName, fromDate, toDate);
+        BigDecimal percentageSales = BigDecimal.valueOf((countOfSales * 1.0 / visitors) * 100).setScale(2, RoundingMode.CEILING);
+
         int woy = fromDate.minusDays(1).get(WeekFields.of(Locale.getDefault()).weekOfYear());
 
-        new StoreWeekResultEntity()
+        return (StoreWeekResultEntity) new StoreWeekResultEntity()
                 .setStoreName(storeName)
                 .setWeekOfYear(woy)
-                .setPercentageSales(storeService.calculatePercentage(storeName , sales.size() , fromDate , toDate))
-                .setAveragePricePerBasket(findAB(sales))
-                .setAveragePricePerProducts(findAP(sales))
-                .setUpt(findUPT(sales))
-                .setCountOfSales(sales.size())
+                .setVisitors(visitors)
+                .setPercentageSales(percentageSales)
+                .setCountOfSales(countOfSales)
+                .setCountOfProducts(countOfProducts)
+                .setAveragePricePerBasket(findAB(turnover, countOfSales))
+                .setAveragePricePerProducts(findAP(turnover, countOfProducts))
+                .setUpt(findUPT(countOfProducts, countOfSales))
                 .setTurnover(findTurnover(sales));
     }
 
@@ -162,22 +163,32 @@ public class SaleServiceImpl implements SaleService {
     public void addSaleForTests() {
         List<UserEntity> allUsers = userService.findAll();
         List<ProductEntity> allProducts = productService.findAll();
-//        List<StoreEntity> allStores = storeService.findAll();
+        int productSize = allProducts.size();
+        //Work only for November
+        LocalDate date = LocalDate.of(2021, 11, 1);
+        int dayOfMonth = LocalDate.now().getDayOfMonth();
 
-        for (UserEntity userEntity : allUsers) {
-            int countSales = ThreadLocalRandom.current().nextInt(0, 10);
-            for (int j = 0; j < countSales; j++) {
-                List<ProductEntity> products = new ArrayList<>();
-                int countProducts = ThreadLocalRandom.current().nextInt(1, 10);
-                for (int k = 0; k < countProducts; k++) {
-                    int randomProductId = ThreadLocalRandom.current().nextInt(0, allProducts.size());
-                    products.add(allProducts.get(randomProductId));
+        for (int i = 1; i <= dayOfMonth; i++) {
+            for (UserEntity userEntity : allUsers) {
+
+                int countSales = ThreadLocalRandom.current().nextInt(0, 10);
+                for (int j = 0; j < countSales; j++) {
+
+                    List<ProductEntity> products = new ArrayList<>();
+
+                    int countProducts = ThreadLocalRandom.current().nextInt(1, 10);
+                    for (int k = 0; k < countProducts; k++) {
+
+                        int randomProductId = ThreadLocalRandom.current().nextInt(0, productSize);
+                        products.add(allProducts.get(randomProductId));
+
+                    }
+                    long shopId = userEntity.getStore().getId();
+                    StoreEntity store = storeService.findById(shopId);
+                    addSale(products, userEntity, store, date);
                 }
-//                long randomShopId = ThreadLocalRandom.current().nextLong(1, allStores.size() + 1);
-                long shopId = userEntity.getStore().getId();
-                StoreEntity store = storeService.findById(shopId);
-                addSale(products, userEntity, store);
             }
+            date = date.plusDays(1);
         }
     }
 }

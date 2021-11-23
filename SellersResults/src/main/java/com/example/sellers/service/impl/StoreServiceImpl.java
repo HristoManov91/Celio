@@ -9,6 +9,7 @@ import com.example.sellers.web.exception.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -43,6 +44,11 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
+    public void addStore() {
+        //ToDo implement
+    }
+
+    @Override
     public StoreEntity findById(Long storeId) {
         return storeRepository.findById(storeId).orElse(null);
     }
@@ -58,14 +64,8 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
-    public BigDecimal calculatePercentage(String storeName, Integer salesCount, LocalDate fromDate, LocalDate toDate) {
-        StoreEntity store = storeRepository
-                .findByName(storeName)
-                .orElseThrow(() -> new ObjectNotFoundException("Store with this name " + storeName + " not found!", storeName));
-
-        Integer visitors = visitorService.countStoreVisitorsBetweenDate(storeName, fromDate, toDate);
-
-        
+    public Integer findVisitorsBetweenDates(String storeName, LocalDate fromDate, LocalDate toDate) {
+        return visitorService.countStoreVisitorsBetweenDate(storeName, fromDate, toDate);
     }
 
     @Override

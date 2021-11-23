@@ -2,8 +2,11 @@ package com.example.sellers.model.entity.results;
 
 import com.example.sellers.model.entity.BaseEntity;
 
+import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
 import java.math.BigDecimal;
 
+@MappedSuperclass
 public abstract class ResultAbs extends BaseEntity {
 
     private Integer countOfSales;
@@ -16,6 +19,7 @@ public abstract class ResultAbs extends BaseEntity {
     public ResultAbs() {
     }
 
+    @Column
     public Integer getCountOfSales() {
         return countOfSales;
     }
@@ -25,6 +29,7 @@ public abstract class ResultAbs extends BaseEntity {
         return this;
     }
 
+    @Column
     public Integer getCountOfProducts() {
         return countOfProducts;
     }
@@ -34,6 +39,7 @@ public abstract class ResultAbs extends BaseEntity {
         return this;
     }
 
+    @Column
     public BigDecimal getAveragePricePerBasket() {
         return averagePricePerBasket;
     }
@@ -43,6 +49,7 @@ public abstract class ResultAbs extends BaseEntity {
         return this;
     }
 
+    @Column
     public BigDecimal getAveragePricePerProducts() {
         return averagePricePerProducts;
     }
@@ -52,6 +59,7 @@ public abstract class ResultAbs extends BaseEntity {
         return this;
     }
 
+    @Column
     public BigDecimal getUpt() {
         return upt;
     }
@@ -61,6 +69,7 @@ public abstract class ResultAbs extends BaseEntity {
         return this;
     }
 
+    @Column
     public BigDecimal getTurnover() {
         return turnover;
     }

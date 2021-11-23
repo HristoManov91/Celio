@@ -8,6 +8,7 @@ import com.example.sellers.service.StoreService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Service
@@ -31,6 +32,28 @@ public class StWRServiceImpl implements StWRService {
 
         for (String storesName : storesNames) {
             StoreWeekResultEntity storeResults = saleService.calculateStoreWeekResults(storesName , fromDate , toDate);
+            if (storeResults != null){
+                storeWeekResultRepository.save(storeResults);
+            }
+        }
+    }
+
+    @Override
+    public void weekTestResults() {
+        LocalDate fromDate = LocalDate.of(2021, 11, 1);
+        LocalDate toDate = LocalDate.of(2021, 11, 7);
+        Set<String> storesNames = storeService.findAllStoresNames();
+
+        for (int i = 0; i < 3; i++) {
+            for (String storesName : storesNames) {
+
+                StoreWeekResultEntity storeResults = saleService.calculateStoreWeekResults(storesName , fromDate , toDate);
+                if (storeResults != null){
+                    storeWeekResultRepository.save(storeResults);
+                }
+            }
+            fromDate = fromDate.plusDays(7);
+            toDate = toDate.plusDays(7);
         }
     }
 }
