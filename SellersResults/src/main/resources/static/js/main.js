@@ -1,3 +1,4 @@
+//---------- Add product ---------- //
 $(document).ready(function () {
     let max_fields = 100;
     let index = 1;
@@ -22,3 +23,30 @@ $(document).ready(function () {
         }
     });
 });
+
+//---------- Stores results ---------- //
+$('#loadStores').click(() => {
+    reloadResults()
+});
+
+function reloadResults() {
+    $("#stores-container").empty();
+
+    fetch("http://localhost:8080/stores-results/week").
+    then(response => response.json()).
+    then(json => json.forEach(store => {
+        let tableRow = '<tr>' +
+            '<td>' + store.storeName + '</td>' +
+            '<td>' + store.turnover + '</td>' +
+            '<td>' + store.visitors + '</td>' +
+            '<td>' + store.countOfSales + '</td>' +
+            '<td>' + store.countOfProducts + '</td>' +
+            '<td>' + store.percentageSales + '</td>' +
+            '<td>' + store.averagePricePerBasket + '</td>' +
+            '<td>' + store.averagePricePerProducts + '</td>' +
+            '<td>' + store.upt + '</td>' +
+            '</tr>'
+
+        $("#stores-container").append(tableRow)
+    }))
+}

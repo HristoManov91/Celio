@@ -9,7 +9,7 @@ import java.util.List;
 public class SaleAddBindingModel {
 
     private String seller;
-    private List<String> products = new ArrayList<>();
+    private List<String> products;
     private LocalDate dateOfSale;
     private String store;
 

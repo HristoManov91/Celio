@@ -55,9 +55,9 @@
                        aria-expanded="false"
                        th:text="#{stores}">Stores</a>
                     <div class="dropdown-menu" aria-labelledby="storeDropdown">
-                        <a class="dropdown-item" href="/shops/store-results" th:text="#{resultForStore}">Results for
+                        <a class="dropdown-item" href="#" th:text="#{resultForStore}">Results for
                             store</a>
-                        <a class="dropdown-item" href="/shops/all-shops-results" th:text="#{resultAllStores}">Results
+                        <a class="dropdown-item" th:href="@{/stores-results/week}" th:text="#{resultAllStores}">Results
                             for all store</a>
                         <a class="dropdown-item" href="/shops/store-information" th:text="#{storeInformation}">Information</a>
                     </div>
@@ -95,7 +95,7 @@
                 </li>
                 <form th:method="get">
                     <label for="lang">
-                        <img th:src="${#locale.toString()} == 'en_US' ? '/img/usa-flag.jpg' : '/img/bg-flag.png'"
+                        <img th:src="${#locale.toString()} == 'bg_BG' ? '/img/bg-flag.png' : '/img/usa-flag.jpg'"
                              width="35" height="25" alt="flag">
                     </label>
                     <select

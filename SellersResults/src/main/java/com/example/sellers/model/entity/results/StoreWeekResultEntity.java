@@ -10,7 +10,6 @@ import java.math.BigDecimal;
 public class StoreWeekResultEntity extends ResultAbs {
 
     private String storeName;
-    private Integer weekOfYear;
     private Integer visitors;
     private BigDecimal percentageSales;
 
@@ -24,16 +23,6 @@ public class StoreWeekResultEntity extends ResultAbs {
 
     public StoreWeekResultEntity setStoreName(String storeName) {
         this.storeName = storeName;
-        return this;
-    }
-
-    @Column
-    public Integer getWeekOfYear() {
-        return weekOfYear;
-    }
-
-    public StoreWeekResultEntity setWeekOfYear(Integer weekOfYear) {
-        this.weekOfYear = weekOfYear;
         return this;
     }
 

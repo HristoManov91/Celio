@@ -15,6 +15,8 @@ public abstract class ResultAbs extends BaseEntity {
     private BigDecimal averagePricePerProducts;
     private BigDecimal upt;
     private BigDecimal turnover;
+    private Integer weekOfYear;
+    private Integer year;
 
     public ResultAbs() {
     }
@@ -76,6 +78,26 @@ public abstract class ResultAbs extends BaseEntity {
 
     public ResultAbs setTurnover(BigDecimal turnover) {
         this.turnover = turnover;
+        return this;
+    }
+
+    @Column
+    public Integer getYear() {
+        return year;
+    }
+
+    public ResultAbs setYear(Integer year) {
+        this.year = year;
+        return this;
+    }
+
+    @Column
+    public Integer getWeekOfYear() {
+        return weekOfYear;
+    }
+
+    public ResultAbs setWeekOfYear(Integer weekOfYear) {
+        this.weekOfYear = weekOfYear;
         return this;
     }
 }

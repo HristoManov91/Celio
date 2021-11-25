@@ -54,15 +54,14 @@
                 <!-- Products -->
                 <div class="products">
                     <div class="col-auto">
-                        <label for="product" th:text="#{product}">Product</label>
+                        <label for="product"
+                               th:text="#{product}">Product</label>
                         <select th:field="*{products}"
                                 id="product"
                                 class="custom-select">
-                            <!-- ToDo да разбера как става с optgroup -->
-                            <!-- <option value="">select а ... </option>
-                            <optgroup th:each="field1 : ${objA}" th:label="${field1.name}"-->
                             <option value="" th:text="#{selectProduct}">Select Product</option>
-                            <option th:each="p : ${products}" th:value="${p.name}"
+                            <option th:each="p : ${products}"
+                                    th:value="${p.name}"
                                     th:text="|${p.category}: ${p.name} ${p.price}|">
                             </option>
                         </select>

@@ -30,7 +30,7 @@ public class CronScheduler {
     public void addSales() {
         LOGGER.info("Start shops weak result method at {}", LocalDateTime.now());
 
-        saleService.addSaleForTests();
+//        saleService.addSaleForTests(); ToDo да го променя да добавя продажби само за деня
 
         LOGGER.info("Finish shops weak result method at {}", LocalDateTime.now());
     }

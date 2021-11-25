@@ -9,7 +9,6 @@ import javax.persistence.Table;
 public class SellerWeekResultEntity extends ResultAbs {
 
     private String employeeName;
-    private Integer weakOfYear;
 
     public SellerWeekResultEntity() {
     }
@@ -23,16 +22,4 @@ public class SellerWeekResultEntity extends ResultAbs {
         this.employeeName = employeeName;
         return this;
     }
-
-    @Column
-    public Integer getWeakOfYear() {
-        return weakOfYear;
-    }
-
-    public SellerWeekResultEntity setWeakOfYear(Integer weakOfYear) {
-        this.weakOfYear = weakOfYear;
-        return this;
-    }
-
-
 }

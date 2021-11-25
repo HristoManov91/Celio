@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.List;
@@ -121,13 +120,14 @@ public class SaleServiceImpl implements SaleService {
 
         return (SellerWeekResultEntity) new SellerWeekResultEntity()
                 .setEmployeeName(fullName)
-                .setWeakOfYear(woy)
                 .setAveragePricePerBasket(findAB(turnover, countOfSales))
                 .setAveragePricePerProducts(findAP(turnover, countOfProducts))
                 .setUpt(findUPT(countOfProducts, countOfSales))
                 .setCountOfSales(countOfSales)
                 .setCountOfProducts(countOfProducts)
-                .setTurnover(turnover);
+                .setTurnover(turnover)
+                .setWeekOfYear(woy)
+                .setYear(fromDate.getYear());
     }
 
     @Override
@@ -148,7 +148,6 @@ public class SaleServiceImpl implements SaleService {
 
         return (StoreWeekResultEntity) new StoreWeekResultEntity()
                 .setStoreName(storeName)
-                .setWeekOfYear(woy)
                 .setVisitors(visitors)
                 .setPercentageSales(percentageSales)
                 .setCountOfSales(countOfSales)
@@ -156,7 +155,9 @@ public class SaleServiceImpl implements SaleService {
                 .setAveragePricePerBasket(findAB(turnover, countOfSales))
                 .setAveragePricePerProducts(findAP(turnover, countOfProducts))
                 .setUpt(findUPT(countOfProducts, countOfSales))
-                .setTurnover(findTurnover(sales));
+                .setTurnover(findTurnover(sales))
+                .setWeekOfYear(woy)
+                .setYear(fromDate.getYear());
     }
 
     @Override
