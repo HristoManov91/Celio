@@ -203,6 +203,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserEntity findUserByName(String fullName) {
+
+        return userRepository.findByFullName(fullName).orElseThrow(() ->
+                new ObjectNotFoundException("User with this full name " + fullName + " not found", fullName));
+    }
+
+    @Override
     public void approvedUser(String fullName) {
         UserEntity user = userRepository.findUserEntityByFullNameAndLeftEmployeeIsFalseAndApprovedIsFalse(fullName)
                 .orElseThrow(() ->

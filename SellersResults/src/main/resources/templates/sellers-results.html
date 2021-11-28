@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">>
+<th:block th:include="~{fragments/head}"></th:block>
+<body>
+<div>
+    <th:block th:include="~{fragments/nav}"></th:block>
+</div>
+<div class="container-fluid">
+    <main class="p-5 align-content-center">
+        <h5 class="text-center text-white mt-5">Sellers Results</h5>
+        <div class="d-flex justify-content-center">
+            <form class="form-inline" th:object="${sellerResultBindingModel}">
+                <!-- From Date -->
+                <label for="fromDate" class="text-white font-weight-bold" th:text="#{fromDate}">From
+                    Date</label>
+                <input th:field="*{fromDate}"
+                       th:errorclass="is-invalid"
+                       type="date"
+                       id="fromDate"
+                       class="form-control"
+                       aria-describedby="saleDateHelpInLine">
+                <small id="fromDateError"
+                       class="invalid-feedback form-text bg-danger rounded" th:text="#{dateSaleError}">
+                    Sale date cannot be in the future.</small>
+                <!-- End Date -->
+                <label for="endDate" class="text-white font-weight-bold" th:text="#{endDate}">End Date</label>
+                <input th:field="*{endDate}"
+                       th:errorclass="is-invalid"
+                       type="date"
+                       id="endDate"
+                       class="form-control"
+                       aria-describedby="saleDateHelpInLine">
+                <small id="endDateError"
+                       class="invalid-feedback form-text bg-danger rounded" th:text="#{dateSaleError}">
+                    Sale date cannot be in the future.</small>
+                <!-- Button -->
+                <button type="submit" th:text="#{submit}">Submit</button>
+            </form>
+        </div>
+    </main>
+</div>
+
+<canvas id="myChart" style="width:100%;max-width:1000px;height: 300px"></canvas>
+
+<script>
+    var yABValues =
+    var xValues = ["Italy", "France", "Spain", "USA", "Argentina" , "Italy", "France", "Spain", "USA", "Argentina"];
+    var yValues = [55, 49, 44, 24, 15, 55, 49, 44, 24, 15];
+    var barColors = ["red", "green","blue","orange","brown", "red", "green","blue","orange","brown"];
+
+    new Chart("myChart", {
+        type: "bar",
+        data: {
+            labels: xValues,
+            datasets: [{
+                backgroundColor: barColors,
+                data: yValues
+            }]
+        },
+        options: {
+            legend: {display: false},
+            title: {
+                display: true,
+                text: "World Wine Production 2018"
+            }
+        }
+    });
+</script>
+<th:block th:include="~{fragments/footer}"></th:block>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.min.js"
+        integrity="sha512-GMGzUEevhWh8Tc/njS0bDpwgxdCJLQBWG3Z2Ct+JGOpVnEmjvNx6ts4v6A2XJf1HOrtOsfhv3hBKpK9kE5z8AQ=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"></script>
+</body>
+</html>

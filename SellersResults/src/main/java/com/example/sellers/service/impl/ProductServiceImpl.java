@@ -4,11 +4,12 @@ import com.example.sellers.model.entity.ProductEntity;
 import com.example.sellers.model.entity.enums.CategoryEnum;
 import com.example.sellers.repository.ProductRepository;
 import com.example.sellers.service.ProductService;
-import org.hibernate.ObjectNotFoundException;
+import com.example.sellers.web.exception.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -37,8 +38,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void removeProduct(String name) {
+
         ProductEntity product = productRepository.findByName(name)
-                .orElseThrow(() -> new IllegalArgumentException("Product with this name not found"));
+                .orElseThrow(() -> new ObjectNotFoundException("Product with this name " + name + " not found" , name));
 
         productRepository.delete(product);
     }
@@ -57,5 +59,12 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public long count() {
         return productRepository.count();
+    }
+
+    @Override
+    public ProductEntity findProductByName(String name) {
+
+        return productRepository.findByName(name)
+                .orElseThrow(() -> new ObjectNotFoundException("Product with this name " + name + " not found" , name));
     }
 }

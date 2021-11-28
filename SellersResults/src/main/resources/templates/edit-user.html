@@ -16,12 +16,13 @@
         <div class="row">
             <!-- Full name -->
             <div class="form-group col-md-6 mb-3">
-                <label for="fullName" class="text-white font-weight-bold" th:text="#{employeeName}">Employee name</label>
+                <label for="fullName" class="text-white font-weight-bold" th:text="#{employeeName}">Employee
+                    name</label>
                 <input disabled
-                        id="fullName"
-                        th:field="*{fullName}"
-                        th:errorclass="is-invalid"
-                        type="text" class="form-control"/>
+                       id="fullName"
+                       th:field="*{fullName}"
+                       th:errorclass="is-invalid"
+                       type="text" class="form-control"/>
             </div>
             <!-- Birthday -->
             <div class="form-group col-md-6 mb-3">
@@ -37,26 +38,25 @@
                     Birthday is required.
                 </p>
             </div>
-
         </div>
         <div class="row">
             <!-- Store -->
             <div class="form-group col-md-6 mb-3">
                 <label for="store" class="text-white font-weight-bold" th:text="#{store}">Store</label>
                 <input disabled
-                        id="store"
-                        th:field="*{store.name}"
-                        type="text"
-                        class="form-control"/>
+                       id="store"
+                       th:field="*{store.name}"
+                       type="text"
+                       class="form-control"/>
             </div>
             <!-- Role -->
             <div class="form-group col-md-6 mb-3">
                 <label for="role" class="text-white font-weight-bold" th:text="#{role}">Role</label>
                 <input disabled
-                        id="role"
-                        th:field="*{role.name}"
-                        type="text"
-                        class="form-control"/>
+                       id="role"
+                       th:field="*{role.name}"
+                       type="text"
+                       class="form-control"/>
             </div>
         </div>
         <div class="row">
@@ -65,9 +65,9 @@
                 <label for="dateOfAppointment" class="text-white font-weight-bold" th:text="#{dateOfAppointment}">
                     Date of Appointment</label>
                 <input id="dateOfAppointment"
-                        th:field="*{dateOfAppointment}"
-                        type="date"
-                        class="form-control"/>
+                       th:field="*{dateOfAppointment}"
+                       type="date"
+                       class="form-control"/>
             </div>
             <!-- Image -->
             <div class="form-group col-md-6 mb-3">

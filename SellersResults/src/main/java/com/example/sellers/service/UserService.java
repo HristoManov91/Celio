@@ -53,4 +53,6 @@ public interface UserService {
     ProfileViewModel findUserViewModelByEmail(String email);
 
     Set<String> findAllUsersFullNameWithoutApproval();
+
+    UserEntity findUserByName(String fullName);
 }

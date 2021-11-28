@@ -24,7 +24,7 @@ public class StoreController {
     @GetMapping("/store-results")
     public String storeResults(){
         //ToDo
-        return "/main/resources/templates/store-results.html";
+        return "/main/resources/static/js/store-results.html";
     }
 
     @GetMapping("/all-stores-results")

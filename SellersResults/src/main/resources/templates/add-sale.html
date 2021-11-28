@@ -16,7 +16,7 @@
                   th:method="POST">
                 <!-- Seller -->
                 <!-- ToDo да направя да може да си добавяш продажба на теб,но не и на други хора,а Manager на всички -->
-                <div sec:authorize="hasRole('ROLE_ADMIN')">
+                <div sec:authorize="hasRole('ROLE_MANAGER')">
                     <div class="col-auto">
                         <label for="user" th:text="#{employeeName}">Seller</label>
                         <select th:field="*{seller}"

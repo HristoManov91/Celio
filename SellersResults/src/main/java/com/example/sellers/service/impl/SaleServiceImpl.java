@@ -1,8 +1,11 @@
 package com.example.sellers.service.impl;
 
+import com.example.sellers.model.binding.SellerResultBindingModel;
 import com.example.sellers.model.entity.*;
 import com.example.sellers.model.entity.results.SellerWeekResultEntity;
 import com.example.sellers.model.entity.results.StoreWeekResultEntity;
+import com.example.sellers.model.service.EmployeeResultServiceModel;
+import com.example.sellers.model.service.SaleAddServiceModel;
 import com.example.sellers.repository.SaleRepository;
 import com.example.sellers.service.ProductService;
 import com.example.sellers.service.SaleService;
@@ -10,15 +13,14 @@ import com.example.sellers.service.StoreService;
 import com.example.sellers.service.UserService;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.Email;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.temporal.WeekFields;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
 @Service
 public class SaleServiceImpl implements SaleService {
@@ -36,17 +38,15 @@ public class SaleServiceImpl implements SaleService {
     }
 
     @Override
-    public Set<SaleEntity> findUserSalesBetweenDates(String fullName, LocalDate fromDate, LocalDate toDate) {
-        return saleRepository
-                .findUserSalesBetweenDates(fullName, fromDate, toDate)
-                .orElse(null);
-    }
+    public void createSale(SaleAddServiceModel sale) {
+        List<ProductEntity> products =
+                sale.getProducts().stream().map(productService::findProductByName).collect(Collectors.toList());
 
-    @Override
-    public Set<SaleEntity> findStoreSalesBetweenDates(String storeName, LocalDate fromDate, LocalDate toDate) {
-        return saleRepository
-                .findStoreSalesBetweenDates(storeName, fromDate, toDate)
-                .orElse(null);
+        UserEntity user = userService.findUserByName(sale.getSeller());
+
+        StoreEntity store = storeService.findByName(sale.getStore());
+
+        addSale(products , user , store , sale.getDateOfSale());
     }
 
     @Override
@@ -74,6 +74,20 @@ public class SaleServiceImpl implements SaleService {
             userEntity.setMostProductsInBill(saleEntity);
         }
         userService.saveUser(userEntity);
+    }
+
+    @Override
+    public Set<SaleEntity> findUserSalesBetweenDates(String fullName, LocalDate fromDate, LocalDate toDate) {
+        return saleRepository
+                .findUserSalesBetweenDates(fullName, fromDate, toDate)
+                .orElse(null);
+    }
+
+    @Override
+    public Set<SaleEntity> findStoreSalesBetweenDates(String storeName, LocalDate fromDate, LocalDate toDate) {
+        return saleRepository
+                .findStoreSalesBetweenDates(storeName, fromDate, toDate)
+                .orElse(null);
     }
 
     @Override
@@ -158,6 +172,34 @@ public class SaleServiceImpl implements SaleService {
                 .setTurnover(findTurnover(sales))
                 .setWeekOfYear(woy)
                 .setYear(fromDate.getYear());
+    }
+
+    @Override
+    public Set<EmployeeResultServiceModel> calculateEmployeeResultsBetweenDate(LocalDate fromDate, LocalDate endDate) {
+        Set<String> allUsersFullName = userService.findAllUsersFullName();
+        Set<EmployeeResultServiceModel> sellersResults = new LinkedHashSet<>();
+
+        for (String employeeName : allUsersFullName) {
+            Set<SaleEntity> sales = findUserSalesBetweenDates(employeeName, fromDate, endDate);
+            if (sales != null){
+                int countOfSales = sales.size();
+                int countOfProducts = findCountOfProducts(sales);
+                BigDecimal turnover = findTurnover(sales);
+
+                EmployeeResultServiceModel seller = new EmployeeResultServiceModel()
+                        .setFullName(employeeName)
+                        .setCountOfSales(countOfSales)
+                        .setCountOfProducts(countOfProducts)
+                        .setAveragePricePerBasket(findAB(turnover , countOfSales))
+                        .setAveragePricePerProducts(findAP(turnover , countOfProducts))
+                        .setUpt(findUPT(countOfProducts , countOfSales))
+                        .setTurnover(turnover);
+
+                sellersResults.add(seller);
+            }
+        }
+
+        return sellersResults;
     }
 
     @Override

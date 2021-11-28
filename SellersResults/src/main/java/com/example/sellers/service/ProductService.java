@@ -5,6 +5,7 @@ import com.example.sellers.model.entity.enums.CategoryEnum;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 public interface ProductService {
@@ -20,4 +21,6 @@ public interface ProductService {
     List<ProductEntity> findAll();
 
     long count();
+
+    ProductEntity findProductByName(String name);
 }

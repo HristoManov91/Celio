@@ -1,10 +1,12 @@
 package com.example.sellers.web;
 
 import com.example.sellers.model.binding.SaleAddBindingModel;
+import com.example.sellers.model.service.SaleAddServiceModel;
 import com.example.sellers.service.ProductService;
 import com.example.sellers.service.SaleService;
 import com.example.sellers.service.StoreService;
 import com.example.sellers.service.UserService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,12 +26,14 @@ public class SaleController {
     private final ProductService productService;
     private final StoreService storeService;
     private final UserService userService;
+    private final ModelMapper modelMapper;
 
-    public SaleController(SaleService saleService, ProductService productService, StoreService storeService, UserService userService) {
+    public SaleController(SaleService saleService, ProductService productService, StoreService storeService, UserService userService, ModelMapper modelMapper) {
         this.saleService = saleService;
         this.productService = productService;
         this.storeService = storeService;
         this.userService = userService;
+        this.modelMapper = modelMapper;
     }
 
     @GetMapping("/add")
@@ -56,7 +60,8 @@ public class SaleController {
             return "redirect:add";
         }
 
-        //ToDo да направя да се запазва в базата и да го взима като ServiceModel
+        SaleAddServiceModel map = modelMapper.map(saleAddBindingModel, SaleAddServiceModel.class);
+        saleService.createSale(map);
 
         return "redirect:add";
     }

@@ -3,6 +3,8 @@ package com.example.sellers.service;
 import com.example.sellers.model.entity.*;
 import com.example.sellers.model.entity.results.SellerWeekResultEntity;
 import com.example.sellers.model.entity.results.StoreWeekResultEntity;
+import com.example.sellers.model.service.EmployeeResultServiceModel;
+import com.example.sellers.model.service.SaleAddServiceModel;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -32,4 +34,8 @@ public interface SaleService {
     SellerWeekResultEntity calculateEmployeeWeekResults(String fullName , LocalDate fromDate , LocalDate toDate);
 
     StoreWeekResultEntity calculateStoreWeekResults(String storeName , LocalDate fromDate , LocalDate toDate);
+
+    void createSale(SaleAddServiceModel sale);
+
+    Set<EmployeeResultServiceModel> calculateEmployeeResultsBetweenDate(LocalDate fromDate , LocalDate endDate);
 }

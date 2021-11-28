@@ -15,6 +15,8 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     Optional<UserEntity> findByEmail (String email);
 
+    Optional<UserEntity> findByFullName(String fullName);
+
     @Query("SELECT u.fullName FROM UserEntity u WHERE u.leftEmployee = false AND u.approved = true ")
     Set<String> findAllUserFullName();
 
