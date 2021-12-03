@@ -1,5 +1,8 @@
 package com.example.sellers.model.binding;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import java.time.LocalDate;
@@ -16,7 +19,7 @@ public class SaleAddBindingModel {
     public SaleAddBindingModel() {
     }
 
-    @NotNull
+    @NotBlank
     public String getSeller() {
         return seller;
     }
@@ -27,7 +30,7 @@ public class SaleAddBindingModel {
     }
 
     @NotNull
-    public List<String> getProducts() {
+    public List<@NotBlank(message="Product not be empty")String> getProducts() {
         return products;
     }
 
@@ -37,6 +40,7 @@ public class SaleAddBindingModel {
     }
 
     @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @PastOrPresent
     public LocalDate getDateOfSale() {
         return dateOfSale;
@@ -51,7 +55,7 @@ public class SaleAddBindingModel {
         this.products.add(productName);
     }
 
-    @NotNull
+    @NotBlank
     public String getStore() {
         return store;
     }

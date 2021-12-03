@@ -6,14 +6,13 @@ import javax.validation.constraints.NotNull;
 
 public class UserRoleBindingModel {
 
-    @NotNull
     private String fullName;
-    @NotNull
     private UserRoleEnum role;
 
     public UserRoleBindingModel() {
     }
 
+    @NotNull
     public String getFullName() {
         return fullName;
     }
@@ -23,6 +22,7 @@ public class UserRoleBindingModel {
         return this;
     }
 
+    @NotNull
     public UserRoleEnum getRole() {
         return role;
     }

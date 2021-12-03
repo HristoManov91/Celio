@@ -2,122 +2,132 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">>
 <th:block th:include="~{fragments/head}"></th:block>
 <body>
-<div>
-    <th:block th:include="~{fragments/nav}"></th:block>
-    <main class="p-5 align-content-center my-register-div">
-        <h1 class="border-bottom" th:text="#{registration}">Registration</h1>
-        <div class="d-flex justify-content-center">
-            <div class="row g-3" style="color: red">
-                <form th:action="@{/users/register}"
-                      th:object="${userRegisterBindingModel}"
-                      method="POST">
-                    <!-- Email -->
-                    <div>
-                        <div class="col-auto">
-                            <label for="inputEmail" class="col-form-label" th:text="#{email}">Email</label>
-                        </div>
-                        <div class="col-auto">
-                            <input name="email"
-                                   th:value="*{email}" th:errorclass="is-invalid"
-                                   required type="email" id="inputEmail"
-                                   class="form-control"
-                                   aria-describedby="emailHelpInLine">
-                            <small id="emailError"
-                                   class="invalid-feedback form-text bg-danger rounded text-white"
-                                   th:text="#{emailValid}">
-                                Email must be valid</small>
-                            <small th:if="${userExistError}" id="usernameUniqueError"
-                                   class="text-light form-text bg-danger rounded text-white" th:text="#{emailOccupied}">
-                                Email is already occupied</small>
-                        </div>
-                    </div>
-                    <!-- Password -->
-                    <div>
-                        <div class="col-auto">
-                            <label for="password" class="col-form-label" th:text="#{password}">Password</label>
-                        </div>
-                        <div class="col-auto">
-                            <input name="password"
-                                   th:value="*{password}" th:errorclass="is-invalid"
-                                   required minlength="6" maxlength="20"
-                                   type="password"
-                                   id="password"
-                                   class="form-control"
-                                   aria-describedby="passwordHelpInLine">
-                            <small id="passwordError"
-                                   class="invalid-feedback form-text bg-danger rounded text-white"
-                                   th:text="#{passwordValid}">
-                                Length must be 6 and 20 characters</small>
-                        </div>
-                    </div>
-                    <!-- Confirm password -->
-                    <div>
-                        <div class="col-auto">
-                            <label for="inputConfirmPassword" class="col-form-label" th:text="#{confirmPassword}">Confirm
-                                password</label>
-                        </div>
-                        <div class="col-auto">
-                            <input name="confirmPassword"
-                                   th:value="*{confirmPassword}" th:errorclass="is-invalid"
-                                   required minlength="6" maxlength="20"
-                                   type="password"
-                                   id="inputConfirmPassword"
-                                   class="form-control"
-                                   aria-describedby="confirmPasswordHelpInline">
-                            <small id="confirmPasswordError"
-                                   class="invalid-feedback form-text bg-danger rounded text-white"
-                                   th:text="#{passwordValid}">
-                                Password length must be between 6 and 20 characters.</small>
-                            <small th:if="${!equalsPassword}" id="not-equals-password"
-                                   class="form-text bg-danger rounded text-white" th:text="#{notEqualsPassword}">
-                                Passwords should be match.
-                            </small>
-                        </div>
-                    </div>
-                    <!-- Full name -->
-                    <div>
-                        <div class="col-auto">
-                            <label for="inputFullName" class="col-form-label" th:text="#{fullName}">Full Name</label>
-                        </div>
-                        <div class="col-auto">
-                            <input name="fullName"
-                                   th:value="*{fullName}" th:errorclass="is-invalid"
-                                   required minlength="6" maxlength="30"
-                                   type="text"
-                                   id="inputFullName"
-                                   class="form-control"
-                                   aria-describedby="fullNameHelpInLine">
-                            <small id="fullNameError"
-                                   class="invalid-feedback form-text bg-danger rounded text-white" th:text="#{fullNameError}">
-                                Length must be 6 and 30 characters</small>
-                        </div>
-                    </div>
-                    <!-- Store -->
-                    <div>
-                        <div class="col-auto">
-                            <label for="store" th:text="#{store}">Store</label>
-                            <select th:field="*{store}"
-                                    id="store"
-                                    class="custom-select">
-                                <option value="" th:text="#{selectStore}">Select Store</option>
-                                <option th:each="s : ${stores}"
-                                        th:value="${s}"
-                                        th:text="${s}">
-                                </option>
-                            </select>
-                        </div>
-                        <small id="storeError" class="invalid-feedback form-text bg-danger rounded text-white"
-                               th:text="#{selectStoreError}">You must select store</small>
-                    </div>
-                    <!-- Button -->
-                    <div class="d-flex justify-content-center mt-4">
-                        <button class="btn btn-primary btn-block w-50" type="submit" th:text="#{registration}">Register</button>
-                    </div>
-                </form>
-            </div>
+<div id="page-container">
+    <div id="content-wrap">
+        <div>
+            <th:block th:include="~{fragments/nav}"></th:block>
         </div>
-    </main>
+        <main class="p-5 align-content-center my-register-div">
+            <h1 class="border-bottom" th:text="#{registration}">Registration</h1>
+            <div class="d-flex justify-content-center">
+                <div class="row g-3" style="color: red">
+                    <form th:action="@{/users/register}"
+                          th:object="${userRegisterBindingModel}"
+                          method="POST">
+                        <!-- Email -->
+                        <div>
+                            <div class="col-auto">
+                                <label for="inputEmail" class="col-form-label" th:text="#{email}">Email</label>
+                            </div>
+                            <div class="col-auto">
+                                <input name="email"
+                                       th:value="*{email}" th:errorclass="is-invalid"
+                                       required type="email" id="inputEmail"
+                                       class="form-control"
+                                       aria-describedby="emailHelpInLine">
+                                <small id="emailError"
+                                       class="invalid-feedback form-text bg-danger rounded text-white"
+                                       th:text="#{emailValid}">
+                                    Email must be valid</small>
+                                <small th:if="${userExistError}" id="usernameUniqueError"
+                                       class="text-light form-text bg-danger rounded text-white"
+                                       th:text="#{emailOccupied}">
+                                    Email is already occupied</small>
+                            </div>
+                        </div>
+                        <!-- Password -->
+                        <div>
+                            <div class="col-auto">
+                                <label for="password" class="col-form-label" th:text="#{password}">Password</label>
+                            </div>
+                            <div class="col-auto">
+                                <input name="password"
+                                       th:value="*{password}" th:errorclass="is-invalid"
+                                       required minlength="6" maxlength="20"
+                                       type="password"
+                                       id="password"
+                                       class="form-control"
+                                       aria-describedby="passwordHelpInLine">
+                                <small id="passwordError"
+                                       class="invalid-feedback form-text bg-danger rounded text-white"
+                                       th:text="#{passwordValid}">
+                                    Length must be 6 and 20 characters</small>
+                            </div>
+                        </div>
+                        <!-- Confirm password -->
+                        <div>
+                            <div class="col-auto">
+                                <label for="inputConfirmPassword" class="col-form-label" th:text="#{confirmPassword}">Confirm
+                                    password</label>
+                            </div>
+                            <div class="col-auto">
+                                <input name="confirmPassword"
+                                       th:value="*{confirmPassword}" th:errorclass="is-invalid"
+                                       required minlength="6" maxlength="20"
+                                       type="password"
+                                       id="inputConfirmPassword"
+                                       class="form-control"
+                                       aria-describedby="confirmPasswordHelpInline">
+                                <small id="confirmPasswordError"
+                                       class="invalid-feedback form-text bg-danger rounded text-white"
+                                       th:text="#{passwordValid}">
+                                    Password length must be between 6 and 20 characters.</small>
+                                <small th:if="${!equalsPassword}" id="not-equals-password"
+                                       class="form-text bg-danger rounded text-white" th:text="#{notEqualsPassword}">
+                                    Passwords should be match.
+                                </small>
+                            </div>
+                        </div>
+                        <!-- Full name -->
+                        <div>
+                            <div class="col-auto">
+                                <label for="inputFullName" class="col-form-label" th:text="#{fullName}">Full
+                                    Name</label>
+                            </div>
+                            <div class="col-auto">
+                                <input name="fullName"
+                                       th:value="*{fullName}" th:errorclass="is-invalid"
+                                       required minlength="6" maxlength="30"
+                                       type="text"
+                                       id="inputFullName"
+                                       class="form-control"
+                                       aria-describedby="fullNameHelpInLine">
+                                <small id="fullNameError"
+                                       class="invalid-feedback form-text bg-danger rounded text-white"
+                                       th:text="#{fullNameError}">
+                                    Length must be 6 and 30 characters</small>
+                            </div>
+                        </div>
+                        <!-- Store -->
+                        <div>
+                            <div class="col-auto">
+                                <label for="store" th:text="#{store}">Store</label>
+                                <select th:field="*{store}"
+                                        required
+                                        id="store"
+                                        class="custom-select">
+                                    <option value="" th:text="#{selectStore}">Select Store</option>
+                                    <option th:each="s : ${stores}"
+                                            th:value="${s}"
+                                            th:text="${s}">
+                                    </option>
+                                </select>
+                            </div>
+                            <small id="storeError" class="invalid-feedback form-text bg-danger rounded text-white"
+                                   th:text="#{selectStoreError}">You must select store</small>
+                        </div>
+                        <!-- Button -->
+                        <div class="d-flex justify-content-center mt-4">
+                            <button class="btn btn-primary btn-block w-50" type="submit" th:text="#{registration}">
+                                Register
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+    <th:block th:include="~{fragments/footer}"></th:block>
 </div>
-<th:block th:include="~{fragments/footer}"></th:block>
 </body>
 </html>

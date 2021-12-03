@@ -1,108 +1,159 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">>
-<th:block th:include="~{fragments/head}"></th:block>
-<body>
-<div>
-    <th:block th:include="~{fragments/nav}"></th:block>
-</div>
-<div class="container-fluid">
-</div>
-<main class="p-5 align-content-center my-register-div">
-    <h1 class="border-bottom" th:text="#{addSale}">Add Sale</h1>
-    <div class="d-flex justify-content-center">
-        <div class="row g-3" style="color: red">
-            <form th:action="@{/sales/add}"
-                  th:object="${saleAddBindingModel}"
-                  th:method="POST">
-                <!-- Seller -->
-                <!-- ToDo да направя да може да си добавяш продажба на теб,но не и на други хора,а Manager на всички -->
-                <div sec:authorize="hasRole('ROLE_MANAGER')">
-                    <div class="col-auto">
-                        <label for="user" th:text="#{employeeName}">Seller</label>
-                        <select th:field="*{seller}"
-                                id="user"
-                                class="custom-select">
-                            <option value="" th:text="#{selectEmployee}">Select employee</option>
-                            <option th:each="s : ${sellers}"
-                                    th:value="${s}"
-                                    th:text="${s}">
-                            </option>
-                        </select>
-                    </div>
-                    <small id="userError" class="invalid-feedback form-text bg-danger rounded"
-                           th:text="#{selectEmployeeError}">
-                        You must select employee</small>
-                </div>
-                <!-- Store -->
-                <div>
-                    <div class="col-auto">
-                        <label for="store" th:text="#{store}">Store</label>
-                        <select th:field="*{store}"
-                                id="store"
-                                class="custom-select">
-                            <option value="" th:text="#{selectStore}">Select Store</option>
-                            <option th:each="s : ${stores}"
-                                    th:value="${s}"
-                                    th:text="${s}">
-                            </option>
-                        </select>
-                    </div>
-                    <small id="storeError" class="invalid-feedback form-text bg-danger rounded"
-                           th:text="#{selectStoreError}">
-                        You must select store</small>
-                </div>
-                <!-- Products -->
-                <div class="products" th:each="product, iterStat : *{products}">
-                    <div class="col-auto">
-                        <label for="product"
-                               th:text="#{product}">Product</label>
-                        <select th:field="*{products}"
-                                id="product"
-                                class="custom-select">
-                            <option value="" th:text="#{selectProduct}">Select Product</option>
-                            <option th:each="p : ${products}"
-                                    th:value="${p.name}"
-                                    th:text="|${p.category}: ${p.name} ${p.price}|">
-                            </option>
-                        </select>
-                    </div>
-                    <small id="productError" class="invalid-feedback form-text bg-danger rounded"
-                           th:text="#{selectProductError}">
-                        You must select product</small>
-                </div>
-                <div class="d-flex justify-content-center mt-4">
-                    <button type="button"
-                            class="add-product btn btn-outline-secondary col-lg-8"
-                            th:text="#{addAnotherProduct}">+ Add another product
-                    </button>
-                </div>
-                <!-- Date -->
-                <div>
-                    <div class="col-auto">
-                        <label for="saleDate" class="col-form-label" th:text="#{dateSale}">Date of sale</label>
-                    </div>
-                    <div class="col-auto">
-                        <input th:field="*{dateOfSale}"
-                               th:errorclass="is-invalid"
-                               type="date"
-                               id="saleDate"
-                               class="form-control"
-                               aria-describedby="saleDateHelpInLine">
-                        <small id="saleDateError"
-                               class="invalid-feedback form-text bg-danger rounded" th:text="#{dateSaleError}">
-                            Sale date cannot be in the future.</small>
-                    </div>
-                </div>
-                <!-- Finish button -->
-                <div class="d-flex justify-content-center mt-4">
-                    <button class="btn btn-primary btn-block w-50" type="submit" th:text="#{addSale}">Add sale</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</main>
-<th:block th:include="~{fragments/footer}"></th:block>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">>
+<head>
+    <meta charset="UTF-8">
+    <title>Celio Bulgaria Results</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <link rel="stylesheet/less" type="text/css" href="styles.less"/>
+</head>
 
+<body>
+<div id="page-container">
+    <div id="content-wrap">
+        <div>
+            <th:block th:include="~{fragments/nav}"></th:block>
+        </div>
+        <main class="p-5 align-content-center my-register-div">
+            <h1 class="border-bottom" th:text="#{addSale}">Add Sale</h1>
+            <div class="d-flex justify-content-center">
+                <div class="row g-3" style="color: red">
+                    <form th:action="@{/sales/add}"
+                          th:object="${saleAddBindingModel}"
+                          th:method="POST">
+                        <!-- Seller -->
+                        <!-- ToDo да направя да може да си добавяш продажба на теб,но не и на други хора,а Manager на всички -->
+                        <div sec:authorize="hasRole('ROLE_MANAGER')">
+                            <div class="col-auto">
+                                <label for="user" th:text="#{employeeName}">Seller</label>
+                                <select th:field="*{seller}"
+                                        th:errorclass="is-invalid"
+                                        id="user"
+                                        class="custom-select">
+                                    <option value="" th:text="#{selectEmployee}">Select employee</option>
+                                    <option th:each="s : ${sellers}"
+                                            th:value="${s}"
+                                            th:text="${s}">
+                                    </option>
+                                </select>
+                                <small id="userError" class="invalid-feedback form-text bg-danger rounded"
+                                       th:text="#{selectEmployeeError}">
+                                    You must select employee</small>
+                            </div>
+                        </div>
+                        <!-- Store -->
+                        <div>
+                            <div class="col-auto">
+                                <label for="store" th:text="#{store}">Store</label>
+                                <select th:field="*{store}"
+                                        th:errorclass="is-invalid"
+                                        id="store"
+                                        class="custom-select">
+                                    <option value="" th:text="#{selectStore}">Select Store</option>
+                                    <option th:each="s : ${stores}"
+                                            th:value="${s}"
+                                            th:text="${s}">
+                                    </option>
+                                </select>
+                            </div>
+                            <small id="storeError" class="invalid-feedback form-text bg-danger rounded"
+                                   th:text="#{selectStoreError}">
+                                You must select store</small>
+                        </div>
+                        <!-- Products -->
+                        <div id="myProducts" th:each="prod, iter : *{products}">
+                            <div class="col-auto">
+                                <label for="product" th:text="#{selectProduct}">Products</label>
+                                <div class="d-flex justify-content-center">
+                                    <input th:field="*{products[__${iter.index}__]}"
+                                           th:errorclass="is-invalid"
+                                           list="products" id="product"
+                                           class="form-control"/>
+                                    <datalist id="products">
+                                        <option th:each="p : ${products}"
+                                                th:value="${p.name}"
+                                                th:text="|${p.name} ${p.category} ${p.price}|"></option>
+                                    </datalist>
+                                </div>
+                            </div>
+                            <small id="productError" class="invalid-feedback form-text bg-danger rounded"
+                                   th:text="#{selectProductError}">
+                                You must select product</small>
+
+                        </div>
+                        <div class="d-flex justify-content-center mt-4">
+                            <button type="button" id="addProduct"
+                                    class="add-product btn btn-outline-secondary col-lg-8"
+                                    th:text="#{addAnotherProduct}">+ Add another product
+                            </button>
+                        </div>
+                        <!--                <div id="myProducts" th:each="product , iterStat : *{products}">-->
+                        <!--                    <div class="col-auto">-->
+                        <!--                        <div class="d-flex justify-content-center mt-4">-->
+                        <!--                            Product-->
+                        <!--                            <input th:field="*{products[__${iterStat.index}__]}" list="products" value="" >-->
+                        <!--                            <datalist id="products">-->
+                        <!--                                <option th:each="p : ${products}"-->
+                        <!--                                        th:value="${p.name}"-->
+                        <!--                                        th:text="${p.name} ${p.category} ${p.price}"></option>-->
+                        <!--                            </datalist>-->
+                        <!--                        </div>-->
+                        <!--                        <label for="products" th:text="#{product}">Product</label>-->
+                        <!--                        <select id="products"-->
+                        <!--                                class="custom-select">-->
+                        <!--                            <option value="" th:text="#{selectProduct}">Select Product</option>-->
+                        <!--                            <option th:each="p : ${products}"-->
+                        <!--                                    th:value="${p.name}"-->
+                        <!--                                    th:text="|${p.category}: ${p.name} ${p.price}|">-->
+                        <!--                            </option>-->
+                        <!--                        </select>-->
+                        <!--                    </div>-->
+                        <!--                    <div class="d-flex justify-content-center mt-1">-->
+                        <!--                        <input list="products" type="text"  readonly/>-->
+                        <!--                        <a href="#" class="delete">Delete</a>-->
+                        <!--                    </div>-->
+                        <!--                    <small id="productError" class="invalid-feedback form-text bg-danger rounded"-->
+                        <!--                           th:text="#{selectProductError}">-->
+                        <!--                        You must select product</small>-->
+                        <!--                </div>-->
+                        <!--                <div class="d-flex justify-content-center mt-4">-->
+                        <!--                    <button type="button" id="addProduct"-->
+                        <!--                            class="add-product btn btn-outline-secondary col-lg-8"-->
+                        <!--                            th:text="#{addAnotherProduct}">+ Add another product-->
+                        <!--                    </button>-->
+                        <!--                </div>-->
+                        <!-- Date -->
+                        <div>
+                            <div class="col-auto">
+                                <label for="saleDate" class="col-form-label" th:text="#{dateSale}">Date of sale</label>
+                            </div>
+                            <div class="col-auto">
+                                <input th:field="*{dateOfSale}"
+                                       th:errorclass="is-invalid"
+                                       type="date"
+                                       id="saleDate"
+                                       class="form-control"
+                                       aria-describedby="saleDateHelpInLine">
+                                <small id="saleDateError"
+                                       class="invalid-feedback form-text bg-danger rounded" th:text="#{dateSaleError}">
+                                    Sale date cannot be in the future.</small>
+                            </div>
+                        </div>
+                        <!-- Finish button -->
+                        <div class="d-flex justify-content-center mt-4">
+                            <button class="btn btn-primary btn-block w-50" type="submit" th:text="#{addSale}">Add sale
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+    <th:block th:include="~{fragments/footer}"></th:block>
+</div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>

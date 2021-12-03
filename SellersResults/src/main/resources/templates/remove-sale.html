@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">>
 <th:block th:include="~{fragments/head}"></th:block>
-<body>
-<div>
-  <th:block th:include="~{fragments/nav}"></th:block>
+<body id="remove-sale">
+<div id="page-container">
+    <div id="content-wrap">
+        <div>
+            <th:block th:include="~{fragments/nav}"></th:block>
+        </div>
+        <!-- ToDo -->
+        <h1 class="bg-danger text-white mt-5">Hello, we are still working on the page.<br>
+            She will be ready soon :)</h1>
+    </div>
+    <th:block th:include="~{fragments/footer}"></th:block>
 </div>
-<div class="container-fluid">
-  <!-- ToDo -->
-  <h5 class="text-center text-white mt-5">Remove Sale</h5>
-</div>
-<th:block th:include="~{fragments/footer}"></th:block>
 </body>
 </html>

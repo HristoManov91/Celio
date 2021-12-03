@@ -1,9 +1,39 @@
 body {
-    background-image: url("/img/background2.png");
+    background-image: url("/img/background2.jpg");
     background-position: center;
     background-attachment: fixed;
     background-size: cover;
 }
+
+#page-container {
+    position: relative;
+    min-height: 100vh;
+}
+
+#content-wrap {
+    padding-bottom: 2.5rem; /* Footer height */
+}
+
+footer {
+    position: absolute;
+    background-color: #343A40;
+    color: white;
+    bottom: 0;
+    width: 100%;
+    height: 2.5rem; /* Footer height */
+    text-align: center;
+}
+
+/*footer {*/
+/*    padding: 1rem;*/
+/*    left: 0;*/
+/*    bottom: 0;*/
+/*    width: 100%;*/
+/*    background-color: #343A40;*/
+/*    color: white;*/
+/*    position: absolute;*/
+/*    text-align: center;*/
+/*}*/
 
 #error-page {
     background-image: url("/img/error.jpg");
@@ -26,24 +56,28 @@ body {
     background-size: 700px 300px;
 }
 
+#remove-sale h1 {
+    position: absolute;
+    text-align: center;
+    top: 250px;
+    left: 400px;
+}
+
+#store-information h1 {
+    position: absolute;
+    text-align: center;
+    top: 250px;
+    left: 400px;
+}
+
 nav ul li a {
     color: white;
 }
 
-.container-fluid {
-    padding-top: 50px;
-}
+/*.container-fluid {*/
+/*    padding-top: 50px;*/
+/*}*/
 
-footer {
-    /*margin-top: 2rem;*/
-    /*padding: 1rem;*/
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    /*background-color: red;*/
-    /*color: white;*/
-    text-align: center;
-}
 
 body div main h1 {
     color: white;
@@ -54,7 +88,7 @@ body div main h1 {
     border: none;
 }
 
- /* така вместо да оцветяваме полетата слагама граница за показване на валидация */
+/* така вместо да оцветяваме полетата слагама граница за показване на валидация */
 input:valid {
     border: lawngreen solid 2px;
 }
@@ -64,7 +98,7 @@ input:invalid {
 }
 
 input:invalid:required {
-    background-image: linear-gradient(to right , pink , red);
+    background-image: linear-gradient(to right, white, grey);
 }
 
 .fonts {
@@ -72,13 +106,14 @@ input:invalid:required {
 }
 
 .profile-card {
-    background-color: #dc3545;
+    background-color: #343A40;
     border: none;
     position: relative;
     overflow: hidden;
     border-radius: 8px;
     cursor: pointer;
     min-height: 65vh;
+    color: white;
 }
 
 .btn-outline-primary {
@@ -94,7 +129,7 @@ input:invalid:required {
 }
 
 .dropdown-item:hover {
-    background-color: #dc3545;
+    background-color: rgba(42, 18, 67, 0.18);
 }
 
 .form-inline {
@@ -103,42 +138,46 @@ input:invalid:required {
     align-items: center;
 }
 
-/* Add some margins for each label */
-.form-inline label {
-    margin: 5px 10px 5px 0;
-}
+/*!* Add some margins for each label *!*/
+/*.form-inline label {*/
+/*    margin: 5px 10px 5px 0;*/
+/*}*/
 
-/* Style the input fields */
-.form-inline input {
-    vertical-align: middle;
-    margin: 5px 10px 5px 0;
-    padding: 10px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-}
+/*!* Style the input fields *!*/
+/*.form-inline input {*/
+/*    vertical-align: middle;*/
+/*    margin: 5px 10px 5px 0;*/
+/*    padding: 10px;*/
+/*    background-color: #fff;*/
+/*    border: 1px solid #ddd;*/
+/*}*/
 
-/* Style the submit button */
-.form-inline button {
-    padding: 10px 20px;
-    background-color: dodgerblue;
-    border: 1px solid #ddd;
-    color: white;
-}
+/*!* Style the submit button *!*/
+/*.form-inline button {*/
+/*    padding: 10px 20px;*/
+/*    background-color: dodgerblue;*/
+/*    border: 1px solid #ddd;*/
+/*    color: white;*/
+/*}*/
 
-.form-inline button:hover {
-    background-color: royalblue;
-}
+/*.form-inline button:hover {*/
+/*    background-color: royalblue;*/
+/*}*/
 
 /* Add responsiveness - display the form controls vertically instead of horizontally on screens that are less than 800px wide */
-@media (max-width: 800px) {
-    .form-inline input {
-        margin: 10px 0;
-    }
+/*@media (max-width: 800px) {*/
+/*    .form-inline input {*/
+/*        margin: 10px 0;*/
+/*    }*/
 
-    .form-inline {
-        flex-direction: column;
-        align-items: stretch;
-    }
+/*    .form-inline {*/
+/*        flex-direction: column;*/
+/*        align-items: stretch;*/
+/*    }*/
+/*}*/
+
+table, th, td {
+    border: 1px solid black;
 }
 
 

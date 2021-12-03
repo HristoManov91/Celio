@@ -1,29 +1,27 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
-
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">>
 <th:block th:include="~{fragments/head}"></th:block>
-
 <body>
-
-<th:block th:include="~{fragments/nav}"></th:block>
-
-<div class="container-fluid">
-    <h1 class="text-center text-white mt-5" th:text="#{statistics}">Statistics</h1>
-    <h3 class="text-center text-white mt-5" th:text="#{totalRequests}">Total requests
-        <th:block th:text="${stats.getTotalRequests()}"></th:block>
-    </h3>
-    <h3 class="text-center text-white mt-5" th:text="#{anonymousRequests}">Anonymous requests
-        <th:block th:text="${stats.getAnonRequests()}"></th:block>
-    </h3>
-    <h3 class="text-center text-white mt-5" th:text="#{authorizedRequests}">Authorized requests
-        <th:block th:text="${stats.getAuthRequests()}"></th:block>
-    </h3>
-</div>
-
-<div>
+<div id="page-container">
+    <div id="content-wrap">
+        <div>
+            <th:block th:include="~{fragments/nav}"></th:block>
+        </div>
+        <!-- ToDo да оправя позицията на текста -->
+        <main class="p-5 align-content-center">
+            <h1 class="border-bottom" th:text="#{statistics}">Statistics</h1>
+            <h3 class="text-center text-white mt-5" th:text="#{totalRequests}">Total requests
+                <th:block th:text="${stats.getTotalRequests()}"></th:block>
+            </h3>
+            <h3 class="text-center text-white mt-5" th:text="#{anonymousRequests}">Anonymous requests
+                <th:block th:text="${stats.getAnonRequests()}"></th:block>
+            </h3>
+            <h3 class="text-center text-white mt-5" th:text="#{authorizedRequests}">Authorized requests
+                <th:block th:text="${stats.getAuthRequests()}"></th:block>
+            </h3>
+        </main>
+    </div>
     <th:block th:include="~{fragments/footer}"></th:block>
 </div>
-
 </body>
 </html>

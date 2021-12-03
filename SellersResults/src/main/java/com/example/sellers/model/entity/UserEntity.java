@@ -53,7 +53,7 @@ public class UserEntity extends BaseEntity {
         return this;
     }
 
-    @Column(name = "email", nullable = false, unique = true, length = 100)
+    @Column(name = "email", nullable = false, unique = true, length = 50)
     public String getEmail() {
         return email;
     }
@@ -83,7 +83,7 @@ public class UserEntity extends BaseEntity {
         return this;
     }
 
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne()
     public PictureEntity getPicture() {
         return picture;
     }

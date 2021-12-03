@@ -2,58 +2,66 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">>
 <th:block th:include="~{fragments/head}"></th:block>
 <body>
-<div>
-  <th:block th:include="~{fragments/nav}"></th:block>
-</div>
-<main class="p-5 align-content-center my-register-div">
-  <h1 class="border-bottom" th:text="#{changeStore}">Change Employee Store</h1>
-  <div class="d-flex justify-content-center">
-    <div class="row g-3" style="color: red">
-      <form th:action="@{/users/change-user-store}"
-            th:object="${userChangeStoreBindingModel}"
-            method="POST">
-        <!-- User -->
+<div id="page-container">
+    <div id="content-wrap">
         <div>
-          <div class="col-auto">
-            <label for="employee" th:text="#{employeeName}">Employee name</label>
-            <select th:field="*{fullName}"
-                    id="employee"
-                    class="custom-select">
-              <option value="">Select User</option>
-              <option th:each="u : ${users}"
-                      th:value="${u}"
-                      th:text="${u}">
-              </option>
-            </select>
-          </div>
-          <small id="employeeError" class="invalid-feedback form-text bg-danger rounded" th:text="#{selectEmployeeError}">
-            You must select employee</small>
+            <th:block th:include="~{fragments/nav}"></th:block>
         </div>
-        <!-- New Store -->
-        <div>
-          <div class="col-auto">
-            <label for="store" th:text="#{store}">Store</label>
-            <select th:field="*{store}"
-                    id="store"
-                    class="custom-select">
-              <option value="" th:text="#{selectStore}">Select Store</option>
-              <option th:each="s : ${stores}"
-                      th:value="${s}"
-                      th:text="${s}">
-              </option>
-            </select>
-          </div>
-          <small id="storeError" class="invalid-feedback form-text bg-danger rounded" th:text="#{selectStoreError}">
-            You must select store</small>
-        </div>
-        <!-- Button -->
-        <div class="d-flex justify-content-center mt-4">
-          <button class="btn btn-primary btn-block w-50" type="submit" th:text="#{changeStoreButton}">Change store</button>
-        </div>
-      </form>
+        <main class="p-5 align-content-center my-register-div">
+            <h1 class="border-bottom" th:text="#{changeStore}">Change Employee Store</h1>
+            <div class="d-flex justify-content-center">
+                <div class="row g-3" style="color: red">
+                    <form th:action="@{/users/change-user-store}"
+                          th:object="${userChangeStoreBindingModel}"
+                          method="POST">
+                        <!-- User -->
+                        <div>
+                            <div class="col-auto">
+                                <label for="employee" th:text="#{employeeName}">Employee name</label>
+                                <select th:field="*{fullName}"
+                                        id="employee"
+                                        class="custom-select">
+                                    <option value="">Select User</option>
+                                    <option th:each="u : ${users}"
+                                            th:value="${u}"
+                                            th:text="${u}">
+                                    </option>
+                                </select>
+                            </div>
+                            <small id="employeeError" class="invalid-feedback form-text bg-danger rounded"
+                                   th:text="#{selectEmployeeError}">
+                                You must select employee</small>
+                        </div>
+                        <!-- New Store -->
+                        <div>
+                            <div class="col-auto">
+                                <label for="store" th:text="#{store}">Store</label>
+                                <select th:field="*{store}"
+                                        id="store"
+                                        class="custom-select">
+                                    <option value="" th:text="#{selectStore}">Select Store</option>
+                                    <option th:each="s : ${stores}"
+                                            th:value="${s}"
+                                            th:text="${s}">
+                                    </option>
+                                </select>
+                            </div>
+                            <small id="storeError" class="invalid-feedback form-text bg-danger rounded"
+                                   th:text="#{selectStoreError}">
+                                You must select store</small>
+                        </div>
+                        <!-- Button -->
+                        <div class="d-flex justify-content-center mt-4">
+                            <button class="btn btn-primary btn-block w-50" type="submit" th:text="#{changeStoreButton}">
+                                Change store
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
     </div>
-  </div>
-</main>
-<th:block th:include="~{fragments/footer}"></th:block>
+    <th:block th:include="~{fragments/footer}"></th:block>
+</div>
 </body>
 </html>

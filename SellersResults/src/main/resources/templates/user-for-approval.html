@@ -2,42 +2,47 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">>
 <th:block th:include="~{fragments/head}"></th:block>
 <body>
-<div>
-  <th:block th:include="~{fragments/nav}"></th:block>
-</div>
-<div class="container-fluid">
-</div>
-<main class="p-5 align-content-center my-login-div">
-  <h1 class="border-bottom" th:text="#{approveUser}">Approve user</h1>
-  <div class="d-flex justify-content-center" style="font-family: Verdana,sans-serif">
-    <div class="row g-3 align-items-center" style="color: red">
-      <form th:action="@{/users/approval}"
-            method="POST">
-        <!-- Name -->
+<div id="page-container">
+    <div id="content-wrap">
         <div>
-          <div class="col-auto">
-            <label for="user" th:text="#{employeeName}">Employee name</label>
-            <select th:field="*{userBindingModel.fullName}"
-                    id="user"
-                    class="custom-select">
-              <option value="" th:text="#{selectEmployee}">Select employee</option>
-              <option th:each="s : ${users}"
-                      th:value="${s}"
-                      th:text="${s}">
-              </option>
-            </select>
-          </div>
-          <small id="userError" class="invalid-feedback form-text bg-danger rounded" th:text="#{selectStoreError}">
-            You must select employee</small>
+            <th:block th:include="~{fragments/nav}"></th:block>
         </div>
-        <!-- Button -->
-        <div class="d-flex justify-content-center mt-3">
-          <button class="btn btn-primary btn-block w-50" type="submit" th:text="#{approveUser}">Approve User</button>
-        </div>
-      </form>
+        <main class="p-5 align-content-center my-login-div">
+            <h1 class="border-bottom" th:text="#{approveUser}">Approve user</h1>
+            <div class="d-flex justify-content-center" style="font-family: Verdana,sans-serif">
+                <div class="row g-3 align-items-center" style="color: red">
+                    <form th:action="@{/users/approval}"
+                          method="POST">
+                        <!-- Name -->
+                        <div>
+                            <div class="col-auto">
+                                <label for="user" th:text="#{employeeName}">Employee name</label>
+                                <select th:field="*{userBindingModel.fullName}"
+                                        id="user"
+                                        class="custom-select">
+                                    <option value="" th:text="#{selectEmployee}">Select employee</option>
+                                    <option th:each="s : ${users}"
+                                            th:value="${s}"
+                                            th:text="${s}">
+                                    </option>
+                                </select>
+                            </div>
+                            <small id="userError" class="invalid-feedback form-text bg-danger rounded"
+                                   th:text="#{selectStoreError}">
+                                You must select employee</small>
+                        </div>
+                        <!-- Button -->
+                        <div class="d-flex justify-content-center mt-3">
+                            <button class="btn btn-primary btn-block w-50" type="submit" th:text="#{approveUser}">
+                                Approve User
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
     </div>
-  </div>
-</main>
-<th:block th:include="~{fragments/footer}"></th:block>
+    <th:block th:include="~{fragments/footer}"></th:block>
+</div>
 </body>
 </html>

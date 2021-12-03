@@ -2,76 +2,83 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">>
 <th:block th:include="~{fragments/head}"></th:block>
 <body>
-<div>
-    <th:block th:include="~{fragments/nav}"></th:block>
-</div>
-<main class="p-5 align-content-center bg-blur my-register-div">
-    <div class="container mt-5">
-        <div class="row d-flex justify-content-center">
-            <div class="col-md-7">
-                <div th:object="${user}" class="profile-card p-3 py-4">
-                    <div class="text-center">
-                        <img th:src="*{getPictureUrl() == null} ? '/img/profile.jpg' : *{getPictureUrl()}"
-                             width="100"
-                             class="rounded-circle"></div>
-                    <div class="text-center mt-3">
-                        <!-- Role -->
-                        <span th:text="*{role.name()}" class="bg-dark p-1 px-4 rounded text-white">Role</span>
-                        <!-- Full Name -->
-                        <h5 class="mt-4 mb-0" th:text="#{employeeName}">Employee name:</h5>
-                        <span th:text="*{fullName}">Hristo Manov</span>
-                        <!-- Birthday -->
-                        <h5 class="mt-2 mb-0" th:text="#{birthday}">Birthday:</h5>
-                        <span th:if="*{birthday != null}"
-                              th:text="|*{birthday.dayOfMonth}-*{birthday.month}-*{birthday.year}|">26-August-1991</span>
-                        <span th:if="*{birthday == null}" th:text="'N/A'"></span>
-                        <!-- Store -->
-                        <h5 class="mt-4 mb-0" th:text="#{store}">Store:</h5>
-                        <span th:text="*{store.getName()}">The Mall</span>
-                        <!-- Date of appointment -->
-                        <h5 class="mt-4 mb-0" th:text="#{dateOfAppointment}">Date of appointment:</h5>
-                        <span th:text="|*{dateOfAppointment.dayOfMonth}-*{dateOfAppointment.month.name()}-*{dateOfAppointment.year}|">
+<div id="page-container">
+    <div id="content-wrap">
+        <div>
+            <th:block th:include="~{fragments/nav}"></th:block>
+        </div>
+        <main class="p-5 align-content-center bg-blur my-register-div">
+            <div class="container mt-5">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-md-7">
+                        <div th:object="${user}" class="profile-card p-3 py-4">
+                            <div class="text-center">
+                                <img th:src="*{getPictureUrl() == null} ? '/img/profile.jpg' : *{getPictureUrl()}"
+                                     width="100"
+                                     class="rounded-circle"></div>
+                            <div class="text-center mt-3">
+                                <!-- Role -->
+                                <span th:text="*{role.name()}" class="bg-dark p-1 px-4 rounded">Role</span>
+                                <!-- Full Name -->
+                                <h5 th:text="#{employeeName}">Employee name:</h5>
+                                <span th:text="*{fullName}">Hristo Manov</span>
+                                <!-- Birthday -->
+                                <h5 class="mt-2 mb-0" th:text="#{birthday}">Birthday:</h5>
+                                <span th:if="*{birthday != null}"
+                                      th:text="|*{birthday.dayOfMonth}-*{birthday.month}-*{birthday.year}|">26-August-1991</span>
+                                <span th:if="*{birthday == null}" th:text="'N/A'"></span>
+                                <!-- Store -->
+                                <h5 class="mt-4 mb-0" th:text="#{store}">Store:</h5>
+                                <span th:text="*{store.getName()}">The Mall</span>
+                                <!-- Date of appointment -->
+                                <h5 class="mt-4 mb-0" th:text="#{dateOfAppointment}">Date of appointment:</h5>
+                                <span th:text="|*{dateOfAppointment.dayOfMonth}-*{dateOfAppointment.month.name()}-*{dateOfAppointment.year}|">
                             01-AUGUST-2021</span>
-                        <!-- Best bill -->
-                        <h5 class="mt-2 mb-0" th:text="#{bestBill}">Best bill:</h5>
-                        <span th:if="*{bestBill != null}"
-                              th:text="|Date: *{bestBill.getDateOfSale()} Sum: *{bestBill.sumOfProductPrice()} lv.
+                                <!-- Best bill -->
+                                <h5 class="mt-2 mb-0" th:text="#{bestBill}">Best bill:</h5>
+                                <span th:if="*{bestBill != null}"
+                                      th:text="|Date: *{bestBill.getDateOfSale()} Sum: *{bestBill.sumOfProductPrice()} lv.
                                  in store *{bestBill.getStore().name}.|">Date: 01.01.1900 Sum: 1000</span>
 
-                        <span th:if="*{bestBill == null}" th:text="'N/A'"></span>
+                                <span th:if="*{bestBill == null}" th:text="'N/A'"></span>
 
-                        <!-- Bill with most products -->
-                        <h5 class="mt-2 mb-0" th:text="#{billWithMostProducts}">Bill with the most products:</h5>
-                        <span th:if="*{mostProductsInBill != null}"
-                              th:text="|Date: *{getMostProductsInBill().getDateOfSale()} Count of products:
+                                <!-- Bill with most products -->
+                                <h5 class="mt-2 mb-0" th:text="#{billWithMostProducts}">Bill with the most
+                                    products:</h5>
+                                <span th:if="*{mostProductsInBill != null}"
+                                      th:text="|Date: *{getMostProductsInBill().getDateOfSale()} Count of products:
                                 *{getMostProductsInBill().countOfProducts()} in store *{getMostProductsInBill().store.name}.|">
                             Date: 01.01.1900 Count of products: 10</span>
 
-                        <span th:if="*{mostProductsInBill == null}" th:text="'N/A'"></span>
-                        <!-- Turnover -->
-                        <!-- ToDo да оправя да се вижда и месец и година кога е постигнато -->
-                        <h5 class="mt-2 mb-0" th:text="#{highestMonthlyTurnover}">Highest Monthly Turnover:</h5>
-                        <span th:if="*{getHighestMonthlyTurnover() != null}"
-                              th:text="|Value: *{getHighestMonthlyTurnover()} lv|">Value: 10000lv April 2020></span>
-                        <span th:if="*{getHighestMonthlyTurnover() == null}" th:text="'N/A'"></span>
-                        <!-- Description -->
-                        <div class="px-4 mt-5">
-                            <h5 class="mt-2 mb-0" th:text="#{description}">Description:</h5>
-                            <p th:text="*{description}" class="fonts"> Lorem ipsum dolor sit amet, consectetur
-                                adipisicing elit. Enim et nostrum optio perferendis quam quod ratione rem sit soluta
-                                ut! A dolor laborum, maiores neque nesciunt quis rerum sunt suscipit.</p>
-                        </div>
-                        <!--ToDo да оправя бутона да изглежда по-добре -->
-                        <div class="card-body" th:if="${isAuthorize}">
-                            <a class="nav-link" th:href="@{/users/profile/{id}/edit(id=*{id})}" th:text="#{editProfile}">
-                                Edit Profile</a>
+                                <span th:if="*{mostProductsInBill == null}" th:text="'N/A'"></span>
+                                <!-- Turnover -->
+                                <!-- ToDo да оправя да се вижда и месец и година кога е постигнато -->
+                                <h5 class="mt-2 mb-0" th:text="#{highestMonthlyTurnover}">Highest Monthly Turnover:</h5>
+                                <span th:if="*{getHighestMonthlyTurnover() != null}"
+                                      th:text="|Value: *{getHighestMonthlyTurnover()} lv|">Value: 10000lv April 2020></span>
+                                <span th:if="*{getHighestMonthlyTurnover() == null}" th:text="'N/A'"></span>
+                                <!-- Description -->
+                                <div class="px-4 mt-5">
+                                    <h5 class="mt-2 mb-0" th:text="#{description}">Description:</h5>
+                                    <p th:text="*{description}" class="fonts"> Lorem ipsum dolor sit amet, consectetur
+                                        adipisicing elit. Enim et nostrum optio perferendis quam quod ratione rem sit
+                                        soluta
+                                        ut! A dolor laborum, maiores neque nesciunt quis rerum sunt suscipit.</p>
+                                </div>
+                                <!--ToDo да оправя бутона да изглежда по-добре -->
+                                <div class="card-body" th:if="${isAuthorize}">
+                                    <a class="nav-link" th:href="@{/users/profile/{id}/edit(id=*{id})}"
+                                       th:text="#{editProfile}">
+                                        Edit Profile</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </main>
     </div>
-</main>
-<th:block th:include="~{fragments/footer}"></th:block>
+    <th:block th:include="~{fragments/footer}"></th:block>
+</div>
 </body>
 </html>

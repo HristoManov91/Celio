@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -42,7 +43,7 @@ public class SaleController {
         model.addAttribute("products", productService.getAllProductsOrderByCategory());
         model.addAttribute("stores", storeService.findAllStoresNames());
         SaleAddBindingModel sale = new SaleAddBindingModel();
-        sale.setProducts(List.of());
+        sale.setProducts(List.of(""));
         model.addAttribute("saleAddBindingModel", sale);
 
         return "add-sale";

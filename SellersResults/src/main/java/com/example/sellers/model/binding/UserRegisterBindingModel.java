@@ -45,7 +45,7 @@ public class UserRegisterBindingModel {
         return this;
     }
 
-    @NotNull
+    @NotBlank
     public String getStore() {
         return store;
     }
