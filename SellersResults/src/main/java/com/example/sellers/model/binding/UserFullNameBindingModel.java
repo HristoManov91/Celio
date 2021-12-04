@@ -1,21 +1,20 @@
 package com.example.sellers.model.binding;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
-public class UserRemoveBindingModel {
+public class UserFullNameBindingModel {
 
     private String fullName;
 
-    public UserRemoveBindingModel() {
+    public UserFullNameBindingModel() {
     }
 
-    @NotNull
+    @NotBlank
     public String getFullName() {
         return fullName;
     }
 
-    public UserRemoveBindingModel setFullName(String fullName) {
+    public UserFullNameBindingModel setFullName(String fullName) {
         this.fullName = fullName;
         return this;
     }

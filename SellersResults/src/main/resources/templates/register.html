@@ -7,10 +7,10 @@
         <div>
             <th:block th:include="~{fragments/nav}"></th:block>
         </div>
-        <main class="p-5 align-content-center my-register-div">
+        <main class="p-5 align-content-center">
             <h1 class="border-bottom" th:text="#{registration}">Registration</h1>
             <div class="d-flex justify-content-center">
-                <div class="row g-3" style="color: red">
+                <div id="register-form" class="row" style="background: #32363b ; color: white ; border-radius: 8px">
                     <form th:action="@{/users/register}"
                           th:object="${userRegisterBindingModel}"
                           method="POST">
@@ -21,8 +21,11 @@
                             </div>
                             <div class="col-auto">
                                 <input name="email"
-                                       th:value="*{email}" th:errorclass="is-invalid"
-                                       required type="email" id="inputEmail"
+                                       th:value="*{email}"
+                                       th:errorclass="is-invalid"
+                                       placeholder="ivancho@gmail.com"
+                                       required
+                                       type="email" id="inputEmail"
                                        class="form-control"
                                        aria-describedby="emailHelpInLine">
                                 <small id="emailError"
@@ -42,7 +45,8 @@
                             </div>
                             <div class="col-auto">
                                 <input name="password"
-                                       th:value="*{password}" th:errorclass="is-invalid"
+                                       th:field="*{password}"
+                                       th:errorclass="is-invalid"
                                        required minlength="6" maxlength="20"
                                        type="password"
                                        id="password"
@@ -62,7 +66,8 @@
                             </div>
                             <div class="col-auto">
                                 <input name="confirmPassword"
-                                       th:value="*{confirmPassword}" th:errorclass="is-invalid"
+                                       th:field="*{confirmPassword}"
+                                       th:errorclass="is-invalid"
                                        required minlength="6" maxlength="20"
                                        type="password"
                                        id="inputConfirmPassword"
@@ -81,13 +86,15 @@
                         <!-- Full name -->
                         <div>
                             <div class="col-auto">
-                                <label for="inputFullName" class="col-form-label" th:text="#{fullName}">Full
-                                    Name</label>
+                                <label for="inputFullName" class="col-form-label" th:text="#{fullName}">
+                                    Full Name</label>
                             </div>
                             <div class="col-auto">
                                 <input name="fullName"
-                                       th:value="*{fullName}" th:errorclass="is-invalid"
+                                       th:field="*{fullName}"
+                                       th:errorclass="is-invalid"
                                        required minlength="6" maxlength="30"
+                                       placeholder="Ivan Ivanov"
                                        type="text"
                                        id="inputFullName"
                                        class="form-control"
@@ -100,9 +107,10 @@
                         </div>
                         <!-- Store -->
                         <div>
-                            <div class="col-auto">
+                            <div class="col-auto mt-2">
                                 <label for="store" th:text="#{store}">Store</label>
                                 <select th:field="*{store}"
+                                        th:errorclass="is-invalid"
                                         required
                                         id="store"
                                         class="custom-select">
@@ -112,12 +120,12 @@
                                             th:text="${s}">
                                     </option>
                                 </select>
+                                <small id="storeError" class="invalid-feedback form-text bg-danger rounded text-white"
+                                       th:text="#{selectStoreError}">You must select store</small>
                             </div>
-                            <small id="storeError" class="invalid-feedback form-text bg-danger rounded text-white"
-                                   th:text="#{selectStoreError}">You must select store</small>
                         </div>
                         <!-- Button -->
-                        <div class="d-flex justify-content-center mt-4">
+                        <div class="d-flex justify-content-center mt-3 mb-3">
                             <button class="btn btn-primary btn-block w-50" type="submit" th:text="#{registration}">
                                 Register
                             </button>

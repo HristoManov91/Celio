@@ -23,7 +23,6 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Arrays;
-import java.util.Set;
 
 @Controller
 @RequestMapping("/users")
@@ -77,21 +76,15 @@ public class UserController {
                                   BindingResult bindingResult,
                                   RedirectAttributes redirectAttributes) {
 
+        boolean emailExist = userService.emailExist(userRegisterBindingModel.getEmail());
         boolean equalsPassword = userRegisterBindingModel.getPassword().equals(userRegisterBindingModel.getConfirmPassword());
-        if (bindingResult.hasErrors() || !equalsPassword) {
+
+        if (bindingResult.hasErrors() || !equalsPassword || emailExist) {
             redirectAttributes.addFlashAttribute("userRegisterBindingModel", userRegisterBindingModel);
             redirectAttributes.addFlashAttribute(
                     "org.springframework.validation.BindingResult.userRegisterBindingModel", bindingResult);
             redirectAttributes.addFlashAttribute("equalsPassword", equalsPassword);
-            return "redirect:register";
-        }
-
-        boolean emailExist = userService.emailExist(userRegisterBindingModel.getEmail());
-
-        if (emailExist) {
-            redirectAttributes.addFlashAttribute("userRegisterBindingModel", userRegisterBindingModel);
-            redirectAttributes.addFlashAttribute("userExistError", true);
-
+            redirectAttributes.addFlashAttribute("userExistError", emailExist);
             return "redirect:register";
         }
 
@@ -106,22 +99,22 @@ public class UserController {
     @GetMapping("/profile")
     public String profile(Principal principal, Model model) {
         String email = principal.getName();
-        model.addAttribute("isAuthorize" , true);
+        model.addAttribute("isAuthorize", true);
         model.addAttribute("user", userService.findUserViewModelByEmail(email));
         return "profile";
     }
 
     @GetMapping("/profile/{id}/details")
-    public String showProfileDetails(@PathVariable Long id, Model model , Principal principal) {
+    public String showProfileDetails(@PathVariable Long id, Model model, Principal principal) {
         boolean authorize = userService.isAuthorize(principal.getName(), id);
-        model.addAttribute("isAuthorize" , authorize);
+        model.addAttribute("isAuthorize", authorize);
         model.addAttribute("user", this.userService.findByIdProfileViewModel(id));
         return "profile";
     }
 
     @PreAuthorize("@userServiceImpl.isAuthorize(#principal.name , #id)")
     @GetMapping("/profile/{id}/edit")
-    public String editUser(@PathVariable Long id, Model model , Principal principal) {
+    public String editUser(@PathVariable Long id, Model model, Principal principal) {
         ProfileViewModel view = this.userService.findByIdProfileViewModel(id);
         ProfileUpdateBindingModel map = modelMapper.map(view, ProfileUpdateBindingModel.class);
         model.addAttribute("user", map);
@@ -158,23 +151,29 @@ public class UserController {
         return "all-users";
     }
 
-    @GetMapping("/change-user-store")
+    @GetMapping("/change-employee-store")
     public String changeSellerStore(Model model) {
         model.addAttribute("stores", storeService.findAllStoresNames());
-        model.addAttribute("users", userService.findAllUsersFullName());
+        model.addAttribute("employees", userService.findAllUsersFullName());
         if (!model.containsAttribute("userChangeStoreBindingModel")) {
             model.addAttribute("userChangeStoreBindingModel", new UserChangeStoreBindingModel());
         }
-        return "change-user-store";
+        return "change-employee-store";
     }
 
-    @PostMapping("/change-user-store")
+    @PostMapping("/change-employee-store")
     public String changeSellerStoreConfirm(@Valid UserChangeStoreBindingModel userChangeStoreBindingModel,
-                                           BindingResult bindingResult) {
+                                           BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
-            return "redirect:change-user-stores";
+            redirectAttributes.addFlashAttribute("userChangeStoreBindingModel", userChangeStoreBindingModel);
+            redirectAttributes
+                    .addFlashAttribute("org.springframework.validation.BindingResult.userChangeStoreBindingModel",
+                            bindingResult);
+
+            return "redirect:change-employee-store";
         }
+
         userService.changeUserStore(userChangeStoreBindingModel.getFullName(), userChangeStoreBindingModel.getStore());
 
         //ToDo да изписва съобшение за успешно сменен магазин
@@ -183,7 +182,7 @@ public class UserController {
 
     @GetMapping("/add-role")
     public String addRole(Model model) {
-        model.addAttribute("users", userService.findAllUsersFullName());
+        model.addAttribute("employees", userService.findAllUsersFullName());
         model.addAttribute("roles", Arrays.stream(UserRoleEnum.values()).toList());
         if (!model.containsAttribute("userRoleBindingModel")) {
             model.addAttribute("userRoleBindingModel", new UserRoleBindingModel());
@@ -194,12 +193,18 @@ public class UserController {
 
     @PostMapping("/add-role")
     public String addRoleConfirm(@Valid UserRoleBindingModel userRoleBindingModel,
-                                 BindingResult bindingResult) {
+                                 BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
-
+        //ToDo да направя проверка за валидни User и Role и дали User-a ги има вече
         if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("userRoleBindingModel", userRoleBindingModel);
+            redirectAttributes
+                    .addFlashAttribute("org.springframework.validation.BindingResult.userRoleBindingModel",
+                            bindingResult);
+
             return "redirect:add-role";
         }
+
         userService.addUserRole(userRoleBindingModel.getRole(), userRoleBindingModel.getFullName());
 
         //ToDo да проверя как да изкарам съобшение за успешно добавена роля
@@ -208,45 +213,59 @@ public class UserController {
 
     @GetMapping("/remove-user")
     public String removeSeller(Model model) {
-        Set<String> users = userService.findAllUsersFullName();
-        model.addAttribute("users", users);
-        if (!model.containsAttribute("userRemoveBindingModel")) {
-            model.addAttribute("userRemoveBindingModel", new UserRemoveBindingModel());
+        model.addAttribute("employees", userService.findAllUsersFullName());
+        if (!model.containsAttribute("userFullNameBindingModel")) {
+            model.addAttribute("userFullNameBindingModel", new UserFullNameBindingModel());
         }
+
         return "remove-user";
     }
 
     @PostMapping("/remove-user")
-    public String removeSellerConfirm(@Valid UserRemoveBindingModel userRemoveBindingModel,
-                                      BindingResult bindingResult) {
+    public String removeSellerConfirm(@Valid UserFullNameBindingModel userFullNameBindingModel,
+                                      BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("userFullNameBindingModel", userFullNameBindingModel);
+            redirectAttributes
+                    .addFlashAttribute("org.springframework.validation.BindingResult.userFullNameBindingModel",
+                            bindingResult);
+
             return "redirect:remove-user";
         }
 
-        userService.removeUser(userRemoveBindingModel.getFullName());
+        userService.removeUser(userFullNameBindingModel.getFullName());
         //ToDo съобщение за успешно премахнат User
         return "redirect:/users/profile/all";
     }
 
     @GetMapping("/approval")
     public String approvalUser(Model model) {
-        Set<String> users = userService.findAllUsersFullNameWithoutApproval();
-        model.addAttribute("users", users);
-        if (!model.containsAttribute("userBindingModel")) {
-            model.addAttribute("userBindingModel", new UserRemoveBindingModel());
+
+        model.addAttribute("employees", userService.findAllUsersFullNameWithoutApproval());
+
+        if (!model.containsAttribute("userFullNameBindingModel")) {
+            model.addAttribute("userFullNameBindingModel", new UserFullNameBindingModel());
         }
+
         return "user-for-approval";
     }
 
     @PostMapping("/approval")
-    public String approvalUserConfirm(@Valid UserRemoveBindingModel userBindingModel, BindingResult bindingResult) {
+    public String approvalUserConfirm(@Valid UserFullNameBindingModel userFullNameBindingModel,
+                                      BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
-            //ToDo да оправя валидацията като не се избере да е Null а не modela
+            redirectAttributes.addFlashAttribute("userFullNameBindingModel", userFullNameBindingModel);
+            redirectAttributes
+                    .addFlashAttribute("org.springframework.validation.BindingResult.userFullNameBindingModel",
+                            bindingResult);
+
             return "redirect:approval";
         }
-        userService.approvedUser(userBindingModel.getFullName());
+
+        //ToDo да изкарва съобщение за успешна операция
+        userService.approvedUser(userFullNameBindingModel.getFullName());
 
         return "redirect:approval";
     }

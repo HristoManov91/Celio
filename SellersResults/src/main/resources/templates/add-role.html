@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">>
 <th:block th:include="~{fragments/head}"></th:block>
 <body>
 <div id="page-container">
@@ -10,33 +10,36 @@
         <main class="p-5 align-content-center">
             <h1 class="border-bottom" th:text="#{addRole}">Add role</h1>
             <div class="d-flex justify-content-center">
-                <div class="row g-3" style="color: red">
+                <div id="add-role" class="row" style="background: #32363b ; color: white ; border-radius: 8px">
                     <form th:action="@{/users/add-role}"
                           th:object="${userRoleBindingModel}"
                           method="POST">
-                        <!-- User -->
+                        <!-- Employee -->
                         <div>
-                            <div class="col-auto">
+                            <div class="col-auto mt-2">
                                 <label for="user" th:text="#{employeeName}">Employee name</label>
                                 <select th:field="*{fullName}"
+                                        th:errorclass="is-invalid"
+                                        required
                                         id="user"
                                         class="custom-select">
                                     <option value="" th:text="#{selectEmployee}">Select employee</option>
-                                    <option th:each="u : ${users}"
-                                            th:value="${u}"
-                                            th:text="${u}">
+                                    <option th:each="e : ${employees}"
+                                            th:value="${e}"
+                                            th:text="${e}">
                                     </option>
                                 </select>
+                                <small id="userError" class="invalid-feedback form-text bg-danger rounded text-white"
+                                       th:text="#{selectEmployeeError}">You must select employee</small>
                             </div>
-                            <small id="userError" class="invalid-feedback form-text bg-danger rounded"
-                                   th:text="#{selectEmployeeError}">
-                                You must select employee</small>
                         </div>
                         <!-- Role -->
                         <div>
-                            <div class="col-auto">
+                            <div class="col-auto mt-2">
                                 <label for="role" th:text="#{role}">Role</label>
                                 <select th:field="*{role}"
+                                        th:errorclass="is-invalid"
+                                        required
                                         id="role"
                                         class="custom-select">
                                     <option value="" th:text="#{selectRole}">Select Role</option>
@@ -45,13 +48,12 @@
                                             th:text="${r}">
                                     </option>
                                 </select>
+                                <small id="roleError" class="invalid-feedback form-text bg-danger rounded text-white"
+                                       th:text="#{selectRoleError}">You must select role</small>
                             </div>
-                            <small id="roleError" class="invalid-feedback form-text bg-danger rounded"
-                                   th:text="#{selectRoleError}">
-                                You must select role</small>
                         </div>
                         <!-- Button -->
-                        <div class="d-flex justify-content-center mt-4">
+                        <div class="d-flex justify-content-center mt-3 mb-3">
                             <button class="btn btn-primary btn-block w-50" type="submit" th:text="#{addRole}">Add role
                             </button>
                         </div>

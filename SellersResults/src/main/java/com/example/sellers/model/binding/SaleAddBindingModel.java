@@ -30,7 +30,7 @@ public class SaleAddBindingModel {
     }
 
     @NotNull
-    public List<@NotBlank(message="Product not be empty")String> getProducts() {
+    public List<@NotBlank(message="You must select product")String> getProducts() {
         return products;
     }
 

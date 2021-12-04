@@ -7,36 +7,39 @@
 </div>
 <div id="page-container">
     <div id="content-wrap">
-        <main class="p-5 align-content-center my-login-div">
+        <main class="p-5 align-content-center">
             <h1 class="border-bottom" th:text="#{addProduct}">Add product</h1>
-            <div class="d-flex justify-content-center" style="font-family: Verdana,sans-serif">
-                <div class="row g-3 align-items-center" style="color: red">
+            <div class="d-flex justify-content-center">
+                <div id="remove-user" class="row" style="background: #32363b ; color: white ; border-radius: 8px">
                     <form th:action="@{/products/add}"
                           th:object="${productAddBindingModel}"
                           method="POST">
                         <!-- Name -->
                         <div>
-                            <div class="col-auto">
+                            <div class="col-auto mt-2">
                                 <label for="name" class="col-form-label" th:text="#{productName}">Name</label>
                             </div>
                             <div class="col-auto">
                                 <input type="text"
                                        th:field="*{name}"
+                                       th:errorclass="is-invalid"
                                        name="name"
                                        required minlength="4" maxlength="15"
                                        id="name"
                                        class="form-control"
                                        aria-describedby="nameHelpInLine">
+                                <small id="nameError" class="invalid-feedback form-text bg-danger rounded text-white"
+                                       th:text="#{productNameError}">
+                                    Name must be between 4 and 15 characters</small>
                             </div>
-                            <small id="nameError" class="invalid-feedback form-text bg-danger rounded"
-                                   th:text="#{productNameError}">
-                                Name must be between 4 and 15 characters</small>
                         </div>
                         <!-- Category -->
                         <div>
-                            <div class="col-auto">
+                            <div class="col-auto mt-2">
                                 <label for="category" th:text="#{category}">Category</label>
                                 <select th:field="*{category}"
+                                        th:errorclass="is-invalid"
+                                        required
                                         id="category"
                                         class="custom-select">
                                     <option value="" th:text="#{selectCategory}">Select category</option>
@@ -45,32 +48,33 @@
                                             th:text="${c}">
                                     </option>
                                 </select>
+                                <small id="categoryError" class="invalid-feedback form-text bg-danger rounded text-white"
+                                       th:text="#{selectCategoryError}">
+                                    You must select category</small>
                             </div>
-                            <small id="categoryError" class="invalid-feedback form-text bg-danger rounded"
-                                   th:text="#{selectCategoryError}">
-                                You must select category</small>
                         </div>
                         <div>
-                            <div class="col-auto">
+                            <div class="col-auto mt-2">
                                 <label for="price" class="col-form-label" th:text="#{price}">Price</label>
                             </div>
                             <div class="col-auto">
                                 <input type="number"
-                                       placeholder="0.00"
                                        th:field="*{price}"
+                                       th:errorclass="is-invalid"
+                                       required min="5"
                                        name="price"
-                                       required min="0"
                                        id="price"
+                                       placeholder="0.00"
                                        step="0.01"
                                        class="form-control"
                                        aria-describedby="priceHelpInLine">
+                                <small id="priceError" class="invalid-feedback form-text bg-danger rounded text-white"
+                                       th:text="#{priceError}">
+                                    Price must be positive and min 5!</small>
                             </div>
-                            <small id="priceError" class="invalid-feedback form-text bg-danger rounded"
-                                   th:text="#{priceError}">
-                                Price must be positive</small>
                         </div>
                         <!-- Button -->
-                        <div class="d-flex justify-content-center mt-2">
+                        <div class="d-flex justify-content-center mt-3 mb-3">
                             <button class="btn btn-primary btn-block w-50" type="submit" th:text="#{addProduct}">Add
                                 Product
                             </button>

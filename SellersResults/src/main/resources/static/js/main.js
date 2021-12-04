@@ -64,9 +64,9 @@ function reloadResults() {
 
     fetch("http://localhost:8080/stores-results/week").then(response => response.json()).then(json => json.forEach(store => {
         let tableRow = '<tr>' +
-            '<td>' + store.storeName + '</td>' +
-            '<td>' + store.weekOfYear + '</td>' +
             '<td>' + store.year + '</td>' +
+            '<td>' + store.weekOfYear + '</td>' +
+            '<td>' + store.storeName + '</td>' +
             '<td>' + store.visitors + '</td>' +
             '<td>' + store.countOfSales + '</td>' +
             '<td>' + store.countOfProducts + '</td>' +

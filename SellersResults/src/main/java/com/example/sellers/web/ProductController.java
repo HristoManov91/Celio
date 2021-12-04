@@ -33,12 +33,13 @@ public class ProductController {
     }
 
     @PostMapping("/add")
-    public String addProductConfirm(@Valid ProductAddBindingModel productAddBindingModel ,
-                                    BindingResult bindingResult , RedirectAttributes redirectAttributes) {
-        if(bindingResult.hasErrors()){
-            redirectAttributes.addFlashAttribute("productAddBindingModel" , productAddBindingModel);
-            redirectAttributes.addFlashAttribute(
-                    "org.springframework.validation.BindingResult.productAddBindingModel", bindingResult);
+    public String addProductConfirm(@Valid ProductAddBindingModel productAddBindingModel,
+                                    BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("productAddBindingModel", productAddBindingModel);
+            redirectAttributes
+                    .addFlashAttribute("org.springframework.validation.BindingResult.productAddBindingModel", bindingResult);
             return "redirect:add";
         }
         productService.addProduct(

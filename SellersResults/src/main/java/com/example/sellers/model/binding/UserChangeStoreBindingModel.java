@@ -1,5 +1,6 @@
 package com.example.sellers.model.binding;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 public class UserChangeStoreBindingModel {
@@ -10,7 +11,7 @@ public class UserChangeStoreBindingModel {
     public UserChangeStoreBindingModel() {
     }
 
-    @NotNull
+    @NotBlank
     public String getFullName() {
         return fullName;
     }
@@ -20,7 +21,7 @@ public class UserChangeStoreBindingModel {
         return this;
     }
 
-    @NotNull
+    @NotBlank
     public String getStore() {
         return store;
     }

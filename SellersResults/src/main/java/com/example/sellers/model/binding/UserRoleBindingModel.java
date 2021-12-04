@@ -2,6 +2,7 @@ package com.example.sellers.model.binding;
 
 import com.example.sellers.model.entity.enums.UserRoleEnum;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 public class UserRoleBindingModel {
@@ -12,7 +13,7 @@ public class UserRoleBindingModel {
     public UserRoleBindingModel() {
     }
 
-    @NotNull
+    @NotBlank
     public String getFullName() {
         return fullName;
     }

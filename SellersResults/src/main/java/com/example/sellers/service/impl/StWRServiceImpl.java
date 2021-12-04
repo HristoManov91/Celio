@@ -64,7 +64,7 @@ public class StWRServiceImpl implements StWRService {
 
     @Override
     public List<StoreWeekResultDTO> getAllStoresWeekResults() {
-        return storeWeekResultRepository.findAll().stream().map(this::asStoreWeekResult).toList();
+        return storeWeekResultRepository.findAllByOrder().stream().map(this::asStoreWeekResult).toList();
     }
 
     @Override

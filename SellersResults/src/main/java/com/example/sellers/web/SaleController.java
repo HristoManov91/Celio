@@ -51,13 +51,13 @@ public class SaleController {
 
     @PostMapping("/add")
     public String addSaleConfirm(@Valid SaleAddBindingModel saleAddBindingModel,
-                                 BindingResult bindingResult,
-                                 RedirectAttributes redirectAttributes) {
+                                 BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("saleAddBindingModel", saleAddBindingModel);
             redirectAttributes.addFlashAttribute(
                     "org.springframework.validation.BindingResult.saleAddBindingModel", bindingResult);
+
             return "redirect:add";
         }
 

@@ -42,7 +42,7 @@
                         <a class="dropdown-item"
                            href="/products/add" th:text="#{addProduct}">Add product</a>
                         <a class="dropdown-item"
-                           href="/users/change-user-store" th:text="#{changeStore}">Change store</a>
+                           href="/users/change-employee-store" th:text="#{changeStore}">Change store</a>
                         <a class="dropdown-item"
                            th:href="@{/users/approval}" th:text="#{approveUser}">Approve user</a>
                     </div>
@@ -100,10 +100,10 @@
                        th:text="#{profile}">Profile</a>
                 </li>
                 <!--------- i18n --------->
-                <form th:method="get">
+                <form th:method="get" class="mt-2">
                     <label for="lang">
                         <img th:src="${#locale.toString()} == 'bg_BG' ? '/img/bg-flag.png' : '/img/usa-flag.jpg'"
-                             width="35" height="25" alt="flag">
+                             width="36" height="25" alt="flag">
                     </label>
                     <select
                             onchange="this.form.submit()"
@@ -114,7 +114,7 @@
                     </select>
                 </form>
                 <!--------- Logout --------->
-                <li class="nav-item" sec:authorize="isAuthenticated()">
+                <li class="nav-item mt-2" sec:authorize="isAuthenticated()">
                     <form th:action="@{/logout}" th:method="POST">
                         <button class="form-inline my-2 my-lg-0 border px-3" type="submit"
                                 th:text="#{logout}">Logout

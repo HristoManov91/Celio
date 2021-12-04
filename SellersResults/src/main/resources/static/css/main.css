@@ -3,6 +3,7 @@ body {
     background-position: center;
     background-attachment: fixed;
     background-size: cover;
+    opacity: 0.95;
 }
 
 #page-container {
@@ -23,17 +24,6 @@ footer {
     height: 2.5rem; /* Footer height */
     text-align: center;
 }
-
-/*footer {*/
-/*    padding: 1rem;*/
-/*    left: 0;*/
-/*    bottom: 0;*/
-/*    width: 100%;*/
-/*    background-color: #343A40;*/
-/*    color: white;*/
-/*    position: absolute;*/
-/*    text-align: center;*/
-/*}*/
 
 #error-page {
     background-image: url("/img/error.jpg");
@@ -63,6 +53,20 @@ footer {
     left: 400px;
 }
 
+#login-form , #register-form , #add-role , #change-employee-store , #add-sale {
+    position: absolute;
+    text-align: center;
+    top: 174px;
+    left: 623px;
+}
+
+#remove-user , #approval-employee {
+    position: absolute;
+    text-align: center;
+    top: 194px;
+    left: 623px;
+}
+
 #store-information h1 {
     position: absolute;
     text-align: center;
@@ -72,20 +76,27 @@ footer {
 
 nav ul li a {
     color: white;
+    text-transform: uppercase;
 }
 
-/*.container-fluid {*/
-/*    padding-top: 50px;*/
-/*}*/
+nav ul li:hover {
+    color: #9fcdff;
+}
 
+nav ul li a:hover {
+    color: #9fcdff;
+}
 
 body div main h1 {
     color: white;
 }
 
 .btn-primary {
-    background-color: red;
+    background-color: #1e7e34;
     border: none;
+}
+.btn-primary:hover {
+    background-color: #19e748;
 }
 
 /* така вместо да оцветяваме полетата слагама граница за показване на валидация */
@@ -137,44 +148,6 @@ input:invalid:required {
     flex-flow: row wrap;
     align-items: center;
 }
-
-/*!* Add some margins for each label *!*/
-/*.form-inline label {*/
-/*    margin: 5px 10px 5px 0;*/
-/*}*/
-
-/*!* Style the input fields *!*/
-/*.form-inline input {*/
-/*    vertical-align: middle;*/
-/*    margin: 5px 10px 5px 0;*/
-/*    padding: 10px;*/
-/*    background-color: #fff;*/
-/*    border: 1px solid #ddd;*/
-/*}*/
-
-/*!* Style the submit button *!*/
-/*.form-inline button {*/
-/*    padding: 10px 20px;*/
-/*    background-color: dodgerblue;*/
-/*    border: 1px solid #ddd;*/
-/*    color: white;*/
-/*}*/
-
-/*.form-inline button:hover {*/
-/*    background-color: royalblue;*/
-/*}*/
-
-/* Add responsiveness - display the form controls vertically instead of horizontally on screens that are less than 800px wide */
-/*@media (max-width: 800px) {*/
-/*    .form-inline input {*/
-/*        margin: 10px 0;*/
-/*    }*/
-
-/*    .form-inline {*/
-/*        flex-direction: column;*/
-/*        align-items: stretch;*/
-/*    }*/
-/*}*/
 
 table, th, td {
     border: 1px solid black;

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">>
 <th:block th:include="~{fragments/head}"></th:block>
 <body>
 <div id="page-container">
@@ -9,30 +9,31 @@
         </div>
         <main class="p-5 align-content-center">
             <h1 class="border-bottom" th:text="#{removeEmployee}">Remove employee</h1>
-            <div class="d-flex justify-content-center" style="font-family: Verdana,sans-serif">
-                <div class="row g-3 align-items-center" style="color: red">
+            <div class="d-flex justify-content-center">
+                <div id="remove-user" class="row" style="background: #32363b ; color: white ; border-radius: 8px">
                     <form th:action="@{/users/remove-user}"
                           method="POST">
-                        <!-- Name -->
+                        <!-- Employee -->
                         <div>
-                            <div class="col-auto">
+                            <div class="col-auto mt-2">
                                 <label for="user" th:text="#{employeeName}">Employee</label>
-                                <select th:field="*{userRemoveBindingModel.fullName}"
+                                <select th:field="*{userFullNameBindingModel.fullName}"
+                                        th:errorclass="is-invalid"
+                                        required
                                         id="user"
                                         class="custom-select">
-                                    <option value="" th:text="#{selectEmployee}">Select User</option>
-                                    <option th:each="s : ${users}"
-                                            th:value="${s}"
-                                            th:text="${s}">
+                                    <option value="" th:text="#{selectEmployee}">Select Employee</option>
+                                    <option th:each="e : ${employees}"
+                                            th:value="${e}"
+                                            th:text="${e}">
                                     </option>
                                 </select>
+                                <small id="userError" class="invalid-feedback form-text bg-danger rounded text-white"
+                                       th:text="#{selectEmployeeError}">You must select employee</small>
                             </div>
-                            <small id="userError" class="invalid-feedback form-text bg-danger rounded"
-                                   th:text="#{selectStoreError}">
-                                You must select user</small>
                         </div>
                         <!-- Button -->
-                        <div class="d-flex justify-content-center mt-2">
+                        <div class="d-flex justify-content-center mt-3 mb-3">
                             <button class="btn btn-primary btn-block w-50" type="submit" th:text="#{removeEmployee}">
                                 Remove employee
                             </button>

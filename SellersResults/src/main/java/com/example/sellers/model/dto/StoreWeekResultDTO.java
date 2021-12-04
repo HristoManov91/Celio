@@ -118,4 +118,13 @@ public class StoreWeekResultDTO {
         this.turnover = turnover;
         return this;
     }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public StoreWeekResultDTO setYear(Integer year) {
+        this.year = year;
+        return this;
+    }
 }

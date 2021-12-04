@@ -2,9 +2,7 @@ package com.example.sellers.model.binding;
 
 import com.example.sellers.model.entity.enums.CategoryEnum;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 
 public class ProductAddBindingModel {
@@ -17,6 +15,7 @@ public class ProductAddBindingModel {
     }
 
     @NotBlank
+    @Size(min = 4 , max = 15)
     public String getName() {
         return name;
     }
@@ -26,7 +25,9 @@ public class ProductAddBindingModel {
         return this;
     }
 
+    @DecimalMin("5")
     @Positive
+    @NotNull
     public BigDecimal getPrice() {
         return price;
     }
