@@ -7,6 +7,7 @@ import com.example.sellers.service.SaleService;
 import com.example.sellers.service.StoreService;
 import com.example.sellers.service.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -60,13 +61,14 @@ public class SaleController {
 
             return "redirect:add";
         }
-
+        //ToDo да има съобщения отдоло кой на кого е добавил продажба и кога (последните 20 да излизат примерно)
         SaleAddServiceModel map = modelMapper.map(saleAddBindingModel, SaleAddServiceModel.class);
         saleService.createSale(map);
 
         return "redirect:add";
     }
 
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
     @GetMapping("/remove")
     public String removeSale() {
         return "remove-sale";

@@ -36,7 +36,8 @@
                        aria-expanded="false"
                        th:text="#{manager}">Manager</a>
                     <div class="dropdown-menu" aria-labelledby="managerDropdown">
-                        <!--            <a class="dropdown-item" href="/">Add training</a>-->
+                        <!-- ToDo да направя функция за добавяне на Обучения -->
+                        <!-- <a class="dropdown-item" href="/">Add training</a>-->
                         <a class="dropdown-item"
                            th:href="@{/sales/remove}" th:text="#{removeSale}">Remove sale</a>
                         <a class="dropdown-item"
@@ -81,9 +82,9 @@
                     </div>
                 </li>
                 <!--------- Training --------->
-                <li class="nav-item">
-                    <a class="nav-link" sec:authorize="isAuthenticated()" href="#" th:text="#{training}">Training</a>
-                </li>
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" sec:authorize="isAuthenticated()" href="#" th:text="#{training}">Training</a>-->
+<!--                </li>-->
                 <!--------- Registration --------->
                 <li class="nav-item">
                     <a class="nav-link" sec:authorize="!isAuthenticated()" th:text="#{registration}"

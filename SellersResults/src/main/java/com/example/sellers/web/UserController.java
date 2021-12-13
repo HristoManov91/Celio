@@ -4,6 +4,7 @@ import com.example.sellers.model.binding.*;
 import com.example.sellers.model.entity.enums.UserRoleEnum;
 import com.example.sellers.model.service.ProfileUpdateServiceModel;
 import com.example.sellers.model.service.UserRegistrationServiceModel;
+import com.example.sellers.model.view.ProfileUpdateViewModel;
 import com.example.sellers.model.view.ProfileViewModel;
 import com.example.sellers.service.PictureService;
 import com.example.sellers.service.StoreService;
@@ -11,6 +12,7 @@ import com.example.sellers.service.UserService;
 import com.example.sellers.web.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,6 +43,8 @@ public class UserController {
         this.modelMapper = modelMapper;
     }
 
+    // ---------- LOGIN ----------
+
     @GetMapping("/login")
     public String login() {
         return "login";
@@ -59,6 +63,8 @@ public class UserController {
 
         return mvc;
     }
+
+    // ---------- REGISTER ----------
 
     @GetMapping("/register")
     public String register(Model model) {
@@ -96,6 +102,7 @@ public class UserController {
         return "redirect:login";
     }
 
+    // ---------- PROFILE ----------
     @GetMapping("/profile")
     public String profile(Principal principal, Model model) {
         String email = principal.getName();
@@ -115,9 +122,10 @@ public class UserController {
     @PreAuthorize("@userServiceImpl.isAuthorize(#principal.name , #id)")
     @GetMapping("/profile/{id}/edit")
     public String editUser(@PathVariable Long id, Model model, Principal principal) {
-        ProfileViewModel view = this.userService.findByIdProfileViewModel(id);
-        ProfileUpdateBindingModel map = modelMapper.map(view, ProfileUpdateBindingModel.class);
-        model.addAttribute("user", map);
+
+        ProfileUpdateViewModel profile = userService.findProfileUpdateViewModelById(id);
+        model.addAttribute("user", profile);
+
         return "edit-user";
     }
 
@@ -127,7 +135,6 @@ public class UserController {
                            BindingResult bindingResult, RedirectAttributes redirectAttributes,
                            Principal principal) throws IOException {
 
-        System.out.println();
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("profileUpdateBindingModel", profileUpdateBindingModel);
             redirectAttributes
@@ -136,10 +143,13 @@ public class UserController {
 
             return "redirect:/users/profile/" + id + "/edit";
         }
+
         ProfileUpdateServiceModel model = modelMapper.map(profileUpdateBindingModel, ProfileUpdateServiceModel.class);
-        if (profileUpdateBindingModel.getPicture() != null) {
+
+        if (!profileUpdateBindingModel.getPicture().isEmpty()) {
             model.setPicture(pictureService.createPicture(profileUpdateBindingModel.getPicture()));
         }
+
         userService.editProfile(model);
 
         return "redirect:/users/profile/" + id + "/details";
@@ -151,6 +161,9 @@ public class UserController {
         return "all-users";
     }
 
+    // ---------- CHANGE EMPLOYEE STORE ----------
+
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
     @GetMapping("/change-employee-store")
     public String changeSellerStore(Model model) {
         model.addAttribute("stores", storeService.findAllStoresNames());
@@ -161,6 +174,7 @@ public class UserController {
         return "change-employee-store";
     }
 
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
     @PostMapping("/change-employee-store")
     public String changeSellerStoreConfirm(@Valid UserChangeStoreBindingModel userChangeStoreBindingModel,
                                            BindingResult bindingResult, RedirectAttributes redirectAttributes) {
@@ -180,6 +194,9 @@ public class UserController {
         return "redirect:/users/profile/all";
     }
 
+    // ---------- ADD ROLE ----------
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/add-role")
     public String addRole(Model model) {
         model.addAttribute("employees", userService.findAllUsersFullName());
@@ -191,6 +208,7 @@ public class UserController {
         return "add-role";
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/add-role")
     public String addRoleConfirm(@Valid UserRoleBindingModel userRoleBindingModel,
                                  BindingResult bindingResult, RedirectAttributes redirectAttributes) {
@@ -211,6 +229,9 @@ public class UserController {
         return "redirect:/users/profile/all";
     }
 
+    // ---------- REMOVE EMPLOYEE ----------
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/remove-user")
     public String removeSeller(Model model) {
         model.addAttribute("employees", userService.findAllUsersFullName());
@@ -221,6 +242,7 @@ public class UserController {
         return "remove-user";
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/remove-user")
     public String removeSellerConfirm(@Valid UserFullNameBindingModel userFullNameBindingModel,
                                       BindingResult bindingResult, RedirectAttributes redirectAttributes) {
@@ -239,6 +261,9 @@ public class UserController {
         return "redirect:/users/profile/all";
     }
 
+    // ---------- APPROVAL USER ----------
+
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
     @GetMapping("/approval")
     public String approvalUser(Model model) {
 
@@ -251,6 +276,7 @@ public class UserController {
         return "user-for-approval";
     }
 
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
     @PostMapping("/approval")
     public String approvalUserConfirm(@Valid UserFullNameBindingModel userFullNameBindingModel,
                                       BindingResult bindingResult, RedirectAttributes redirectAttributes) {
@@ -270,7 +296,8 @@ public class UserController {
         return "redirect:approval";
     }
 
-    //Exception
+    // ---------- Exception ----------
+
     @ExceptionHandler(ObjectNotFoundException.class)
     public ModelAndView handleObException(ObjectNotFoundException ex) {
         ModelAndView modelAndView = new ModelAndView("error-404");

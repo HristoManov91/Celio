@@ -3,6 +3,7 @@ package com.example.sellers.web;
 import com.example.sellers.model.binding.ProductAddBindingModel;
 import com.example.sellers.model.entity.enums.CategoryEnum;
 import com.example.sellers.service.ProductService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,6 +24,8 @@ public class ProductController {
         this.productService = productService;
     }
 
+    // ---------- ADD PRODUCT ----------
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
     @GetMapping("/add")
     public String addProduct(Model model) {
         model.addAttribute("categories", CategoryEnum.values());
@@ -32,6 +35,7 @@ public class ProductController {
         return "add-product";
     }
 
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
     @PostMapping("/add")
     public String addProductConfirm(@Valid ProductAddBindingModel productAddBindingModel,
                                     BindingResult bindingResult, RedirectAttributes redirectAttributes) {
@@ -49,4 +53,10 @@ public class ProductController {
         //ToDo да проверя как може да изкара съобщение,че продукта е добавен успешно
         return "redirect:add";
     }
+
+    // ---------- REMOVE PRODUCT ----------
+    // ToDo implement
+
+    // ---------- EDIT PRODUCT ----------
+    //ToDo implement
 }

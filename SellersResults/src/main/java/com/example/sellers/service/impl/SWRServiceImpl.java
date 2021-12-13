@@ -25,7 +25,6 @@ public class SWRServiceImpl implements SWRService {
 
     @Override
     public void weekResults() {
-        //ToDo да се тества
         LocalDate fromDate = LocalDate.now().minusDays(7L);
         LocalDate toDate = LocalDate.now().minusDays(1L);
         Set<String> allUserFullName = userService.findAllUsersFullName();
@@ -44,7 +43,7 @@ public class SWRServiceImpl implements SWRService {
         LocalDate toDate = LocalDate.of(2021, 11, 7);
         Set<String> allUserFullName = userService.findAllUsersFullName();
 
-        for (int i = 0; i < 3; i++) {
+        while (toDate.isBefore(LocalDate.now())){
             for (String fullName : allUserFullName) {
 
                 SellerWeekResultEntity sellerResults = saleService.calculateEmployeeWeekResults(fullName, fromDate, toDate);

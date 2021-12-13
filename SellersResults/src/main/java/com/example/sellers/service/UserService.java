@@ -4,6 +4,7 @@ import com.example.sellers.model.entity.UserEntity;
 import com.example.sellers.model.entity.enums.UserRoleEnum;
 import com.example.sellers.model.service.ProfileUpdateServiceModel;
 import com.example.sellers.model.service.UserRegistrationServiceModel;
+import com.example.sellers.model.view.ProfileUpdateViewModel;
 import com.example.sellers.model.view.ProfileViewModel;
 
 import java.util.List;
@@ -16,17 +17,17 @@ public interface UserService {
 
     void addAdmin(String fullName, String password, String email);
 
-    void addUser(String fullName, String password, String email , Long shopId);
+    void addUser(String fullName, String password, String email, Long shopId);
 
     void registrationUser(UserRegistrationServiceModel userRegistrationServiceModel);
 
-    void addUserRole(UserRoleEnum role , String userFullName);
+    void addUserRole(UserRoleEnum role, String userFullName);
 
     void saveUser(UserEntity userEntity);
 
     void approvedUser(String fullName);
 
-    void changeUserStore(String fullName , String store);
+    void changeUserStore(String fullName, String store);
 
     void removeUser(String fullName);
 
@@ -36,23 +37,25 @@ public interface UserService {
 
     boolean isAdmin(UserEntity user);
 
-    boolean isAuthorize(String email , Long id);
+    boolean isAuthorize(String email, Long id);
 
     Optional<UserEntity> findUserByEmail(String email);
 
     UserEntity findById(Long id);
 
+    UserEntity findUserByName(String fullName);
+
+    ProfileViewModel findByIdProfileViewModel(Long id);
+
+    ProfileUpdateViewModel findProfileUpdateViewModelById(Long id);
+
+    ProfileViewModel findUserViewModelByEmail(String email);
+
     Set<String> findAllUsersFullName();
 
     List<ProfileViewModel> findAllUsersViewModel();
 
-    ProfileViewModel findByIdProfileViewModel(Long id);
-
-    List<UserEntity> findAll();
-
-    ProfileViewModel findUserViewModelByEmail(String email);
-
     Set<String> findAllUsersFullNameWithoutApproval();
 
-    UserEntity findUserByName(String fullName);
+    List<UserEntity> findAll();
 }

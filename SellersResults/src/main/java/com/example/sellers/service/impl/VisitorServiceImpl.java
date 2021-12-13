@@ -28,21 +28,21 @@ public class VisitorServiceImpl implements VisitorService {
 
     @Override
     public void addTestVisitors(List<StoreEntity> stores) {
-        //ToDo work only for November
-        LocalDate dayOfMonth = LocalDate.of(2021, 11, 1);
-        int countDays = LocalDate.now().getDayOfMonth();
-        for (int i = 1; i <= countDays; i++) {
+
+        LocalDate startDate = LocalDate.of(2021, 11, 1);
+
+        while (startDate.isBefore(LocalDate.now())){
             for (StoreEntity store : stores) {
-                int quantity = ThreadLocalRandom.current().nextInt(100, 500);
+                int quantity = ThreadLocalRandom.current().nextInt(100, 300);
                 VisitorEntity visitors =
                         new VisitorEntity()
                                 .setStore(store)
-                                .setDate(dayOfMonth)
+                                .setDate(startDate)
                                 .setQuantity(quantity);
 
                 visitorRepository.save(visitors);
             }
-            dayOfMonth = dayOfMonth.plusDays(1);
+            startDate = startDate.plusDays(1);
         }
     }
 }

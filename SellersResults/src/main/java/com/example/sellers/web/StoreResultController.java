@@ -24,16 +24,16 @@ public class StoreResultController {
         return ResponseEntity.ok(storesWeekResults);
     }
 
-    @GetMapping("/week/{id}")
-    public ResponseEntity<StoreWeekResultDTO> storeWeekResults(@PathVariable Long id) {
-        Optional<StoreWeekResultDTO> results = stWRService.getById(id);
-
-        if (results.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        } else {
-            return ResponseEntity.ok(results.get());
-        }
-    }
+//    @GetMapping("/week/{id}")
+//    public ResponseEntity<StoreWeekResultDTO> storeWeekResults(@PathVariable Long id) {
+//        Optional<StoreWeekResultDTO> results = stWRService.getById(id);
+//
+//        if (results.isEmpty()) {
+//            return ResponseEntity.notFound().build();
+//        } else {
+//            return ResponseEntity.ok(results.get());
+//        }
+//    }
 
 //    How to create object
 //    @PostMapping()

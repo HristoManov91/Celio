@@ -5,6 +5,7 @@ import com.example.sellers.model.entity.UserRoleEntity;
 import com.example.sellers.model.entity.enums.UserRoleEnum;
 import com.example.sellers.model.service.ProfileUpdateServiceModel;
 import com.example.sellers.model.service.UserRegistrationServiceModel;
+import com.example.sellers.model.view.ProfileUpdateViewModel;
 import com.example.sellers.model.view.ProfileViewModel;
 import com.example.sellers.repository.UserRepository;
 import com.example.sellers.service.*;
@@ -157,6 +158,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public ProfileUpdateViewModel findProfileUpdateViewModelById(Long id) {
+        UserEntity userEntity = userRepository.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException("User with this id " + id + " not found", id.toString()));
+
+        return mapToProfileUpdateViewModel(userEntity);
+    }
+
+    @Override
     public List<UserEntity> findAll() {
         return userRepository.findAll();
     }
@@ -234,7 +243,19 @@ public class UserServiceImpl implements UserService {
             profile.setPictureUrl(user.getPicture().getUrl());
         }
 
-        profile.setStore(user.getStore()).setRole(user.findHighestRole());
+        profile
+                .setStore(user.getStore())
+                .setRole(user.findHighestRole());
+
+        return profile;
+    }
+
+    private ProfileUpdateViewModel mapToProfileUpdateViewModel(UserEntity user) {
+        ProfileUpdateViewModel profile = modelMapper.map(user , ProfileUpdateViewModel.class);
+
+        profile
+                .setPicture(user.getPicture())
+                .setRole(user.findHighestRole());
 
         return profile;
     }

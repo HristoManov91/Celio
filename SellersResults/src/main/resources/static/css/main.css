@@ -91,12 +91,19 @@ body div main h1 {
     color: white;
 }
 
-.btn-primary {
+.btn-primary , .add-product , #edit-profile {
     background-color: #1e7e34;
     border: none;
+    color: white;
 }
-.btn-primary:hover {
+.btn-primary:hover , .add-product:hover , #edit-profile:hover{
     background-color: #19e748;
+    color: black;
+}
+
+#edit-profile {
+    margin-left: 210px;
+    margin-right: 210px;
 }
 
 /* така вместо да оцветяваме полетата слагама граница за показване на валидация */
@@ -125,6 +132,10 @@ input:invalid:required {
     cursor: pointer;
     min-height: 65vh;
     color: white;
+}
+
+.profile-card h5 {
+    color: #9fcdff;
 }
 
 .btn-outline-primary {

@@ -9,13 +9,10 @@ import java.time.LocalDate;
 public class ProfileUpdateServiceModel {
 
     private Long id;
-    private String fullName;
     private LocalDate birthday;
     private LocalDate dateOfAppointment;
     private PictureEntity picture;
     private String description;
-    private StoreEntity store;
-    private UserRoleEnum role;
 
     public ProfileUpdateServiceModel() {
     }
@@ -26,15 +23,6 @@ public class ProfileUpdateServiceModel {
 
     public ProfileUpdateServiceModel setId(Long id) {
         this.id = id;
-        return this;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public ProfileUpdateServiceModel setFullName(String fullName) {
-        this.fullName = fullName;
         return this;
     }
 
@@ -71,24 +59,6 @@ public class ProfileUpdateServiceModel {
 
     public ProfileUpdateServiceModel setDescription(String description) {
         this.description = description;
-        return this;
-    }
-
-    public StoreEntity getStore() {
-        return store;
-    }
-
-    public ProfileUpdateServiceModel setStore(StoreEntity store) {
-        this.store = store;
-        return this;
-    }
-
-    public UserRoleEnum getRole() {
-        return role;
-    }
-
-    public ProfileUpdateServiceModel setRole(UserRoleEnum role) {
-        this.role = role;
         return this;
     }
 }

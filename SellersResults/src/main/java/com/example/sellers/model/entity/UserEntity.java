@@ -19,7 +19,7 @@ public class UserEntity extends BaseEntity {
     private String email;
     private LocalDate birthday;
     private LocalDate dateOfAppointment;
-    private PictureEntity picture;
+    private PictureEntity picture; //ToDo може би да го направя само String
     private String description;
     private Set<SaleEntity> sales;
     private Set<UserRoleEntity> roles = new LinkedHashSet<>();
@@ -33,7 +33,7 @@ public class UserEntity extends BaseEntity {
     public UserEntity() {
     }
 
-    @Column(name = "full_name", length = 50, nullable = false, unique = true)
+    @Column(name = "full_name", length = 30, nullable = false, unique = true)
     public String getFullName() {
         return fullName;
     }

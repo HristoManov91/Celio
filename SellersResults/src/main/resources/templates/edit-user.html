@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">>
 <th:block th:include="~{fragments/head}"></th:block>
 <body>
 <div id="page-container">
@@ -14,10 +14,11 @@
                     th:action="@{/users/profile/{id}/edit(id=*{id})}"
                     th:method="patch"
                     enctype="multipart/form-data"
-                    class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
+                    class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center"
+                    style="background: #32363b ; color: white ; border-radius: 8px">
                 <div class="row">
                     <!-- Full name -->
-                    <div class="form-group col-md-6 mb-3">
+                    <div class="form-group col-md-6 mt-3 mb-3">
                         <label for="fullName" class="text-white font-weight-bold" th:text="#{employeeName}">Employee
                             name</label>
                         <input disabled
@@ -27,7 +28,7 @@
                                type="text" class="form-control"/>
                     </div>
                     <!-- Birthday -->
-                    <div class="form-group col-md-6 mb-3">
+                    <div class="form-group col-md-6 mt-3 mb-3">
                         <label for="birthday" class="text-white font-weight-bold" th:text="#{birthday}">Birthday</label>
                         <input
                                 id="birthday"
@@ -43,7 +44,7 @@
                 </div>
                 <div class="row">
                     <!-- Store -->
-                    <div class="form-group col-md-6 mb-3">
+                    <div class="form-group col-md-6 mt-3 mb-3">
                         <label for="store" class="text-white font-weight-bold" th:text="#{store}">Store</label>
                         <input disabled
                                id="store"
@@ -52,7 +53,7 @@
                                class="form-control"/>
                     </div>
                     <!-- Role -->
-                    <div class="form-group col-md-6 mb-3">
+                    <div class="form-group col-md-6 mt-3 mb-3">
                         <label for="role" class="text-white font-weight-bold" th:text="#{role}">Role</label>
                         <input disabled
                                id="role"
@@ -63,17 +64,16 @@
                 </div>
                 <div class="row">
                     <!-- Date of appointment -->
-                    <div class="form-group col-md-6 mb-3">
+                    <div class="form-group col-md-6 mt-3 mb-3">
                         <label for="dateOfAppointment" class="text-white font-weight-bold"
-                               th:text="#{dateOfAppointment}">
-                            Date of Appointment</label>
+                               th:text="#{dateOfAppointment}">Date of Appointment</label>
                         <input id="dateOfAppointment"
                                th:field="*{dateOfAppointment}"
                                type="date"
                                class="form-control"/>
                     </div>
                     <!-- Image -->
-                    <div class="form-group col-md-6 mb-3">
+                    <div class="form-group col-md-6 mt-3 mb-3">
                         <label class="text-white font-weight-bold" for="picture" th:text="#{chooseImage}">Choose
                             image</label>
                         <input id="picture"
@@ -83,7 +83,7 @@
                     </div>
                 </div>
                 <!-- Description -->
-                <div class="form-group">
+                <div class="form-group mt-3">
                     <label class="text-white font-weight-bold" for="description"
                            th:text="#{description}">Description</label>
                     <textarea id="description"
@@ -96,12 +96,9 @@
                     </p>
                 </div>
 
-                <div class="row">
-                    <div class="col col-md-4">
-                        <div class="button-holder d-flex">
-                            <input type="submit" class="btn btn-info btn-lg" value="Save changes"/>
-                        </div>
-                    </div>
+                <!-- Button -->
+                <div class="d-flex justify-content-center mt-3 mb-3">
+                    <input type="submit" class="btn btn-primary btn-block w-50" value="Save changes"/>
                 </div>
             </form>
         </div>

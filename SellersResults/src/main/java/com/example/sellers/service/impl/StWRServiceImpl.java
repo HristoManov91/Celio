@@ -49,7 +49,7 @@ public class StWRServiceImpl implements StWRService {
         LocalDate toDate = LocalDate.of(2021, 11, 7);
         Set<String> storesNames = storeService.findAllStoresNames();
 
-        for (int i = 0; i < 3; i++) {
+        while (toDate.isBefore(LocalDate.now())){
             for (String storesName : storesNames) {
 
                 StoreWeekResultEntity storeResults = saleService.calculateStoreWeekResults(storesName , fromDate , toDate);
