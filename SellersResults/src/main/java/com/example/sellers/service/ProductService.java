@@ -20,7 +20,5 @@ public interface ProductService {
 
     List<ProductEntity> findAll();
 
-    long count();
-
     ProductEntity findProductByName(String name);
 }

@@ -37,12 +37,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void removeProduct(String name) {
-
-        ProductEntity product = productRepository.findByName(name)
-                .orElseThrow(() -> new ObjectNotFoundException("Product with this name " + name + " not found" , name));
-
-        productRepository.delete(product);
+    public List<ProductEntity> findAll() {
+        return productRepository.findAll();
     }
 
     @Override
@@ -52,19 +48,18 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductEntity> findAll() {
-        return productRepository.findAll();
-    }
-
-    @Override
-    public long count() {
-        return productRepository.count();
-    }
-
-    @Override
     public ProductEntity findProductByName(String name) {
 
         return productRepository.findByName(name)
                 .orElseThrow(() -> new ObjectNotFoundException("Product with this name " + name + " not found" , name));
+    }
+
+    @Override
+    public void removeProduct(String name) {
+
+        ProductEntity product = productRepository.findByName(name)
+                .orElseThrow(() -> new ObjectNotFoundException("Product with this name " + name + " not found" , name));
+
+        productRepository.delete(product);
     }
 }

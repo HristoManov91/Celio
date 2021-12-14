@@ -34,12 +34,12 @@ public class UserRoleServiceImpl implements UserRoleService {
     @Override
     public UserRoleEntity findById(Long id) {
         return userRoleRepository.findById(id)
-                .orElseThrow(() -> new IllegalStateException("USER role not found. Please seed the roles."));
+                .orElseThrow(() -> new IllegalArgumentException("User role with this " + id + " not found!"));
     }
 
     @Override
     public UserRoleEntity findUserRoleByName(UserRoleEnum role) {
         return userRoleRepository.findUserRoleEntityByRole(role)
-                .orElseThrow(() -> new IllegalStateException("USER role not found."));
+                .orElseThrow(() -> new IllegalArgumentException("User role with this " + role.name() + " name not found!"));
     }
 }
