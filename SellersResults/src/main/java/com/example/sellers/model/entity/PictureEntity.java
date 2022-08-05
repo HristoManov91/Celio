@@ -12,7 +12,8 @@ public class PictureEntity extends BaseEntity {
     public PictureEntity() {
     }
 
-    @Column(nullable = false , columnDefinition = "TEXT")
+    @Lob
+    @Column(nullable = false)
     public String getUrl() {
         return url;
     }

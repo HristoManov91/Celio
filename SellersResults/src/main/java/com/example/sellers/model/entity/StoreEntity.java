@@ -29,7 +29,7 @@ public class StoreEntity extends BaseEntity{
         return this;
     }
 
-    @Column(columnDefinition = "TEXT")
+    @Lob
     public String getDescription() {
         return description;
     }
